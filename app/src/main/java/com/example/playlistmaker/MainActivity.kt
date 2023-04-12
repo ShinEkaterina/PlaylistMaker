@@ -18,19 +18,20 @@ class MainActivity : AppCompatActivity() {
 
         val searchButtonClickListener: View.OnClickListener = object : View.OnClickListener {
             override fun onClick(v: View?) {
-                val displayIntent = Intent(this@MainActivity, SearchActivity::class.java)
-                startActivity(displayIntent)
+                navigateTo(SearchActivity::class.java)
             }
         }
         searchButton.setOnClickListener(searchButtonClickListener)
 
         libraryButton.setOnClickListener {
-            val displayIntent = Intent(this, LibraryActivity::class.java)
-            startActivity(displayIntent)
+            navigateTo(LibraryActivity::class.java)
         }
         settingsButton.setOnClickListener {
-            val displayIntent = Intent(this, SettingsActivity::class.java)
-            startActivity(displayIntent)
+            navigateTo(SettingsActivity::class.java)
         }
+    }
+    private fun navigateTo(clazz: Class<out AppCompatActivity>) {
+        val intent = Intent(this, clazz)
+        startActivity(intent)
     }
 }
