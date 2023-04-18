@@ -11,10 +11,12 @@
     <dimen name="height_for_setting">61dp</dimen>
     <dimen name="text_small">16sp</dimen>
     <dimen name="menu_button_insetTop">0dp</dimen>
+    <dimen name="menu_button_insetBottom">0dp</dimen>
     <dimen name="menu_button_marginTop">16dp</dimen>
     <dimen name="menu_button_height">0dp</dimen>
-    <dimen name="settings_margin_end">12dp</dimen>
-    <dimen name="settings_margin_start">16dp</dimen>
+    <dimen name="settings_ic_margin_end">12dp</dimen>
+    <dimen name="settings_text_margin_start">16dp</dimen>
+    <dimen name="settings_text_margin_end">8dp</dimen>
     <dimen name="settings_element_padding_vertical">21dp</dimen>
     <dimen name="toolbar_header_margin">21dp</dimen>
 </resources>

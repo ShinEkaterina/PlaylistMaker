@@ -15,6 +15,7 @@
 
         <TextView
             android:textSize="@dimen/header_text_size"
+            android:fontFamily="sans-serif-medium"
             android:textColor="@color/button_text_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
