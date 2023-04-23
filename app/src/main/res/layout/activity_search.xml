@@ -3,21 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="?attr/colorSecondary"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/search_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:navigationIcon="@drawable/ic_arrow_back">
+        style ="@style/ToolBarStyle">
 
         <TextView
-            android:textSize="@dimen/header_text_size"
-            android:fontFamily="sans-serif-medium"
-            android:textColor="@color/button_text_color"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style ="@style/TextHeaderStyle"
             android:text="@string/search" />
 
     </androidx.appcompat.widget.Toolbar>

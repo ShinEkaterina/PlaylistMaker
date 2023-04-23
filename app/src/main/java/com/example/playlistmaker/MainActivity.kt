@@ -3,7 +3,6 @@ package com.example.playlistmaker
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 
 
@@ -16,12 +15,10 @@ class MainActivity : AppCompatActivity() {
         val libraryButton = findViewById<Button>(R.id.library_button)
         val settingsButton = findViewById<Button>(R.id.settings_button)
 
-        val searchButtonClickListener: View.OnClickListener = object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                navigateTo(SearchActivity::class.java)
-            }
+
+        searchButton.setOnClickListener {
+            navigateTo(SearchActivity::class.java)
         }
-        searchButton.setOnClickListener(searchButtonClickListener)
 
         libraryButton.setOnClickListener {
             navigateTo(LibraryActivity::class.java)
@@ -30,6 +27,7 @@ class MainActivity : AppCompatActivity() {
             navigateTo(SettingsActivity::class.java)
         }
     }
+
     private fun navigateTo(clazz: Class<out AppCompatActivity>) {
         val intent = Intent(this, clazz)
         startActivity(intent)
