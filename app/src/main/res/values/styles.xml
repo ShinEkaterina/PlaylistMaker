@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="MenuButtonStyle" parent="Widget.MaterialComponents.Button">
+    <style name="MenuButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/menu_button_height</item>
         <item name="android:layout_weight">1</item>
@@ -21,6 +21,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">0dp</item>
+        <item name="navigationIcon">@drawable/ic_arrow_back</item>
     </style>
     <style name="TextHeaderStyle">
         <item name="android:layout_width">wrap_content</item>
@@ -70,7 +71,7 @@
     </style>
     <style name="ClearTextIconStyle">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:src">@drawable/ic_crear_text</item>
     </style>
 </resources>

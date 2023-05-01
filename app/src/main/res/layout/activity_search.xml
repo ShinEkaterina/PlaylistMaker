@@ -16,36 +16,49 @@
             android:text="@string/search" />
     </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/edit_text_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_on_search_screen"
         android:layout_marginHorizontal="@dimen/search_text_margin_horizontal"
-        android:layout_marginVertical="@dimen/search_text_margin_vertical">
+        android:layout_marginVertical="@dimen/search_text_margin_vertical"
+        android:background="@drawable/shape_on_search_screen">
 
-        <ImageView
-            style="@style/SearchIconStyle"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/margin_12dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="start|center_vertical"
+            android:paddingStart="@dimen/margin_12dp">
 
-        <EditText
-            android:id="@+id/input_edit_text"
-            style="@style/EditTextStyle"
-            android:layout_weight="1"
-            android:backgroundTint="@android:color/transparent"
-            android:hint="@string/search"
-            android:imeOptions="actionDone"
-            android:inputType="textNoSuggestions"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@color/dark"/>
+            <ImageView
+                android:id="@+id/search_icon"
+                style="@style/SearchIconStyle"
+                android:layout_gravity="start|center_vertical" />
+
+            <EditText
+                android:id="@+id/input_edit_text"
+                style="@style/EditTextStyle"
+                android:textCursorDrawable="@drawable/blue_cursor"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                android:hint="@string/search"
+                android:imeOptions="actionDone"
+                android:inputType="textNoSuggestions"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/dark"/>
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/clear_icon"
             style="@style/ClearTextIconStyle"
             android:layout_gravity="end|center_vertical"
             android:layout_marginEnd="@dimen/margin_12dp"
-            android:visibility="gone" />
-    </LinearLayout>
+            android:visibility="visible" />
+
+    </FrameLayout>
 </LinearLayout>
