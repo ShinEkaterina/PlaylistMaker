@@ -10,4 +10,10 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:src">@drawable/ic_clear_text_night</item>
     </style>
+    <style name="ToolBarStyle" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="navigationIcon">@drawable/ic_arrow_back_night</item>
+    </style>
 </resources>

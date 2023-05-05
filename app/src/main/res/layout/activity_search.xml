@@ -58,7 +58,6 @@
             style="@style/ClearTextIconStyle"
             android:layout_gravity="end|center_vertical"
             android:layout_marginEnd="@dimen/margin_12dp"
-            android:visibility="visible" />
-
+            android:visibility="gone" />
     </FrameLayout>
 </LinearLayout>
