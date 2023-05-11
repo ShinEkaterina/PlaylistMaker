@@ -1,24 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="?attr/colorSecondary"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/search_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:navigationIcon="@drawable/ic_arrow_back">
+        style="@style/ToolBarStyle">
 
         <TextView
-            android:textSize="@dimen/header_text_size"
-            android:fontFamily="sans-serif-medium"
-            android:textColor="@color/button_text_color"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/TextHeaderStyle"
             android:text="@string/search" />
-
     </androidx.appcompat.widget.Toolbar>
+
+    <FrameLayout
+        android:id="@+id/edit_text_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/search_text_margin_horizontal"
+        android:layout_marginVertical="@dimen/search_text_margin_vertical"
+        android:background="@drawable/shape_on_search_screen">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="start|center_vertical"
+            android:paddingStart="@dimen/margin_12dp">
+
+            <ImageView
+                android:id="@+id/search_icon"
+                style="@style/SearchIconStyle"
+                android:layout_gravity="start|center_vertical" />
+
+            <EditText
+                android:id="@+id/input_edit_text"
+                style="@style/EditTextStyle"
+                android:textCursorDrawable="@drawable/blue_cursor"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                android:hint="@string/search"
+                android:imeOptions="actionDone"
+                android:inputType="textNoSuggestions"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/dark"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/clear_icon"
+            style="@style/ClearTextIconStyle"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="@dimen/margin_12dp"
+            android:visibility="gone" />
+    </FrameLayout>
 </LinearLayout>

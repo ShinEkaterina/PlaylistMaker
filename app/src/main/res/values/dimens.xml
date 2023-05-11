@@ -19,4 +19,8 @@
     <dimen name="settings_text_margin_end">8dp</dimen>
     <dimen name="settings_element_padding_vertical">21dp</dimen>
     <dimen name="toolbar_header_margin">21dp</dimen>
+    <dimen name="search_text_margin_horizontal">16dp</dimen>
+    <dimen name="search_text_margin_vertical">12dp</dimen>
+    <dimen name="margin_12dp">12dp</dimen>
+    <dimen name="margin_8dp">8dp</dimen>
 </resources>

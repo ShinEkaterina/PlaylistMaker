@@ -3,75 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_blue"
+    android:background="?attr/colorPrimary"
     android:orientation="vertical"
     android:paddingHorizontal="@dimen/main_activity_side_padding"
     android:paddingTop="@dimen/main_activity_top_padding"
     android:paddingBottom="@dimen/main_activity_bottom_padding">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style ="@style/TextHeaderStyle"
         android:layout_gravity="start"
-        android:fontFamily="sans-serif-medium"
         android:text="@string/app_name"
-        android:textSize="@dimen/header_text_size"
         android:textColor="@color/white" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/search_button"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/menu_button_height"
+        style="@style/MenuButtonStyle"
         android:layout_marginTop="40dp"
-        android:layout_weight="1"
-        android:backgroundTint="@color/white"
-        android:insetTop="@dimen/menu_button_insetTop"
-        android:insetBottom="@dimen/menu_button_insetBottom"
         android:text="@string/search"
-        android:textAllCaps="false"
-        android:textColor="@color/button_text_color"
-        android:textSize="@dimen/button_text_size"
-        app:cornerRadius="@dimen/button_corner_radius"
-        app:icon="@drawable/ic_search"
-        app:iconGravity="textStart"
-        app:iconPadding="@dimen/icon_to_text"
-        app:iconTint="@color/button_text_color" />
+        app:icon="@drawable/ic_search" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/library_button"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/menu_button_height"
+        style ="@style/MenuButtonStyle"
         android:layout_marginTop="@dimen/menu_button_marginTop"
-        android:layout_weight="1"
-        android:backgroundTint="@color/white"
-        android:insetTop="@dimen/menu_button_insetTop"
-        android:insetBottom="@dimen/menu_button_insetBottom"
         android:text="@string/library"
-        android:textAllCaps="false"
-        android:textColor="@color/button_text_color"
-        android:textSize="@dimen/button_text_size"
-        app:cornerRadius="@dimen/button_corner_radius"
-        app:icon="@drawable/ic_library"
-        app:iconGravity="textStart"
-        app:iconPadding="@dimen/icon_to_text"
-        app:iconTint="@color/button_text_color" />
+        app:icon="@drawable/ic_library" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/settings_button"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/menu_button_height"
+        style ="@style/MenuButtonStyle"
         android:layout_marginTop="@dimen/menu_button_marginTop"
-        android:layout_weight="1"
-        android:backgroundTint="@color/white"
-        android:insetTop="@dimen/menu_button_insetTop"
-        android:insetBottom="@dimen/menu_button_insetBottom"
         android:text="@string/settings"
-        android:textAllCaps="false"
-        android:textColor="@color/button_text_color"
-        android:textSize="@dimen/button_text_size"
-        app:cornerRadius="@dimen/button_corner_radius"
-        app:icon="@drawable/ic_settings"
-        app:iconGravity="textStart"
-        app:iconPadding="@dimen/icon_to_text"
-        app:iconTint="@color/button_text_color" />
+        app:icon="@drawable/ic_settings" />
 </LinearLayout>

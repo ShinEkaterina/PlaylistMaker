@@ -4,29 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="?attr/colorSecondary"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/settings_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:navigationIcon="@drawable/ic_arrow_back"
-        android:layout_margin="0dp">
+        style="@style/ToolBarStyle">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/settings"
-            android:textColor="@color/button_text_color"
-            android:textSize="@dimen/header_text_size"
-            android:fontFamily="sans-serif-medium"/>
+            style="@style/TextHeaderStyle"
+            android:text="@string/settings" />
 
     </androidx.appcompat.widget.Toolbar>
 
     <Switch
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/SettingsElementStyle"
         android:layout_gravity="start"
         android:layout_marginStart="@dimen/settings_text_margin_start"
         android:layout_marginTop="24dp"
@@ -35,83 +27,41 @@
         android:textSize="@dimen/text_small"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false"
-        android:orientation="horizontal">
+    <LinearLayout style="@style/SettingsElementStyle">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/settings_element_padding_vertical"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/settings_text_margin_start"
-            android:layout_marginEnd="@dimen/settings_text_margin_end"
-            android:layout_weight="1"
-            android:text="@string/share_app"
-            android:textColor="@color/button_text_color"
-            android:textSize="@dimen/text_small" />
+            style="@style/SettingsTextStyle"
+            android:text="@string/share_app" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|end"
-            android:layout_marginEnd="@dimen/settings_ic_margin_end"
+            android:id="@+id/share_app_icon"
+            style="@style/SettingsIconStyle"
             android:src="@drawable/ic_share" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false"
-        android:orientation="horizontal">
+    <LinearLayout style="@style/SettingsElementStyle">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/settings_element_padding_vertical"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/settings_text_margin_start"
-            android:layout_marginEnd="@dimen/settings_text_margin_end"
-            android:layout_weight="1"
-            android:text="@string/write_to_support"
-            android:textColor="@color/button_text_color"
-            android:textSize="@dimen/text_small" />
+            style="@style/SettingsTextStyle"
+            android:text="@string/write_to_support" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|end"
-            android:layout_marginEnd="@dimen/settings_ic_margin_end"
+            android:id="@+id/support_icon"
+            style="@style/SettingsIconStyle"
             android:src="@drawable/ic_support" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false"
-        android:orientation="horizontal">
+    <LinearLayout style="@style/SettingsElementStyle">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/settings_element_padding_vertical"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/settings_text_margin_start"
-            android:layout_marginEnd="@dimen/settings_text_margin_end"
-            android:layout_weight="1"
-            android:text="@string/user_agreement"
-            android:textColor="@color/button_text_color"
-            android:textSize="@dimen/text_small" />
+            style="@style/SettingsTextStyle"
+            android:text="@string/user_agreement" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|end"
-            android:layout_marginEnd="@dimen/settings_ic_margin_end"
+            android:id="@+id/go_to_agreement_icon"
+            style="@style/SettingsIconStyle"
             android:src="@drawable/ic_arrow_forward" />
 
     </LinearLayout>
