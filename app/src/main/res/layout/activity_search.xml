@@ -60,4 +60,16 @@
             android:layout_marginEnd="@dimen/margin_12dp"
             android:visibility="gone" />
     </FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_20dp"
+        android:layout_marginStart="@dimen/margin_13dp"
+        android:layout_marginEnd="@dimen/margin_24dp"
+        android:visibility="visible"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_goneMarginTop="@dimen/margin_24dp"
+        tools:listitem="@layout/track_view_card" />
 </LinearLayout>

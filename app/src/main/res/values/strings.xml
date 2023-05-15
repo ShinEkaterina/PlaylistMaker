@@ -9,4 +9,6 @@
     <string name="user_agreement">Пользовательское соглашение</string>
     <string name="write_support_subject">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
     <string name="write_support_message">Спасибо разработчикам и разработчицам за крутое приложение!</string>
+    <string name="artwork_content_description">Описание</string>
+
 </resources>
