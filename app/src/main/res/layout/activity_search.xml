@@ -20,8 +20,8 @@
         android:id="@+id/edit_text_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/search_text_margin_horizontal"
-        android:layout_marginVertical="@dimen/search_text_margin_vertical"
+        android:layout_marginHorizontal="@dimen/size_16"
+        android:layout_marginVertical="@dimen/size_12"
         android:background="@drawable/shape_on_search_screen">
 
         <LinearLayout
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="start|center_vertical"
-            android:paddingStart="@dimen/margin_12dp">
+            android:paddingStart="@dimen/size_12">
 
             <ImageView
                 android:id="@+id/search_icon"
@@ -40,7 +40,7 @@
                 android:id="@+id/input_edit_text"
                 style="@style/EditTextStyle"
                 android:textCursorDrawable="@drawable/blue_cursor"
-                android:layout_marginStart="@dimen/margin_8dp"
+                android:layout_marginStart="@dimen/size_8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@android:color/transparent"
@@ -57,19 +57,16 @@
             android:id="@+id/clear_icon"
             style="@style/ClearTextIconStyle"
             android:layout_gravity="end|center_vertical"
-            android:layout_marginEnd="@dimen/margin_12dp"
+            android:layout_marginEnd="@dimen/size_12"
             android:visibility="gone" />
     </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_list"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_20dp"
-        android:layout_marginStart="@dimen/margin_13dp"
-        android:layout_marginEnd="@dimen/margin_24dp"
+        android:layout_marginTop="@dimen/size_20"
         android:visibility="visible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_goneMarginTop="@dimen/margin_24dp"
         tools:listitem="@layout/track_view_card" />
 </LinearLayout>

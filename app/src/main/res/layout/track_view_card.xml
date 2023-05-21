@@ -6,71 +6,66 @@
     android:layout_height="@dimen/size_61"
     android:backgroundTint="?attr/colorSecondary">
 
+    <ImageView
+        android:id="@+id/track_image"
+        android:layout_width="@dimen/size_45"
+        android:layout_height="@dimen/size_45"
+        android:layout_marginVertical="@dimen/size_8"
+        android:layout_marginStart="@dimen/size_13"
+        android:background="@drawable/placeholder"
+        android:contentDescription="@string/artwork_content_description" />
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-        <ImageView
-            android:id="@+id/track_image"
-            android:layout_width="@dimen/size_45"
-            android:layout_height="@dimen/size_45"
-            android:layout_marginVertical="@dimen/size_8"
-            android:layout_marginStart="@dimen/size_12"
-            android:contentDescription="@string/artwork_content_description" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="@dimen/size_12"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/track_name"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
+            style="@style/Recycleview_Track_Name"
             android:layout_marginStart="@dimen/size_68"
             android:layout_marginTop="@dimen/size_12"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textSize="@dimen/text_small" />
+            android:layout_marginEnd="@dimen/size_8"
+            tools:text="Upss, I did it again duhvgfdiuhvfdhbviufhbiufhdbuihdfiubhdfiuhbiudfhbiudfhiubhfdiuhbiudfhbiudfhiubhdfiubhiudfhbiufdhbiu" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginStart="@dimen/size_68"
-            android:layout_marginBottom="@dimen/size_12">
+            android:orientation="horizontal">
+
 
             <TextView
                 android:id="@+id/artist_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/Recycleview_ArtistName_TrackTime"
+                android:layout_marginStart="@dimen/size_68"
                 android:layout_marginEnd="@dimen/size_4"
-                android:ellipsize="end"
                 android:maxWidth="@dimen/size_224"
                 android:maxLines="1"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/small_text_size" />
+                tools:text="Britney Spears" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/ellipse"
                 android:layout_gravity="center_vertical"
-                android:layout_marginEnd="@dimen/size_4"
-                android:background="@drawable/ellipse"
-                android:backgroundTint="@color/gray"
-                tools:ignore="ContentDescription" />
-
+                android:layout_marginEnd="@dimen/size_4"/>
+ />
             <TextView
                 android:id="@+id/track_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/small_text_size" />
+                style="@style/Recycleview_ArtistName_TrackTime"
+                tools:text="02:55" />
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/on_track_chosen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|end"
-            android:layout_marginEnd="@dimen/size_20"
-            android:background="@drawable/ic_arrow_forward"
-            android:backgroundTint="@color/gray"
-            tools:ignore="ContentDescription" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/on_track_chosen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:layout_marginEnd="@dimen/size_20"
+        android:layout_marginStart="@dimen/size_8"
+        android:background="@drawable/ic_arrow_forward"
+        android:backgroundTint="@color/gray"
+        tools:ignore="ContentDescription" />
 </androidx.cardview.widget.CardView>
