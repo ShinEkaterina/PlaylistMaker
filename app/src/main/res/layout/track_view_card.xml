@@ -29,7 +29,7 @@
             android:layout_marginStart="@dimen/size_68"
             android:layout_marginTop="@dimen/size_12"
             android:layout_marginEnd="@dimen/size_8"
-            tools:text="Upss, I did it again duhvgfdiuhvfdhbviufhbiufhdbuihdfiubhdfiuhbiudfhbiudfhiubhfdiuhbiudfhbiudfhiubhdfiubhiudfhbiufdhbiu" />
+            tools:text="Upss, I did it again" />
 
         <LinearLayout
             android:layout_width="wrap_content"
