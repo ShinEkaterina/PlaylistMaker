@@ -2,18 +2,18 @@
 <resources>
     <style name="MenuButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/menu_button_height</item>
+        <item name="android:layout_height">@dimen/size_0</item>
         <item name="android:layout_weight">1</item>
         <item name="android:backgroundTint">@color/white</item>
-        <item name="android:insetBottom">@dimen/menu_button_insetBottom</item>
-        <item name="android:insetTop">@dimen/menu_button_insetTop</item>
+        <item name="android:insetBottom">@dimen/size_0</item>
+        <item name="android:insetTop">@dimen/size_0</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/dark</item>
-        <item name="android:textSize">@dimen/button_text_size</item>
-        <item name="cornerRadius">@dimen/button_corner_radius</item>
+        <item name="android:textSize">@dimen/text_size_22</item>
+        <item name="cornerRadius">@dimen/button_radius_16</item>
         <item name="iconGravity">textStart</item>
         <item name="iconTint">@color/dark</item>
-        <item name="iconPadding">@dimen/icon_to_text</item>
+        <item name="iconPadding">@dimen/size_8</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textFontWeight">500</item>
     </style>
@@ -26,7 +26,7 @@
     <style name="TextHeaderStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/header_text_size</item>
+        <item name="android:textSize">@dimen/text_size_22</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textFontWeight">500</item>
         <item name="android:textColor">?attr/colorOnSecondary</item>
@@ -40,13 +40,13 @@
     <style name="SettingsTextStyle">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingVertical">@dimen/settings_element_padding_vertical</item>
+        <item name="android:paddingVertical">@dimen/size_21</item>
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:layout_marginStart">@dimen/settings_text_margin_start</item>
-        <item name="android:layout_marginEnd">@dimen/settings_text_margin_end</item>
+        <item name="android:layout_marginStart">@dimen/size_16</item>
+        <item name="android:layout_marginEnd">@dimen/size_8</item>
         <item name="android:layout_weight">1</item>
         <item name="android:textColor">?attr/colorOnSecondary</item>
-        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textFontWeight">400</item>
     </style>
@@ -54,15 +54,15 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center_vertical|end</item>
-        <item name="android:layout_marginEnd">@dimen/settings_ic_margin_end</item>
+        <item name="android:layout_marginEnd">@dimen/size_12</item>
     </style>
     <style name="EditTextStyle">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textFontWeight">400</item>
-        <item name="android:textSize">@dimen/text_small</item>
-        <item name="android:layout_marginStart">@dimen/margin_8dp</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:layout_marginStart">@dimen/size_8</item>
     </style>
     <style name="SearchIconStyle">
         <item name="android:layout_width">wrap_content</item>
@@ -73,5 +73,36 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:src">@drawable/ic_crear_text</item>
+    </style>
+    <style name="YSRegular">
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+    <style name="Recycleview_Track_Name">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">TextView</item>
+        <item name="android:textColor">@color/dark</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+    </style>
+    <style name="Recycleview_ArtistName_TrackTime">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:text">TextView</item>
+        <item name="android:textSize">@dimen/text_size_11</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:lines">1</item>
+    </style>
+    <style name="ellipse">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/ellipse</item>
     </style>
 </resources>

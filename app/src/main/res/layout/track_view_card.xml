@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/track_item"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_61"
+    android:backgroundTint="?attr/colorSecondary">
+
+    <ImageView
+        android:id="@+id/track_image"
+        android:layout_width="@dimen/size_45"
+        android:layout_height="@dimen/size_45"
+        android:layout_marginVertical="@dimen/size_8"
+        android:layout_marginStart="@dimen/size_13"
+        android:background="@drawable/placeholder"
+        android:contentDescription="@string/artwork_content_description" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="@dimen/size_12"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/track_name"
+            style="@style/Recycleview_Track_Name"
+            android:layout_marginStart="@dimen/size_68"
+            android:layout_marginTop="@dimen/size_12"
+            android:layout_marginEnd="@dimen/size_8"
+            tools:text="Upss, I did it again" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/artist_name"
+                style="@style/Recycleview_ArtistName_TrackTime"
+                android:layout_marginStart="@dimen/size_68"
+                android:layout_marginEnd="@dimen/size_4"
+                android:maxWidth="@dimen/size_224"
+                android:maxLines="1"
+                tools:text="Britney Spears" />
+
+            <ImageView
+                style="@style/ellipse"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/size_4"/>
+ />
+            <TextView
+                android:id="@+id/track_time"
+                style="@style/Recycleview_ArtistName_TrackTime"
+                tools:text="02:55" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/on_track_chosen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:layout_marginEnd="@dimen/size_20"
+        android:layout_marginStart="@dimen/size_8"
+        android:background="@drawable/ic_arrow_forward"
+        android:backgroundTint="@color/gray"
+        tools:ignore="ContentDescription" />
+</androidx.cardview.widget.CardView>

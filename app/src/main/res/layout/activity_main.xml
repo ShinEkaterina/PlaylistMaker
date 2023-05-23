@@ -5,9 +5,9 @@
     android:layout_height="match_parent"
     android:background="?attr/colorPrimary"
     android:orientation="vertical"
-    android:paddingHorizontal="@dimen/main_activity_side_padding"
-    android:paddingTop="@dimen/main_activity_top_padding"
-    android:paddingBottom="@dimen/main_activity_bottom_padding">
+    android:paddingHorizontal="@dimen/size_16"
+    android:paddingTop="@dimen/size_14"
+    android:paddingBottom="@dimen/size_28">
 
     <TextView
         style ="@style/TextHeaderStyle"
@@ -25,14 +25,14 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/library_button"
         style ="@style/MenuButtonStyle"
-        android:layout_marginTop="@dimen/menu_button_marginTop"
+        android:layout_marginTop="@dimen/size_16"
         android:text="@string/library"
         app:icon="@drawable/ic_library" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/settings_button"
         style ="@style/MenuButtonStyle"
-        android:layout_marginTop="@dimen/menu_button_marginTop"
+        android:layout_marginTop="@dimen/size_16"
         android:text="@string/settings"
         app:icon="@drawable/ic_settings" />
 </LinearLayout>
