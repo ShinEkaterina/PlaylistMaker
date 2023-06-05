@@ -1,7 +1,6 @@
 package com.example.playlistmaker
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -23,7 +22,7 @@ class TrackViewHolder(parentView: ViewGroup) : RecyclerView.ViewHolder(
     fun bind(model: Track) {
         trackName.text = model.trackName
         artistName.text = model.artistName
-        trackTime.text = model.trackTime
+        trackTime.text = model.trackTimeMillis.toString()
 
         Glide
             .with(itemView.context)
