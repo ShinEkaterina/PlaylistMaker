@@ -70,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_20"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/track_view_card" />
 
@@ -87,17 +87,18 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/size_110" />
+
             <TextView
                 style="@style/PlaceHolderText"
-                android:text="@string/not_found"
-                android:textSize="@dimen/text_size_19" />
+                android:text="@string/not_found" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/network_problem_widget"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <ImageView
                 style="@style/SearchingActivityNetworkProbleMode"
@@ -105,22 +106,24 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/size_110" />
+
             <TextView
                 style="@style/PlaceHolderText"
-                android:text="@string/no_internet"
                 android:layout_marginHorizontal="@dimen/size_24"
+                android:text="@string/no_internet"
                 android:textAlignment="center"
                 android:textSize="@dimen/text_size_19" />
+
             <Button
                 android:id="@+id/update_button"
                 style="@style/UpdateButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="24dp"
                 android:text="@string/update"
                 android:textAllCaps="false"
-                android:textSize="@dimen/text_size_14"
-                android:layout_marginTop="24dp"/>
+                android:textSize="@dimen/text_size_14" />
         </LinearLayout>
     </FrameLayout>
 </LinearLayout>

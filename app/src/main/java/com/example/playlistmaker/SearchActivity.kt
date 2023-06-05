@@ -113,6 +113,10 @@ override fun onCreate(savedInstanceState: Bundle?) {
         val keyboard = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         keyboard.hideSoftInputFromWindow(searchEditText.windowToken, 0)
         searchEditText.clearFocus()
+
+        //clear trackList
+        trackList.clear()
+        trackAdapter.notifyDataSetChanged()
     }
 
     searchEditText.addTextChangedListener(searchTextWatcher)

@@ -79,7 +79,7 @@
         <item name="android:textFontWeight">400</item>
     </style>
     <style name="Recycleview_Track_Name">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:text">TextView</item>
         <item name="android:textColor">@color/dark</item>
@@ -123,6 +123,7 @@
         <item name="android:textSize">@dimen/text_size_19</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textFontWeight">400</item>
+        <item name="android:textColor">@color/dark</item>
     </style>
     <style name="UpdateButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="backgroundTint">@color/dark</item>
