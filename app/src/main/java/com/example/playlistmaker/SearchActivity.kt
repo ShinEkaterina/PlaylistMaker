@@ -29,13 +29,12 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var trackAdapter: TrackAdapter
     private lateinit var recycleViewTracks: RecyclerView
 
-    private val iTunesBaseUrl = "https://itunes.apple.com"
     private lateinit var trackNotFoundVidget: View
     private lateinit var noInternetVidget: View
 
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl(iTunesBaseUrl)
+        .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -172,6 +171,7 @@ private fun clearButtonVisibility(s: CharSequence?): Int {
 
 companion object {
     const val SEARCH_TEXT = "SEARCH_TEXT"
+    const val BASE_URL = "https://itunes.apple.com"
 }
 
 override fun onSaveInstanceState(outState: Bundle) {
