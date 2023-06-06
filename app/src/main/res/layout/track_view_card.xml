@@ -16,8 +16,9 @@
         android:contentDescription="@string/artwork_content_description" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="350dp"
+        android:layout_height="49dp"
+        android:layout_weight="1"
         android:layout_gravity="bottom"
         android:layout_marginStart="0dp"
         android:layout_marginBottom="@dimen/size_12"
@@ -29,7 +30,7 @@
             android:layout_marginStart="@dimen/size_68"
             android:layout_marginTop="@dimen/size_12"
             android:layout_marginEnd="@dimen/size_8"
-            tools:text="Upss, I did it again" />
+            tools:text="Upss, I did it again ger8yg8erhg8uhreguerhiguheriuhgiurehguirehghreiuhgruhguierhguirehgiuerhgiuhreiughreiughiurehguierhgiuerhgiuheriughe" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -49,8 +50,9 @@
             <ImageView
                 style="@style/ellipse"
                 android:layout_gravity="center_vertical"
-                android:layout_marginEnd="@dimen/size_4"/>
- />
+                android:layout_marginEnd="@dimen/size_4" />
+            />
+
             <TextView
                 android:id="@+id/track_time"
                 style="@style/Recycleview_ArtistName_TrackTime"

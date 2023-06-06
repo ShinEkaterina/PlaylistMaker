@@ -27,8 +27,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="start|center_vertical"
+            android:orientation="horizontal"
             android:paddingStart="@dimen/size_12">
 
             <ImageView
@@ -39,17 +39,17 @@
             <EditText
                 android:id="@+id/input_edit_text"
                 style="@style/EditTextStyle"
-                android:textCursorDrawable="@drawable/blue_cursor"
-                android:layout_marginStart="@dimen/size_8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_8"
                 android:backgroundTint="@android:color/transparent"
                 android:hint="@string/search"
                 android:imeOptions="actionDone"
                 android:inputType="textNoSuggestions"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textColor="@color/dark"/>
+                android:textColor="@color/dark"
+                android:textCursorDrawable="@drawable/blue_cursor" />
 
         </LinearLayout>
 
@@ -61,12 +61,69 @@
             android:visibility="gone" />
     </FrameLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_list"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_20"
-        android:visibility="visible"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/track_view_card" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_20"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/track_view_card" />
+
+        <LinearLayout
+            android:id="@+id/not_found_widget"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                style="@style/SearchingActivityNotFoundMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/size_110" />
+
+            <TextView
+                style="@style/PlaceHolderText"
+                android:text="@string/not_found" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/network_problem_widget"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                style="@style/SearchingActivityNetworkProbleMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/size_110" />
+
+            <TextView
+                style="@style/PlaceHolderText"
+                android:layout_marginHorizontal="@dimen/size_24"
+                android:text="@string/no_internet"
+                android:textAlignment="center"
+                android:textSize="@dimen/text_size_19" />
+
+            <Button
+                android:id="@+id/update_button"
+                style="@style/UpdateButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                android:text="@string/update"
+                android:textAllCaps="false"
+                android:textSize="@dimen/text_size_14" />
+        </LinearLayout>
+    </FrameLayout>
 </LinearLayout>
