@@ -17,15 +17,15 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <Switch
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/themeSwitcher"
         style="@style/SettingsElementStyle"
         android:layout_gravity="start"
         android:layout_marginStart="@dimen/size_16"
         android:layout_marginTop="24dp"
         android:paddingVertical="@dimen/size_21"
         android:text="@string/dark_theme"
-        android:textSize="@dimen/text_size_16"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
+        android:textSize="@dimen/text_size_16" />
 
     <LinearLayout style="@style/SettingsElementStyle">
 
