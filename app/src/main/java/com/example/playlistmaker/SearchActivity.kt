@@ -31,7 +31,16 @@ class SearchActivity : AppCompatActivity() {
 
     private lateinit var trackNotFoundVidget: View
     private lateinit var noInternetVidget: View
+    private lateinit var historyWidget: View
 
+    private val trackList: ArrayList<Track>  = arrayListOf()
+    private var historyList = ArrayList<Track>()
+
+
+    companion object {
+        const val SEARCH_TEXT = "SEARCH_TEXT"
+        const val BASE_URL = "https://itunes.apple.com"
+    }
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
@@ -82,15 +91,13 @@ class SearchActivity : AppCompatActivity() {
     }
 
 
-private val trackList: ArrayList<Track>  = arrayListOf()
-
-
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_search)
 
     trackNotFoundVidget = findViewById<View>(R.id.not_found_widget)
     noInternetVidget = findViewById<View>(R.id.network_problem_widget)
+    historyWidget = findViewById<View>(R.id.history_widget)
 
 
     val toolbar = findViewById<Toolbar>(R.id.search_toolbar)
@@ -131,10 +138,35 @@ override fun onCreate(savedInstanceState: Bundle?) {
     val updateButton = findViewById<Button>(R.id.update_button)
     updateButton.setOnClickListener { findTrack(searchText) }
 
-    trackAdapter = TrackAdapter(trackList)
+    trackAdapter.tracks = trackList
     recycleViewTracks = findViewById(R.id.search_list)
     recycleViewTracks.adapter = trackAdapter
+
+    historyList.clear()
+    historyList = SearchHistory.fillInList()
 }
+    @SuppressLint("NotifyDataSetChanged")
+    private fun focusVisibility(hasFocus: Boolean) {
+        if (hasFocus && searchEditText.text.isEmpty() && historyList.isNotEmpty()) {
+            historyWidget.visibility = View.VISIBLE
+        } else {
+            historyWidget.visibility = View.GONE
+        }
+        trackAdapter.tracks = historyList
+        trackAdapter.notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun showHistory() {
+        historyList = SearchHistory.fillInList()
+        if (historyList.isNotEmpty()) {
+            historyWidget.visibility = View.VISIBLE
+        } else {
+            historyWidget.visibility = View.GONE
+        }
+        trackAdapter.tracks = historyList
+        trackAdapter.notifyDataSetChanged()
+    }
 
 private val searchTextWatcher = object : TextWatcher {
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -169,10 +201,7 @@ private fun clearButtonVisibility(s: CharSequence?): Int {
     }
 }
 
-companion object {
-    const val SEARCH_TEXT = "SEARCH_TEXT"
-    const val BASE_URL = "https://itunes.apple.com"
-}
+
 
 override fun onSaveInstanceState(outState: Bundle) {
     super.onSaveInstanceState(outState)
