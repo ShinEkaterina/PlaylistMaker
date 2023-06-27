@@ -71,7 +71,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_20"
             android:visibility="gone"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/track_view_card" />
 
         <LinearLayout
@@ -149,7 +148,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_20"
                 android:layout_weight="1"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/track_view_card" />
 
             <Button

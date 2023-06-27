@@ -14,6 +14,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,15 +28,20 @@ class SearchActivity : AppCompatActivity() {
     private var searchText: String = ""
 
     private lateinit var trackAdapter: TrackAdapter
+    private lateinit var historyAdapter: TrackAdapter
+
     private lateinit var recycleViewTracks: RecyclerView
+    private lateinit var historyRecyclerView: RecyclerView
+
 
     private lateinit var trackNotFoundVidget: View
     private lateinit var noInternetVidget: View
     private lateinit var historyWidget: View
 
-    private val trackList: ArrayList<Track>  = arrayListOf()
+    private val trackList: ArrayList<Track> = arrayListOf()
     private var historyList = ArrayList<Track>()
 
+    private lateinit var clearHistoryButton: Button
 
     companion object {
         const val SEARCH_TEXT = "SEARCH_TEXT"
@@ -91,120 +97,145 @@ class SearchActivity : AppCompatActivity() {
     }
 
 
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_search)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_search)
 
-    trackNotFoundVidget = findViewById<View>(R.id.not_found_widget)
-    noInternetVidget = findViewById<View>(R.id.network_problem_widget)
-    historyWidget = findViewById<View>(R.id.history_widget)
+        trackNotFoundVidget = findViewById<View>(R.id.not_found_widget)
+        noInternetVidget = findViewById<View>(R.id.network_problem_widget)
+        historyWidget = findViewById<View>(R.id.history_widget)
 
 
-    val toolbar = findViewById<Toolbar>(R.id.search_toolbar)
-    toolbar.setNavigationOnClickListener { finish() }
+        val toolbar = findViewById<Toolbar>(R.id.search_toolbar)
+        toolbar.setNavigationOnClickListener { finish() }
 
-    searchEditText = findViewById<EditText>(R.id.input_edit_text)
-    clearButton = findViewById<ImageView>(R.id.clear_icon)
+        searchEditText = findViewById<EditText>(R.id.input_edit_text)
+        clearButton = findViewById<ImageView>(R.id.clear_icon)
 
-    if (savedInstanceState != null) {
-        searchText = savedInstanceState.getString(SEARCH_TEXT).toString()
-    }
-    searchEditText.setText(searchText)
-
-    clearButton.setOnClickListener {
-        //Clear text
-        searchEditText.setText("")
-
-        //Hide the keyboard
-        val keyboard = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        keyboard.hideSoftInputFromWindow(searchEditText.windowToken, 0)
-        searchEditText.clearFocus()
-
-        //clear trackList
-        trackList.clear()
-        trackAdapter.notifyDataSetChanged()
-    }
-
-    searchEditText.addTextChangedListener(searchTextWatcher)
-
-    searchEditText.setOnEditorActionListener { _, actionId, _ ->
-        if (actionId == EditorInfo.IME_ACTION_DONE) {
-            findTrack(searchText)
-            true
+        if (savedInstanceState != null) {
+            searchText = savedInstanceState.getString(SEARCH_TEXT).toString()
         }
-        false
+        searchEditText.setText(searchText)
+
+        clearButton.setOnClickListener {
+            //Clear text
+            searchEditText.setText("")
+
+            //Hide the keyboard
+            val keyboard = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            keyboard.hideSoftInputFromWindow(searchEditText.windowToken, 0)
+            searchEditText.clearFocus()
+
+            //clear trackList
+            trackList.clear()
+            trackAdapter.notifyDataSetChanged()
+
+            // show history
+            showHistory()
+        }
+
+        searchEditText.addTextChangedListener(searchTextWatcher)
+
+        searchEditText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                findTrack(searchText)
+                true
+            }
+            false
+        }
+
+        val updateButton = findViewById<Button>(R.id.update_button)
+        updateButton.setOnClickListener { findTrack(searchText) }
+
+        trackAdapter = TrackAdapter(trackList)
+        historyAdapter = TrackAdapter(historyList)
+
+        recycleViewTracks = findViewById(R.id.search_list)
+        recycleViewTracks.layoutManager = LinearLayoutManager(this)
+        recycleViewTracks.adapter = trackAdapter
+
+        historyRecyclerView = findViewById(R.id.history_recycle_view)
+        historyRecyclerView.layoutManager = LinearLayoutManager(this)
+        historyRecyclerView.adapter = historyAdapter
+
+        historyList.clear()
+        historyList = SearchHistory.fillInList()
+
+        clearHistoryButton = findViewById(R.id.clear_history_button)
+        clearHistoryButton.setOnClickListener {
+            SearchHistory.clear()
+            historyList.clear()
+            historyAdapter.notifyDataSetChanged()
+            historyWidget.visibility = View.GONE
+        }
+
+        searchEditText.setOnFocusChangeListener { view, hasFocus ->
+            focusVisibility(hasFocus)
+        }
     }
 
-    val updateButton = findViewById<Button>(R.id.update_button)
-    updateButton.setOnClickListener { findTrack(searchText) }
-
-    trackAdapter.tracks = trackList
-    recycleViewTracks = findViewById(R.id.search_list)
-    recycleViewTracks.adapter = trackAdapter
-
-    historyList.clear()
-    historyList = SearchHistory.fillInList()
-}
     @SuppressLint("NotifyDataSetChanged")
     private fun focusVisibility(hasFocus: Boolean) {
+        historyList.clear()
+        historyList = SearchHistory.fillInList()
+        historyAdapter.notifyDataSetChanged()
         if (hasFocus && searchEditText.text.isEmpty() && historyList.isNotEmpty()) {
             historyWidget.visibility = View.VISIBLE
+            historyAdapter.notifyDataSetChanged()
         } else {
             historyWidget.visibility = View.GONE
         }
-        trackAdapter.tracks = historyList
-        trackAdapter.notifyDataSetChanged()
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun showHistory() {
+        historyList.clear()
         historyList = SearchHistory.fillInList()
+        historyAdapter.notifyDataSetChanged()
         if (historyList.isNotEmpty()) {
             historyWidget.visibility = View.VISIBLE
         } else {
             historyWidget.visibility = View.GONE
         }
-        trackAdapter.tracks = historyList
-        trackAdapter.notifyDataSetChanged()
     }
 
-private val searchTextWatcher = object : TextWatcher {
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        // empty
-    }
-
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        if (s != null) {
-            searchText = s.toString()
+    private val searchTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            // empty
         }
-        clearButton.visibility = clearButtonVisibility(s)
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            if (s != null) {
+                searchText = s.toString()
+            }
+            clearButton.visibility = clearButtonVisibility(s)
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            // empty
+        }
     }
 
-    override fun afterTextChanged(s: Editable?) {
-        // empty
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        if (savedInstanceState != null) {
+            searchText = savedInstanceState.getString(SEARCH_TEXT).toString()
+        }
     }
-}
 
-override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-    super.onRestoreInstanceState(savedInstanceState)
-    if (savedInstanceState != null) {
-        searchText = savedInstanceState.getString(SEARCH_TEXT).toString()
+
+    private fun clearButtonVisibility(s: CharSequence?): Int {
+        return if (s.isNullOrEmpty()) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
     }
-}
 
 
-private fun clearButtonVisibility(s: CharSequence?): Int {
-    return if (s.isNullOrEmpty()) {
-        View.GONE
-    } else {
-        View.VISIBLE
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(SEARCH_TEXT, searchText)
     }
-}
-
-
-
-override fun onSaveInstanceState(outState: Bundle) {
-    super.onSaveInstanceState(outState)
-    outState.putString(SEARCH_TEXT, searchText)
-}
 }
