@@ -59,6 +59,7 @@ class SearchActivity : AppCompatActivity() {
         trackNotFoundVidget.setVisibility(View.GONE)
         noInternetVidget.setVisibility(View.GONE)
         recycleViewTracks.setVisibility(View.GONE)
+        hideHistory()
 
 
         iTunesService
@@ -204,6 +205,10 @@ class SearchActivity : AppCompatActivity() {
         } else {
             historyWidget.visibility = View.GONE
         }
+    }
+
+    private fun hideHistory(){
+        historyWidget.visibility = View.GONE
     }
 
     private val searchTextWatcher = object : TextWatcher {
