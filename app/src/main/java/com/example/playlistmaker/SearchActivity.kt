@@ -78,6 +78,7 @@ class SearchActivity : AppCompatActivity() {
                         } else {
                             trackList.clear()
                             trackList.addAll(response.body()?.results!!)
+                            trackAdapter.tracks = trackList
                             trackAdapter.notifyDataSetChanged()
                             recycleViewTracks.setVisibility(View.VISIBLE)
 
@@ -128,6 +129,7 @@ class SearchActivity : AppCompatActivity() {
 
             //clear trackList
             trackList.clear()
+            trackAdapter.tracks = trackList
             trackAdapter.notifyDataSetChanged()
 
             // show history
@@ -147,8 +149,10 @@ class SearchActivity : AppCompatActivity() {
         val updateButton = findViewById<Button>(R.id.update_button)
         updateButton.setOnClickListener { findTrack(searchText) }
 
-        trackAdapter = TrackAdapter(trackList)
-        historyAdapter = TrackAdapter(historyList)
+        trackAdapter = TrackAdapter()
+        trackAdapter.tracks = trackList
+        historyAdapter = TrackAdapter()
+        historyAdapter.tracks = historyList
 
         recycleViewTracks = findViewById(R.id.search_list)
         recycleViewTracks.layoutManager = LinearLayoutManager(this)
@@ -165,6 +169,7 @@ class SearchActivity : AppCompatActivity() {
         clearHistoryButton.setOnClickListener {
             SearchHistory.clear()
             historyList.clear()
+            historyAdapter.tracks = historyList
             historyAdapter.notifyDataSetChanged()
             historyWidget.visibility = View.GONE
         }
@@ -176,12 +181,12 @@ class SearchActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun focusVisibility(hasFocus: Boolean) {
-        historyList.clear()
+     //   historyList.clear()
         historyList = SearchHistory.fillInList()
+        historyAdapter.tracks = historyList
         historyAdapter.notifyDataSetChanged()
         if (hasFocus && searchEditText.text.isEmpty() && historyList.isNotEmpty()) {
             historyWidget.visibility = View.VISIBLE
-            historyAdapter.notifyDataSetChanged()
         } else {
             historyWidget.visibility = View.GONE
         }
@@ -190,8 +195,9 @@ class SearchActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun showHistory() {
-        historyList.clear()
+     //   historyList.clear()
         historyList = SearchHistory.fillInList()
+        historyAdapter.tracks = historyList
         historyAdapter.notifyDataSetChanged()
         if (historyList.isNotEmpty()) {
             historyWidget.visibility = View.VISIBLE

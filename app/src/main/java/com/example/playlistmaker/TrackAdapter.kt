@@ -6,8 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.SearchHistory.addTrack
 
-class TrackAdapter(private var tracks: ArrayList<Track>) :
+class TrackAdapter() :
     RecyclerView.Adapter<TrackViewHolder>() {
+     var tracks: ArrayList<Track> = arrayListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         return TrackViewHolder(parent)
     }
