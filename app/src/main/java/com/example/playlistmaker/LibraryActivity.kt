@@ -9,6 +9,6 @@ class LibraryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_library)
         val toolbar = findViewById<Toolbar>(R.id.library_toolbar)
-        toolbar.setNavigationOnClickListener { onBackPressed() }
+        toolbar.setNavigationOnClickListener { finish() }
     }
 }
