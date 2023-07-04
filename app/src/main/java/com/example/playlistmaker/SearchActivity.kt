@@ -14,6 +14,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,11 +28,25 @@ class SearchActivity : AppCompatActivity() {
     private var searchText: String = ""
 
     private lateinit var trackAdapter: TrackAdapter
+    private lateinit var historyAdapter: TrackAdapter
+
     private lateinit var recycleViewTracks: RecyclerView
+    private lateinit var historyRecyclerView: RecyclerView
+
 
     private lateinit var trackNotFoundVidget: View
     private lateinit var noInternetVidget: View
+    private lateinit var historyWidget: View
 
+    private val trackList: ArrayList<Track> = arrayListOf()
+    private var historyList = ArrayList<Track>()
+
+    private lateinit var clearHistoryButton: Button
+
+    companion object {
+        const val SEARCH_TEXT = "SEARCH_TEXT"
+        const val BASE_URL = "https://itunes.apple.com"
+    }
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
@@ -44,6 +59,7 @@ class SearchActivity : AppCompatActivity() {
         trackNotFoundVidget.setVisibility(View.GONE)
         noInternetVidget.setVisibility(View.GONE)
         recycleViewTracks.setVisibility(View.GONE)
+        hideHistory()
 
 
         iTunesService
@@ -63,6 +79,7 @@ class SearchActivity : AppCompatActivity() {
                         } else {
                             trackList.clear()
                             trackList.addAll(response.body()?.results!!)
+                            trackAdapter.tracks = trackList
                             trackAdapter.notifyDataSetChanged()
                             recycleViewTracks.setVisibility(View.VISIBLE)
 
@@ -82,100 +99,154 @@ class SearchActivity : AppCompatActivity() {
     }
 
 
-private val trackList: ArrayList<Track>  = arrayListOf()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_search)
+
+        trackNotFoundVidget = findViewById<View>(R.id.not_found_widget)
+        noInternetVidget = findViewById<View>(R.id.network_problem_widget)
+        historyWidget = findViewById<View>(R.id.history_widget)
 
 
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_search)
+        val toolbar = findViewById<Toolbar>(R.id.search_toolbar)
+        toolbar.setNavigationOnClickListener { finish() }
 
-    trackNotFoundVidget = findViewById<View>(R.id.not_found_widget)
-    noInternetVidget = findViewById<View>(R.id.network_problem_widget)
+        searchEditText = findViewById<EditText>(R.id.input_edit_text)
+        clearButton = findViewById<ImageView>(R.id.clear_icon)
 
-
-    val toolbar = findViewById<Toolbar>(R.id.search_toolbar)
-    toolbar.setNavigationOnClickListener { finish() }
-
-    searchEditText = findViewById<EditText>(R.id.input_edit_text)
-    clearButton = findViewById<ImageView>(R.id.clear_icon)
-
-    if (savedInstanceState != null) {
-        searchText = savedInstanceState.getString(SEARCH_TEXT).toString()
-    }
-    searchEditText.setText(searchText)
-
-    clearButton.setOnClickListener {
-        //Clear text
-        searchEditText.setText("")
-
-        //Hide the keyboard
-        val keyboard = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        keyboard.hideSoftInputFromWindow(searchEditText.windowToken, 0)
-        searchEditText.clearFocus()
-
-        //clear trackList
-        trackList.clear()
-        trackAdapter.notifyDataSetChanged()
-    }
-
-    searchEditText.addTextChangedListener(searchTextWatcher)
-
-    searchEditText.setOnEditorActionListener { _, actionId, _ ->
-        if (actionId == EditorInfo.IME_ACTION_DONE) {
-            findTrack(searchText)
-            true
+        if (savedInstanceState != null) {
+            searchText = savedInstanceState.getString(SEARCH_TEXT).toString()
         }
-        false
-    }
+        searchEditText.setText(searchText)
 
-    val updateButton = findViewById<Button>(R.id.update_button)
-    updateButton.setOnClickListener { findTrack(searchText) }
+        clearButton.setOnClickListener {
+            //Clear text
+            searchEditText.setText("")
 
-    trackAdapter = TrackAdapter(trackList)
-    recycleViewTracks = findViewById(R.id.search_list)
-    recycleViewTracks.adapter = trackAdapter
-}
+            //Hide the keyboard
+            val keyboard = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            keyboard.hideSoftInputFromWindow(searchEditText.windowToken, 0)
+            searchEditText.clearFocus()
 
-private val searchTextWatcher = object : TextWatcher {
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        // empty
-    }
+            //clear trackList
+            trackList.clear()
+            trackAdapter.tracks = trackList
+            trackAdapter.notifyDataSetChanged()
 
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        if (s != null) {
-            searchText = s.toString()
+            // show history
+            showHistory()
         }
-        clearButton.visibility = clearButtonVisibility(s)
+
+        searchEditText.addTextChangedListener(searchTextWatcher)
+
+        searchEditText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                findTrack(searchText)
+                true
+            }
+            false
+        }
+
+        val updateButton = findViewById<Button>(R.id.update_button)
+        updateButton.setOnClickListener { findTrack(searchText) }
+
+        trackAdapter = TrackAdapter()
+        trackAdapter.tracks = trackList
+        historyAdapter = TrackAdapter()
+        historyAdapter.tracks = historyList
+
+        recycleViewTracks = findViewById(R.id.search_list)
+        recycleViewTracks.layoutManager = LinearLayoutManager(this)
+        recycleViewTracks.adapter = trackAdapter
+
+        historyRecyclerView = findViewById(R.id.history_recycle_view)
+        historyRecyclerView.layoutManager = LinearLayoutManager(this)
+        historyRecyclerView.adapter = historyAdapter
+
+        historyList.clear()
+        historyList = SearchHistory.fillInList()
+
+        clearHistoryButton = findViewById(R.id.clear_history_button)
+        clearHistoryButton.setOnClickListener {
+            SearchHistory.clear()
+            historyList.clear()
+            historyAdapter.tracks = historyList
+            historyAdapter.notifyDataSetChanged()
+            historyWidget.visibility = View.GONE
+        }
+
+        searchEditText.setOnFocusChangeListener { view, hasFocus ->
+            focusVisibility(hasFocus)
+        }
     }
 
-    override fun afterTextChanged(s: Editable?) {
-        // empty
+    @SuppressLint("NotifyDataSetChanged")
+    private fun focusVisibility(hasFocus: Boolean) {
+     //   historyList.clear()
+        historyList = SearchHistory.fillInList()
+        historyAdapter.tracks = historyList
+        historyAdapter.notifyDataSetChanged()
+        if (hasFocus && searchEditText.text.isEmpty() && historyList.isNotEmpty()) {
+            historyWidget.visibility = View.VISIBLE
+        } else {
+            historyWidget.visibility = View.GONE
+        }
+
     }
-}
 
-override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-    super.onRestoreInstanceState(savedInstanceState)
-    if (savedInstanceState != null) {
-        searchText = savedInstanceState.getString(SEARCH_TEXT).toString()
+    @SuppressLint("NotifyDataSetChanged")
+    private fun showHistory() {
+     //   historyList.clear()
+        historyList = SearchHistory.fillInList()
+        historyAdapter.tracks = historyList
+        historyAdapter.notifyDataSetChanged()
+        if (historyList.isNotEmpty()) {
+            historyWidget.visibility = View.VISIBLE
+        } else {
+            historyWidget.visibility = View.GONE
+        }
     }
-}
 
-
-private fun clearButtonVisibility(s: CharSequence?): Int {
-    return if (s.isNullOrEmpty()) {
-        View.GONE
-    } else {
-        View.VISIBLE
+    private fun hideHistory(){
+        historyWidget.visibility = View.GONE
     }
-}
 
-companion object {
-    const val SEARCH_TEXT = "SEARCH_TEXT"
-    const val BASE_URL = "https://itunes.apple.com"
-}
+    private val searchTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            // empty
+        }
 
-override fun onSaveInstanceState(outState: Bundle) {
-    super.onSaveInstanceState(outState)
-    outState.putString(SEARCH_TEXT, searchText)
-}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            if (s != null) {
+                searchText = s.toString()
+            }
+            clearButton.visibility = clearButtonVisibility(s)
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            // empty
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        if (savedInstanceState != null) {
+            searchText = savedInstanceState.getString(SEARCH_TEXT).toString()
+        }
+    }
+
+
+    private fun clearButtonVisibility(s: CharSequence?): Int {
+        return if (s.isNullOrEmpty()) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
+    }
+
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(SEARCH_TEXT, searchText)
+    }
 }

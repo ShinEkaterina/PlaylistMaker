@@ -2,12 +2,12 @@ package com.example.playlistmaker
 
 
 import android.content.Intent
-import android.content.res.Resources
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
+import com.google.android.material.switchmaterial.SwitchMaterial
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,5 +42,24 @@ class SettingsActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_VIEW, url)
             startActivity(intent)
         }
+
+
+
+        val sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE)
+
+        sharedPreferences.edit()
+            .putBoolean(DARK_THEME_KEY, false)
+            .apply()
+
+        val themeSwitcher = findViewById<SwitchMaterial>(R.id.themeSwitcher)
+        themeSwitcher.isChecked = sharedPreferences.getBoolean(DARK_THEME_KEY, false)
+
+        themeSwitcher.setOnCheckedChangeListener { switcher, checked ->
+            (applicationContext as App).switchTheme(checked)
+            sharedPreferences.edit()
+                .putBoolean(DARK_THEME_KEY, checked)
+                .apply()
+        }
+
     }
 }
