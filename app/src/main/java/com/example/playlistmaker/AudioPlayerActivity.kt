@@ -33,15 +33,15 @@ class AudioPlayerActivity() : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
 
-        trackName = findViewById<TextView>(R.id.track_name)
-        artistName = findViewById<TextView>(R.id.artist_name)
+        trackName = findViewById<TextView>(R.id.trackName)
+        artistName = findViewById<TextView>(R.id.artistName)
         trackDuration = findViewById<TextView>(R.id.trackDuration)
         trackAlbum = findViewById<TextView>(R.id.trackAlbum)
         album = findViewById<TextView>(R.id.album)
         trackYear = findViewById<TextView>(R.id.trackYear)
         trackGenre = findViewById<TextView>(R.id.trackGenre)
         trackCountry = findViewById<TextView>(R.id.trackCountry)
-        albumCover = findViewById<ImageView>(R.id.track_image)
+        albumCover = findViewById<ImageView>(R.id.trackImage)
         trackDurationPlay = findViewById<TextView>(R.id.durationTrackPlay)
 
 
