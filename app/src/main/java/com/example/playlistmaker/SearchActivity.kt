@@ -2,6 +2,7 @@ package com.example.playlistmaker
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -150,9 +151,21 @@ class SearchActivity : AppCompatActivity() {
         val updateButton = findViewById<Button>(R.id.update_button)
         updateButton.setOnClickListener { findTrack(searchText) }
 
-        trackAdapter = TrackAdapter()
+        trackAdapter = TrackAdapter {
+            SearchHistory.addTrack(it)
+
+            val intent = Intent(this, AudioPlayerActivity::class.java)
+            intent.putExtra(App.TRACK, it)
+            startActivity(intent)
+
+        }
         trackAdapter.tracks = trackList
-        historyAdapter = TrackAdapter()
+        historyAdapter = TrackAdapter {
+            SearchHistory.addTrack(it)
+            val intent = Intent(this, AudioPlayerActivity::class.java)
+            intent.putExtra(App.TRACK, it)
+            startActivity(intent)
+        }
         historyAdapter.tracks = historyList
 
         recycleViewTracks = findViewById(R.id.search_list)
@@ -182,7 +195,7 @@ class SearchActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun focusVisibility(hasFocus: Boolean) {
-     //   historyList.clear()
+        //   historyList.clear()
         historyList = SearchHistory.fillInList()
         historyAdapter.tracks = historyList
         historyAdapter.notifyDataSetChanged()
@@ -196,7 +209,7 @@ class SearchActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun showHistory() {
-     //   historyList.clear()
+        //   historyList.clear()
         historyList = SearchHistory.fillInList()
         historyAdapter.tracks = historyList
         historyAdapter.notifyDataSetChanged()
@@ -207,7 +220,7 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun hideHistory(){
+    private fun hideHistory() {
         historyWidget.visibility = View.GONE
     }
 

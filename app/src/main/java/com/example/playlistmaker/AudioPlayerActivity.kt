@@ -19,6 +19,7 @@ class AudioPlayerActivity() : AppCompatActivity() {
     private lateinit var trackName: TextView
     private lateinit var artistName: TextView
     private lateinit var trackDuration: TextView
+    private lateinit var trackDurationPlay: TextView
     private lateinit var trackAlbum: TextView
     private lateinit var album: TextView
     private lateinit var trackYear: TextView
@@ -41,6 +42,7 @@ class AudioPlayerActivity() : AppCompatActivity() {
         trackGenre = findViewById<TextView>(R.id.trackGenre)
         trackCountry = findViewById<TextView>(R.id.trackCountry)
         albumCover = findViewById<ImageView>(R.id.track_image)
+        trackDurationPlay = findViewById<TextView>(R.id.durationTrackPlay)
 
 
 
@@ -57,6 +59,7 @@ class AudioPlayerActivity() : AppCompatActivity() {
         trackName.text = track.trackName
         artistName.text = track.artistName
         trackDuration.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(track.trackTimeMillis)
+        trackDurationPlay.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(track.trackTimeMillis)
         if (track.collectionName.isNullOrEmpty()) {
             trackAlbum.visibility = View.GONE
             album.visibility = View.GONE
