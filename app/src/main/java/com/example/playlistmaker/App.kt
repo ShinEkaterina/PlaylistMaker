@@ -15,7 +15,7 @@ class App : Application() {
         const val SHARED_PREFERENCES = "shared_preferences"
         const val DARK_THEME_KEY = "DARK_THEME_KEY"
         const val KEY_FOR_HISTORY_LIST = "KEY_FOR_HISTORY_LIST"
-
+        const val TRACK = "track"
     }
 
     override fun onCreate() {

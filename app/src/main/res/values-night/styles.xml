@@ -70,4 +70,27 @@
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textFontWeight">500</item>
     </style>
+    <style name="audio_player_play_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/size_30</item>
+        <item name="android:layout_marginBottom">12dp</item>
+        <item name="android:src">@drawable/play_button_night</item>
+    </style>
+    <style name="audio_player_add_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/size_8</item>
+        <item name="android:layout_marginEnd">63dp</item>
+        <item name="android:layout_marginBottom">84dp</item>
+        <item name="android:src">@drawable/add_to_list_button_night</item>
+    </style>
+    <style name="audio_player_like_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">63dp</item>
+        <item name="android:layout_marginEnd">@dimen/size_8</item>
+        <item name="android:layout_marginBottom">84dp</item>
+        <item name="android:src">@drawable/like_button_night</item>
+    </style>
 </resources>
