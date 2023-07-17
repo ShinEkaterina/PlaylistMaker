@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/search_toolbar"
+        android:id="@+id/searchToolbar"
         style="@style/ToolBarStyle">
 
         <TextView
@@ -37,7 +37,7 @@
                 android:layout_gravity="start|center_vertical" />
 
             <EditText
-                android:id="@+id/input_edit_text"
+                android:id="@+id/searchEditText"
                 style="@style/EditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -54,12 +54,21 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/clear_icon"
+            android:id="@+id/clearButton"
             style="@style/ClearTextIconStyle"
             android:layout_gravity="end|center_vertical"
             android:layout_marginEnd="@dimen/size_12"
             android:visibility="gone" />
     </FrameLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="148dp"
+        android:indeterminateTint="@color/blue"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/searchHistory"
@@ -74,7 +83,7 @@
         android:textSize="@dimen/text_size_19" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_list"
+        android:id="@+id/recycleViewTracks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_20"
@@ -82,7 +91,7 @@
         tools:listitem="@layout/track_view_card" />
 
     <Button
-        android:id="@+id/clear_history_button"
+        android:id="@+id/clearHistoryButton"
         style="@style/SearchingActivityButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -100,7 +109,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/not_found_widget"
+            android:id="@+id/trackNotFoundVidget"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -119,7 +128,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/network_problem_widget"
+            android:id="@+id/noInternetVidget"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
