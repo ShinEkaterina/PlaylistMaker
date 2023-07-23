@@ -38,7 +38,6 @@ class SearchActivity : AppCompatActivity() {
     private val trackList: ArrayList<Track> = arrayListOf()
     private var historyList = ArrayList<Track>()
 
-
     private lateinit var binding: ActivitySearchBinding
 
 
@@ -75,6 +74,9 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun findTrack() {
+        if(searchText.isNotEmpty()){
+
+
         binding.progressBar.visibility = View.VISIBLE
         binding.trackNotFoundVidget.setVisibility(View.GONE)
         binding.noInternetVidget.setVisibility(View.GONE)
@@ -118,7 +120,7 @@ class SearchActivity : AppCompatActivity() {
                     binding.noInternetVidget.setVisibility(View.VISIBLE)
                 }
             })
-
+        }
     }
 
 

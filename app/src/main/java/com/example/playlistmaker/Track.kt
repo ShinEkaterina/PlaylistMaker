@@ -13,7 +13,7 @@ data class Track(
     val releaseDate: String,// Год релиза трека
     val primaryGenreName: String,// Жанр трека
     val country: String, // Страна исполнителя
-    val previewUrl: String
+    val previewUrl: String //ссылка на отрывок трека для прослушивания
 ) : Parcelable {
     fun getReleaseDateOnlyYear(): String {
         val answer = releaseDate.split("-")

@@ -118,7 +118,9 @@ class AudioPlayerActivity() : AppCompatActivity() {
         binding.trackName.text = track.trackName
         binding.artistName.text = track.artistName
         binding.trackDuration.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(track.trackTimeMillis)
-        binding.durationTrackPlay.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(track.trackTimeMillis)
+      //  binding.durationTrackPlay.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(track.trackTimeMillis)
+        binding.durationTrackPlay.setText(R.string.time_00)
+
         if (track.collectionName.isNullOrEmpty()) {
             binding.trackAlbum.visibility = View.GONE
             binding.album.visibility = View.GONE
