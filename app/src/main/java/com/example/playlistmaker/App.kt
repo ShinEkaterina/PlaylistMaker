@@ -22,6 +22,7 @@ class App : Application() {
         super.onCreate()
         sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE)
         darkTheme = sharedPreferences.getBoolean(DARK_THEME_KEY, false)
+        switchTheme(darkTheme)
     }
 
     fun switchTheme(darkThemeEnabled: Boolean) {

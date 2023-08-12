@@ -16,21 +16,21 @@
         android:textColor="@color/white" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/search_button"
+        android:id="@+id/searchButton"
         style="@style/MenuButtonStyle"
         android:layout_marginTop="40dp"
         android:text="@string/search"
         app:icon="@drawable/ic_search" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/library_button"
+        android:id="@+id/libraryButton"
         style ="@style/MenuButtonStyle"
         android:layout_marginTop="@dimen/size_16"
         android:text="@string/library"
         app:icon="@drawable/ic_library" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/settings_button"
+        android:id="@+id/settingsButton"
         style ="@style/MenuButtonStyle"
         android:layout_marginTop="@dimen/size_16"
         android:text="@string/settings"
