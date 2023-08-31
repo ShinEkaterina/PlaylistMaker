@@ -8,10 +8,8 @@ import com.example.playlistmaker.domain.model.Track
 
 
 class AudioPlayerInteractorImpl(
-    private var rep: AudioPlayerRepository,
-    private val track: Track
-) :
-    AudioPlayerInteractor {
+    private var rep: AudioPlayerRepository, private val track: Track
+) : AudioPlayerInteractor {
 
     private val mediaPlayer: Player = rep.getAudioPlayer(track)
     private var currentState: PlayerState = PlayerState.STATE_DEFAULT

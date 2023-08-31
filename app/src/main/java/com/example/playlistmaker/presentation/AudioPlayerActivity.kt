@@ -14,7 +14,7 @@ import com.example.playlistmaker.App.Companion.TRACK
 import com.example.playlistmaker.R
 import com.example.playlistmaker.creator.Creator
 import com.example.playlistmaker.databinding.ActivityPlayerBinding
-import com.example.playlistmaker.domain.impl.AudioPlayerInteractorImpl
+import com.example.playlistmaker.domain.api.AudioPlayerInteractor
 import com.example.playlistmaker.domain.model.PlayerState
 import com.example.playlistmaker.domain.model.Track
 
@@ -22,7 +22,7 @@ import com.example.playlistmaker.domain.model.Track
 class AudioPlayerActivity() : AppCompatActivity() {
 
     private lateinit var binding: ActivityPlayerBinding
-    private lateinit var playerInteractor: AudioPlayerInteractorImpl
+    private lateinit var playerInteractor: AudioPlayerInteractor
 
     fun isDarkThemeEnabled(): Boolean {
         val nightMode = AppCompatDelegate.getDefaultNightMode()
@@ -58,29 +58,23 @@ class AudioPlayerActivity() : AppCompatActivity() {
         preparePlayer(track)
 
         binding.playButton.setOnClickListener {
-            playerInteractor.playbackControl(
-                onStartPlayer = {
-                    if (isDarkThemeEnabled()) (
-                            binding.playButton.setImageResource(R.drawable.pause_button_night)
-                            )
-                    else {
-                        binding.playButton.setImageResource(R.drawable.pause_button)
+            playerInteractor.playbackControl(onStartPlayer = {
+                if (isDarkThemeEnabled()) (binding.playButton.setImageResource(R.drawable.pause_button_night))
+                else {
+                    binding.playButton.setImageResource(R.drawable.pause_button)
 
-                    }
-                    playerInteractor.setPlayerState(PlayerState.STATE_PLAYING)
-                    handler.post(runnable)
-                },
-                onPausePlayer = {
-                    if (isDarkThemeEnabled()) (
-                            binding.playButton.setImageResource(R.drawable.play_button_night)
-                            )
-                    else {
-                        binding.playButton.setImageResource(R.drawable.play_button)
-
-                    }
-                    handler.removeCallbacks(runnable)
-                    playerInteractor.setPlayerState(PlayerState.STATE_PAUSED)
                 }
+                playerInteractor.setPlayerState(PlayerState.STATE_PLAYING)
+                handler.post(runnable)
+            }, onPausePlayer = {
+                if (isDarkThemeEnabled()) (binding.playButton.setImageResource(R.drawable.play_button_night))
+                else {
+                    binding.playButton.setImageResource(R.drawable.play_button)
+
+                }
+                handler.removeCallbacks(runnable)
+                playerInteractor.setPlayerState(PlayerState.STATE_PAUSED)
+            }
 
             )
         }
@@ -89,25 +83,18 @@ class AudioPlayerActivity() : AppCompatActivity() {
 
     private fun preparePlayer(track: Track) {
         playerInteractor = Creator.provideAudioPlayerInteractor(track)
-        playerInteractor.preparePlayer(prepare =
-        {
+        playerInteractor.preparePlayer(prepare = {
             binding.playButton.isEnabled = true
-        }, onComplete =
-        {
-            if (isDarkThemeEnabled()) (
-                    binding.playButton.setImageResource(R.drawable.play_button_night)
-                    )
+        }, onComplete = {
+            if (isDarkThemeEnabled()) (binding.playButton.setImageResource(R.drawable.play_button_night))
             else {
                 binding.playButton.setImageResource(R.drawable.play_button)
 
             }
             binding.durationTrackPlay.setText(R.string.time_00)
             handler.removeCallbacks(runnable)
-        }
-        )
+        })
     }
-
-
 
 
     override fun onPause() {

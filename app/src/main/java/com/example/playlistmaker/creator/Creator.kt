@@ -8,8 +8,9 @@ import com.example.playlistmaker.domain.model.Track
 object Creator {
     private fun provideAudioPlayerRepository(): AudioPlayerRepository = AudioPlayerRepositoryImpl()
 
-    fun provideAudioPlayerInteractor(track:Track) :AudioPlayerInteractorImpl{
+    fun provideAudioPlayerInteractor(track: Track): AudioPlayerInteractorImpl {
         val rep = provideAudioPlayerRepository()
         return AudioPlayerInteractorImpl(rep, track)
     }
 }
+

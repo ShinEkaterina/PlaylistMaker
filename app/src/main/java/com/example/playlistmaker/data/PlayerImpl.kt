@@ -3,7 +3,8 @@ package com.example.playlistmaker.data
 import android.media.MediaPlayer
 import com.example.playlistmaker.domain.api.Player
 import com.example.playlistmaker.domain.model.Track
-class AudioPlayer(track: Track) : Player {
+
+class PlayerImpl(track: Track) : Player {
 
     private val mediaPlayer: MediaPlayer = MediaPlayer()
 
@@ -12,7 +13,7 @@ class AudioPlayer(track: Track) : Player {
         mediaPlayer.prepareAsync()
     }
 
-    override fun prepare(prepare: () -> Unit, onComplete:() -> Unit) {
+    override fun prepare(prepare: () -> Unit, onComplete: () -> Unit) {
         mediaPlayer.setOnPreparedListener { prepare() }
         mediaPlayer.setOnCompletionListener {
             onComplete()

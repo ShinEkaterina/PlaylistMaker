@@ -4,6 +4,7 @@ import com.example.playlistmaker.App.Companion.KEY_FOR_HISTORY_LIST
 import com.example.playlistmaker.domain.model.Track
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+
 const val SIZE = 10
 
 object SearchHistory {

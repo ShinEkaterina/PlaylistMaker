@@ -45,10 +45,9 @@ class SearchActivity : AppCompatActivity() {
         private const val SEARCH_DEBOUNCE_DELAY_ML = 2000L
     }
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+    private val retrofit =
+        Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create())
+            .build()
 
     val iTunesService = retrofit.create(iTunesApi::class.java)
 
@@ -81,12 +80,10 @@ class SearchActivity : AppCompatActivity() {
             hideHistory()
 
 
-            iTunesService
-                .search(binding.searchEditText.text.toString())
+            iTunesService.search(binding.searchEditText.text.toString())
                 .enqueue(object : Callback<TrackResponse> {
                     override fun onResponse(
-                        call: Call<TrackResponse>,
-                        response: Response<TrackResponse>
+                        call: Call<TrackResponse>, response: Response<TrackResponse>
                     ) {
                         Log.d("SEARCH_LOG", "Count track: ${response.body()?.resultCount}")
                         Log.d("SEARCH_LOG", "Code: ${response.code()}")
@@ -160,9 +157,7 @@ class SearchActivity : AppCompatActivity() {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 findTrack()
                 true
-            } else (
-                    false
-                    )
+            } else (false)
         }
 
         binding.updateButton.setOnClickListener { findTrack() }
