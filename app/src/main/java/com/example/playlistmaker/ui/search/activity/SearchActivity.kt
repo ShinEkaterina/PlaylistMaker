@@ -1,4 +1,4 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.ui.search.activity
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,28 +8,26 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.playlistmaker.data.network.TrackResponse
-import com.example.playlistmaker.data.network.iTunesApi
+import com.example.playlistmaker.App
+import com.example.playlistmaker.SearchHistory
+import com.example.playlistmaker.ui.search.TrackAdapter
+import com.example.playlistmaker.creator.Creator
 import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.domain.model.Track
-import com.example.playlistmaker.presentation.AudioPlayerActivity
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.example.playlistmaker.domain.search.TracksInteractor
+import com.example.playlistmaker.ui.player.activity.AudioPlayerActivity
 
 class SearchActivity : AppCompatActivity() {
 
     private var searchText: String = ""
 
     private lateinit var trackAdapter: TrackAdapter
+    private val tracksInteractor = Creator.provideTracksInteractor(this)
 
 
     private val trackList: ArrayList<Track> = arrayListOf()
@@ -40,16 +38,17 @@ class SearchActivity : AppCompatActivity() {
 
     companion object {
         const val SEARCH_TEXT = "SEARCH_TEXT"
-        const val BASE_URL = "https://itunes.apple.com"
+
+        //   const val BASE_URL = "https://itunes.apple.com"
         private const val CLICK_DEBOUNCE_DELAY_ML = 1000L
         private const val SEARCH_DEBOUNCE_DELAY_ML = 2000L
     }
 
-    private val retrofit =
-        Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create())
-            .build()
+    // private val retrofit =
+    // Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create())
+    //   .build()
 
-    val iTunesService = retrofit.create(iTunesApi::class.java)
+    //  val iTunesService = retrofit.create(iTunesApi::class.java)
 
     private val handler = Handler(Looper.getMainLooper())
     private var isClickAllowed = true
@@ -79,8 +78,25 @@ class SearchActivity : AppCompatActivity() {
             binding.recycleViewTracks.setVisibility(View.GONE)
             hideHistory()
 
+            tracksInteractor.searchTracks(searchText, object : TracksInteractor.TrackConsumer {
+                override fun consume(foundTracks: List<Track>) {
+                    handler.post {
+                        if (foundTracks.isEmpty()) {
+                            binding.progressBar.visibility = View.GONE
+                            binding.trackNotFoundVidget.setVisibility(View.VISIBLE)
+                        } else {
+                            trackList.clear()
+                            trackList.addAll(foundTracks)
+                            trackAdapter.tracks = trackList
+                            trackAdapter.notifyDataSetChanged()
+                            binding.progressBar.visibility = View.GONE
+                            binding.recycleViewTracks.setVisibility(View.VISIBLE)
+                        }
+                    }
+                }
+            })
 
-            iTunesService.search(binding.searchEditText.text.toString())
+/*            iTunesService.search(binding.searchEditText.text.toString())
                 .enqueue(object : Callback<TrackResponse> {
                     override fun onResponse(
                         call: Call<TrackResponse>, response: Response<TrackResponse>
@@ -113,7 +129,7 @@ class SearchActivity : AppCompatActivity() {
                         Log.d("SEARCH_LOG", "FAIL")
                         binding.noInternetVidget.setVisibility(View.VISIBLE)
                     }
-                })
+                })*/
         }
     }
 

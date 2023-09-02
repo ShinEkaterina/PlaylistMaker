@@ -1,10 +1,10 @@
-package com.example.playlistmaker.data
+package com.example.playlistmaker.data.player
 
 import android.media.MediaPlayer
-import com.example.playlistmaker.domain.api.Player
+import com.example.playlistmaker.domain.player.api.AudioPlayerRepository
 import com.example.playlistmaker.domain.model.Track
 
-class PlayerImpl(track: Track) : Player {
+class AudioPlayerRepositoryImpl(track:Track) : AudioPlayerRepository {
 
     private val mediaPlayer: MediaPlayer = MediaPlayer()
 

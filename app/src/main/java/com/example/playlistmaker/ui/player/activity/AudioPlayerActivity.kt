@@ -1,4 +1,4 @@
-package com.example.playlistmaker.presentation
+package com.example.playlistmaker.ui.player.activity
 
 import android.os.Build
 import android.os.Bundle
@@ -14,9 +14,10 @@ import com.example.playlistmaker.App.Companion.TRACK
 import com.example.playlistmaker.R
 import com.example.playlistmaker.creator.Creator
 import com.example.playlistmaker.databinding.ActivityPlayerBinding
-import com.example.playlistmaker.domain.api.AudioPlayerInteractor
+import com.example.playlistmaker.domain.player.api.AudioPlayerInteractor
 import com.example.playlistmaker.domain.model.PlayerState
 import com.example.playlistmaker.domain.model.Track
+import com.example.playlistmaker.presentation.Formater
 
 
 class AudioPlayerActivity() : AppCompatActivity() {

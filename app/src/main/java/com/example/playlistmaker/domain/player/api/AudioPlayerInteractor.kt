@@ -1,4 +1,4 @@
-package com.example.playlistmaker.domain.api
+package com.example.playlistmaker.domain.player.api
 
 import com.example.playlistmaker.domain.model.PlayerState
 

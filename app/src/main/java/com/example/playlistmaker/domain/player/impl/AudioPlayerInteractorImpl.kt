@@ -1,17 +1,15 @@
-package com.example.playlistmaker.domain.impl
+package com.example.playlistmaker.domain.player.impl
 
-import com.example.playlistmaker.domain.api.AudioPlayerInteractor
-import com.example.playlistmaker.domain.api.AudioPlayerRepository
-import com.example.playlistmaker.domain.api.Player
+import com.example.playlistmaker.domain.player.api.AudioPlayerInteractor
+import com.example.playlistmaker.domain.player.api.AudioPlayerRepository
 import com.example.playlistmaker.domain.model.PlayerState
 import com.example.playlistmaker.domain.model.Track
 
 
 class AudioPlayerInteractorImpl(
-    private var rep: AudioPlayerRepository, private val track: Track
+    private var mediaPlayer: AudioPlayerRepository, private val track: Track
 ) : AudioPlayerInteractor {
 
-    private val mediaPlayer: Player = rep.getAudioPlayer(track)
     private var currentState: PlayerState = PlayerState.STATE_DEFAULT
 
 

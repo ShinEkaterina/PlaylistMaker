@@ -1,6 +1,9 @@
-package com.example.playlistmaker.domain.api
+package com.example.playlistmaker.domain.player.api
 
-interface Player {
+import com.example.playlistmaker.domain.model.Track
+
+interface AudioPlayerRepository {
+
     fun prepare(prepare: () -> Unit, onComplete: () -> Unit)
     fun start()
     fun pause()

@@ -1,12 +1,15 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.ui.settings.activity
 
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.playlistmaker.App
+import com.example.playlistmaker.DARK_THEME_KEY
+import com.example.playlistmaker.R
+import com.example.playlistmaker.SHARED_PREFERENCES
 import com.example.playlistmaker.databinding.ActivitySettingsBinding
-import com.google.android.material.switchmaterial.SwitchMaterial
 
 class SettingsActivity : AppCompatActivity() {
 
