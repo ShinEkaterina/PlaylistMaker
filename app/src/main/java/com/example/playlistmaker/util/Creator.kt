@@ -1,4 +1,4 @@
-package com.example.playlistmaker.creator
+package com.example.playlistmaker.util
 
 import android.content.Context
 import com.example.playlistmaker.data.player.AudioPlayerRepositoryImpl
@@ -20,7 +20,7 @@ object Creator {
     }
 
     private fun getTracksRepository(context: Context): TrackRepository {
-        return TrackRepositoryImpl(RetrofitNetworkClient())
+        return TrackRepositoryImpl(RetrofitNetworkClient(context))
     }
 
     fun provideTracksInteractor(context: Context): TracksInteractor {

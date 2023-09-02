@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -16,11 +17,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.playlistmaker.App
 import com.example.playlistmaker.SearchHistory
 import com.example.playlistmaker.ui.search.TrackAdapter
-import com.example.playlistmaker.creator.Creator
+import com.example.playlistmaker.util.Creator
 import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.domain.search.TracksInteractor
 import com.example.playlistmaker.ui.player.activity.AudioPlayerActivity
+import com.example.playlistmaker.util.ErrorCode
 
 class SearchActivity : AppCompatActivity() {
 
@@ -38,17 +40,11 @@ class SearchActivity : AppCompatActivity() {
 
     companion object {
         const val SEARCH_TEXT = "SEARCH_TEXT"
-
-        //   const val BASE_URL = "https://itunes.apple.com"
         private const val CLICK_DEBOUNCE_DELAY_ML = 1000L
         private const val SEARCH_DEBOUNCE_DELAY_ML = 2000L
     }
 
-    // private val retrofit =
-    // Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create())
-    //   .build()
 
-    //  val iTunesService = retrofit.create(iTunesApi::class.java)
 
     private val handler = Handler(Looper.getMainLooper())
     private var isClickAllowed = true
@@ -71,7 +67,6 @@ class SearchActivity : AppCompatActivity() {
     private fun findTrack() {
         if (searchText.isNotEmpty()) {
 
-
             binding.progressBar.visibility = View.VISIBLE
             binding.trackNotFoundVidget.setVisibility(View.GONE)
             binding.noInternetVidget.setVisibility(View.GONE)
@@ -79,57 +74,44 @@ class SearchActivity : AppCompatActivity() {
             hideHistory()
 
             tracksInteractor.searchTracks(searchText, object : TracksInteractor.TrackConsumer {
-                override fun consume(foundTracks: List<Track>) {
+                override fun consume(
+                    foundTracks: List<Track>?,
+                    errorCode: ErrorCode?,
+                    errorMessage: String?
+                ) {
                     handler.post {
-                        if (foundTracks.isEmpty()) {
-                            binding.progressBar.visibility = View.GONE
-                            binding.trackNotFoundVidget.setVisibility(View.VISIBLE)
-                        } else {
-                            trackList.clear()
-                            trackList.addAll(foundTracks)
-                            trackAdapter.tracks = trackList
-                            trackAdapter.notifyDataSetChanged()
-                            binding.progressBar.visibility = View.GONE
-                            binding.recycleViewTracks.setVisibility(View.VISIBLE)
-                        }
-                    }
-                }
-            })
-
-/*            iTunesService.search(binding.searchEditText.text.toString())
-                .enqueue(object : Callback<TrackResponse> {
-                    override fun onResponse(
-                        call: Call<TrackResponse>, response: Response<TrackResponse>
-                    ) {
-                        Log.d("SEARCH_LOG", "Count track: ${response.body()?.resultCount}")
-                        Log.d("SEARCH_LOG", "Code: ${response.code()}")
-                        Log.d("SEARCH_LOG", "TrackList: ${response.body()?.results.toString()}")
-                        if (response.code() == 200) {
-
-                            if (response.body()?.resultCount == 0) {
-                                binding.progressBar.visibility = View.GONE
-                                binding.trackNotFoundVidget.setVisibility(View.VISIBLE)
-                            } else {
+                        binding.progressBar.visibility = View.GONE
+                        if (foundTracks != null) {
+                            if (foundTracks.isNotEmpty()) {
                                 trackList.clear()
-                                trackList.addAll(response.body()?.results!!)
+                                trackList.addAll(foundTracks)
                                 trackAdapter.tracks = trackList
                                 trackAdapter.notifyDataSetChanged()
                                 binding.progressBar.visibility = View.GONE
                                 binding.recycleViewTracks.setVisibility(View.VISIBLE)
+                            } else {
+                                binding.progressBar.visibility = View.GONE
+                                binding.trackNotFoundVidget.setVisibility(View.VISIBLE)
+                            }
+                        }
+                        if (errorCode != null) {
+                            when (errorCode) {
+                                ErrorCode.NO_INTERNET -> {
+                                    binding.noInternetVidget.setVisibility(View.VISIBLE)
+                                    Log.d("SEARCH_LOG", "Error message: ${errorMessage}")
+                                }
+
+                                ErrorCode.UNKNOWN_ERROR ->  {
+                                    binding.noInternetVidget.setVisibility(View.VISIBLE)
+                                    Log.d("SEARCH_LOG", "Error message: ${errorMessage}")
+                                }
 
                             }
-
-                        } else {
-                            binding.progressBar.visibility = View.GONE
-                            binding.noInternetVidget.setVisibility(View.VISIBLE)
                         }
-                    }
 
-                    override fun onFailure(call: Call<TrackResponse>, t: Throwable) {
-                        Log.d("SEARCH_LOG", "FAIL")
-                        binding.noInternetVidget.setVisibility(View.VISIBLE)
                     }
-                })*/
+                }
+            })
         }
     }
 
@@ -140,9 +122,7 @@ class SearchActivity : AppCompatActivity() {
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         binding.searchToolbar.setNavigationOnClickListener { finish() }
-
 
         if (savedInstanceState != null) {
             searchText = savedInstanceState.getString(SEARCH_TEXT).toString()
@@ -162,6 +142,10 @@ class SearchActivity : AppCompatActivity() {
             trackList.clear()
             trackAdapter.tracks = trackList
             trackAdapter.notifyDataSetChanged()
+
+            //clear screen
+            binding.trackNotFoundVidget.setVisibility(View.GONE)
+            binding.noInternetVidget.setVisibility(View.GONE)
 
             // show history
             showHistory()
@@ -189,15 +173,11 @@ class SearchActivity : AppCompatActivity() {
         }
         trackAdapter.tracks = trackList
 
-
         binding.recycleViewTracks.layoutManager = LinearLayoutManager(this)
         binding.recycleViewTracks.adapter = trackAdapter
 
-
         historyList.clear()
         historyList = SearchHistory.fillInList()
-
-
 
         binding.clearHistoryButton.setOnClickListener {
             SearchHistory.clear()
