@@ -13,29 +13,37 @@ class TrackRepositoryImpl(private val networkClient: NetworkClient) : TrackRepos
     override fun searchTracks(expression: String): Resource<List<Track>> {
         val response = networkClient.doRequest(TracksSearchRequest(expression))
 
-        return when (response.resultCode) {
+        when (response.resultCode) {
             -1 -> {
-                Resource.Error(ErrorCode.NO_INTERNET,"Check internet connection")
+                return Resource.Error(ErrorCode.NO_INTERNET, "Check internet connection")
             }
+
             200 -> {
-                Resource.Success((response as TrackSearchResponse).results.map {
-                    Track(
-                        it.trackId,
-                        it.trackName,
-                        it.artistName,
-                        it.trackTimeMillis,
-                        it.artworkUrl100,
-                        it.collectionName,
-                        it.releaseDate,
-                        it.primaryGenreName,
-                        it.country,
-                        it.previewUrl
+                if ((response as TrackSearchResponse).results.isEmpty()) {
+                    return Resource.Error(
+                        ErrorCode.NOTHING_FOUND,
+                        "Nothing found. Results list is empty"
                     )
-                })
+                } else {
+                    return Resource.Success((response as TrackSearchResponse).results.map {
+                        Track(
+                            it.trackId,
+                            it.trackName,
+                            it.artistName,
+                            it.trackTimeMillis,
+                            it.artworkUrl100,
+                            it.collectionName,
+                            it.releaseDate,
+                            it.primaryGenreName,
+                            it.country,
+                            it.previewUrl
+                        )
+                    })
+                }
             }
 
             else -> {
-                Resource.Error(ErrorCode.UNKNOWN_ERROR, "Server error")
+                return Resource.Error(ErrorCode.UNKNOWN_ERROR, "Server error")
             }
         }
     }

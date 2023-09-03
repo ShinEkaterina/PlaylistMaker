@@ -45,7 +45,6 @@ class SearchActivity : AppCompatActivity() {
     }
 
 
-
     private val handler = Handler(Looper.getMainLooper())
     private var isClickAllowed = true
 
@@ -82,17 +81,12 @@ class SearchActivity : AppCompatActivity() {
                     handler.post {
                         binding.progressBar.visibility = View.GONE
                         if (foundTracks != null) {
-                            if (foundTracks.isNotEmpty()) {
-                                trackList.clear()
-                                trackList.addAll(foundTracks)
-                                trackAdapter.tracks = trackList
-                                trackAdapter.notifyDataSetChanged()
-                                binding.progressBar.visibility = View.GONE
-                                binding.recycleViewTracks.setVisibility(View.VISIBLE)
-                            } else {
-                                binding.progressBar.visibility = View.GONE
-                                binding.trackNotFoundVidget.setVisibility(View.VISIBLE)
-                            }
+                            trackList.clear()
+                            trackList.addAll(foundTracks)
+                            trackAdapter.tracks = trackList
+                            trackAdapter.notifyDataSetChanged()
+                            binding.progressBar.visibility = View.GONE
+                            binding.recycleViewTracks.setVisibility(View.VISIBLE)
                         }
                         if (errorCode != null) {
                             when (errorCode) {
@@ -101,9 +95,14 @@ class SearchActivity : AppCompatActivity() {
                                     Log.d("SEARCH_LOG", "Error message: ${errorMessage}")
                                 }
 
-                                ErrorCode.UNKNOWN_ERROR ->  {
+                                ErrorCode.UNKNOWN_ERROR -> {
                                     binding.noInternetVidget.setVisibility(View.VISIBLE)
                                     Log.d("SEARCH_LOG", "Error message: ${errorMessage}")
+                                }
+
+                                ErrorCode.NOTHING_FOUND -> {
+                                    binding.progressBar.visibility = View.GONE
+                                    binding.trackNotFoundVidget.setVisibility(View.VISIBLE)
                                 }
 
                             }
