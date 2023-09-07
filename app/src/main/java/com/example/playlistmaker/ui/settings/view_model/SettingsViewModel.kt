@@ -17,7 +17,6 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     private val sharingInteractor = Creator.provideSharingInteractor(getApplication<Application>())
 
     companion object {
-
         fun getViewModelFactory(): ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 SettingsViewModel(this[APPLICATION_KEY] as Application)
@@ -51,6 +50,17 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
             settingsInteractor.updateThemeSetting(ThemeSettings.MODE_DARK_NO)
             modeLiveData.postValue(false)
         }
+    }
+    fun openSupport(subject: String, text: String) {
+        sharingInteractor.openSupport()
+    }
+
+    fun shareApp() {
+        sharingInteractor.shareApp()
+    }
+
+    fun legalAgreement() {
+        sharingInteractor.openTerms()
     }
 
 
