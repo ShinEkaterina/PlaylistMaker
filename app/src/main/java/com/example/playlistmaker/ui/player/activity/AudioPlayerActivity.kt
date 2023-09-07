@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.example.playlistmaker.App.Companion.TRACK
+import com.example.playlistmaker.util.App.Companion.TRACK
 import com.example.playlistmaker.R
 import com.example.playlistmaker.util.Creator
 import com.example.playlistmaker.databinding.ActivityPlayerBinding

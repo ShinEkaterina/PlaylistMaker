@@ -14,7 +14,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.playlistmaker.App
+import com.example.playlistmaker.util.App
 import com.example.playlistmaker.SearchHistory
 import com.example.playlistmaker.ui.search.TrackAdapter
 import com.example.playlistmaker.util.Creator
@@ -22,7 +22,7 @@ import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.domain.search.TracksInteractor
 import com.example.playlistmaker.ui.player.activity.AudioPlayerActivity
-import com.example.playlistmaker.util.ErrorCode
+import com.example.playlistmaker.data.search.network.ErrorCode
 
 class SearchActivity : AppCompatActivity() {
 

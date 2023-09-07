@@ -1,7 +1,8 @@
 package com.example.playlistmaker
 
-import com.example.playlistmaker.App.Companion.KEY_FOR_HISTORY_LIST
+import com.example.playlistmaker.util.App.Companion.KEY_FOR_HISTORY_LIST
 import com.example.playlistmaker.domain.model.Track
+import com.example.playlistmaker.util.App
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

@@ -8,7 +8,7 @@
         android:minSdkVersion="23"
         android:targetSdkVersion="33" />
     <application
-        android:name=".App"
+        android:name=".util.App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -25,13 +25,13 @@
             android:name=".ui.search.activity.SearchActivity"
             android:exported="false" />
         <activity
-            android:name=".LibraryActivity"
+            android:name=".ui.library.activity.LibraryActivity"
             android:exported="false" />
         <activity
             android:name=".ui.settings.activity.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.main.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

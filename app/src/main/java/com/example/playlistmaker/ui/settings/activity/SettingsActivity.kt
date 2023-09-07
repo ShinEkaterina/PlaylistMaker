@@ -5,20 +5,29 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.playlistmaker.App
-import com.example.playlistmaker.DARK_THEME_KEY
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.ViewModelProvider
 import com.example.playlistmaker.R
-import com.example.playlistmaker.SHARED_PREFERENCES
 import com.example.playlistmaker.databinding.ActivitySettingsBinding
+import com.example.playlistmaker.ui.settings.view_model.SettingsViewModel
 
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingsBinding
+    private lateinit var viewModel: SettingsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel = ViewModelProvider(this, SettingsViewModel.getViewModelFactory())[SettingsViewModel::class.java]
+        viewModel.getModeLiveData().observe(this) {isDarkMode ->
+            changeThemeMode(isDarkMode)
+        }
+
+        binding.themeSwitcher.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.changeMode(isChecked) }
 
         binding.toolbar.setNavigationOnClickListener { finish() }
 
@@ -46,17 +55,16 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
 
-        val sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE)
-
-        binding.themeSwitcher.isChecked = sharedPreferences.getBoolean(DARK_THEME_KEY, false)
-
-        binding.themeSwitcher.setOnCheckedChangeListener { switcher, checked ->
-            (applicationContext as App).switchTheme(checked)
-            sharedPreferences.edit().putBoolean(DARK_THEME_KEY, checked).apply()
-            binding.themeSwitcher.setChecked(checked)
+    private fun changeThemeMode (isDarkMode:Boolean) {
+        if(isDarkMode==true) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            binding.themeSwitcher.isChecked = true
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            binding.themeSwitcher.isChecked = false
         }
-
     }
 
 }
