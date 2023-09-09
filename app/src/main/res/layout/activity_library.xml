@@ -8,7 +8,9 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/library_toolbar"
-        style ="@style/ToolBarStyle">
+        style ="@style/ToolBarStyle"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        >
 
         <TextView
             style ="@style/TextHeaderStyle"
