@@ -13,9 +13,9 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 
-class TrackAdapter(private val listener: (Track) -> Unit) :
+class TrackAdapter(var tracks: ArrayList<Track>,  var listener: Listener) :
     RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
-    var tracks: ArrayList<Track> = arrayListOf()
+   // var tracks: ArrayList<Track> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val layoutInspector = LayoutInflater.from(parent.context)
@@ -26,11 +26,14 @@ class TrackAdapter(private val listener: (Track) -> Unit) :
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
         val track = tracks[position]
         holder.bind(track)
-        holder.itemView.setOnClickListener { listener(track) }
+        holder.itemView.setOnClickListener { listener.onClick(track) }
     }
 
     override fun getItemCount(): Int {
         return tracks.size
+    }
+    interface Listener {
+        fun onClick(track: Track)
     }
 
      class TrackViewHolder(private val binding: TrackViewCardBinding) :

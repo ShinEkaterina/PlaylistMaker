@@ -11,7 +11,6 @@ class App : Application() {
     var darkTheme = ThemeSettings.MODE_DARK_NO
 
     companion object {
-        const val KEY_FOR_HISTORY_LIST = "KEY_FOR_HISTORY_LIST"
         lateinit var sharedPreferences: SharedPreferences
         const val TRACK = "track"
     }

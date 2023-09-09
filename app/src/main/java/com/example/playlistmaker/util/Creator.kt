@@ -1,15 +1,21 @@
 package com.example.playlistmaker.util
 
 import android.content.Context
+import com.example.playlistmaker.data.navigation.history.impl.HistoryRepositoryImpl
+import com.example.playlistmaker.data.navigation.impl.InternalNavigationRepositoryImpl
 import com.example.playlistmaker.data.player.AudioPlayerRepositoryImpl
 import com.example.playlistmaker.data.search.TrackRepository
 import com.example.playlistmaker.data.search.impl.TrackRepositoryImpl
 import com.example.playlistmaker.data.search.network.RetrofitNetworkClient
 import com.example.playlistmaker.data.settings.impl.SettingsRepositoryImpl
 import com.example.playlistmaker.data.sharing.impl.ExternalNavigationImpl
+import com.example.playlistmaker.domain.history.HistoryInteractor
+import com.example.playlistmaker.domain.history.impl.HistoryInteractorImpl
 import com.example.playlistmaker.domain.player.api.AudioPlayerRepository
 import com.example.playlistmaker.domain.player.impl.AudioPlayerInteractorImpl
 import com.example.playlistmaker.domain.model.Track
+import com.example.playlistmaker.domain.navigation.InternalNavigationInteractor
+import com.example.playlistmaker.domain.navigation.impl.InternalNavigationInteractorImpl
 import com.example.playlistmaker.domain.search.TracksInteractor
 import com.example.playlistmaker.domain.search.impl.TracksInteractorImpl
 import com.example.playlistmaker.domain.settings.SettingsInteractor
@@ -44,5 +50,16 @@ object Creator {
     fun getSharingRepository(context: Context): ExternalNavigationImpl {
         return ExternalNavigationImpl(context)
     }
+
+    fun provideNavigationInteractor(context: Context): InternalNavigationInteractor {
+        return InternalNavigationInteractorImpl( InternalNavigationRepositoryImpl(context))
+    }
+
+    fun provideHistoryInteractor(context: Context): HistoryInteractor {
+        return HistoryInteractorImpl(
+            HistoryRepositoryImpl(context)
+        )
+    }
+
 }
 
