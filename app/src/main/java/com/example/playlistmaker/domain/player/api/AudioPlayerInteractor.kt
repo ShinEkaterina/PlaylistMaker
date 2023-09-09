@@ -7,8 +7,11 @@ interface AudioPlayerInteractor {
     fun pauseMusic()
     fun destroyPlayer()
     fun getCurrentTime(): Long
-    fun preparePlayer(prepare: () -> Unit, onComplete: () -> Unit)
+    fun preparePlayer(url:String, prepare: () -> Unit, onComplete: () -> Unit)
     fun getPlayerState(): PlayerState
     fun setPlayerState(state: PlayerState)
-    fun playbackControl(onStartPlayer: () -> Unit, onPausePlayer: () -> Unit)
+/*    fun playbackControl(onStartPlayer: () -> Unit, onPausePlayer: () -> Unit)*/
+
+    fun switchPlayer(onStateChangedTo: (s: PlayerState) -> Unit)
+
 }

@@ -3,19 +3,23 @@ package com.example.playlistmaker.domain.player.impl
 import com.example.playlistmaker.domain.player.api.AudioPlayerInteractor
 import com.example.playlistmaker.domain.player.api.AudioPlayerRepository
 import com.example.playlistmaker.domain.model.PlayerState
-import com.example.playlistmaker.domain.model.Track
 
 
 class AudioPlayerInteractorImpl(
-    private var mediaPlayer: AudioPlayerRepository, private val track: Track
+    private var audioPlayerRepository: AudioPlayerRepository
 ) : AudioPlayerInteractor {
 
     private var currentState: PlayerState = PlayerState.STATE_DEFAULT
 
 
-    override fun preparePlayer(prepare: () -> Unit, onComplete: () -> Unit) {
-        mediaPlayer.prepare(prepare, onComplete)
+    override fun preparePlayer(url: String,prepare: () -> Unit, onComplete: () -> Unit) {
+        audioPlayerRepository.prepare(
+            url,
+            prepare,
+            onComplete
+        )
         currentState = PlayerState.STATE_PREPARED
+        prepare()
     }
 
     override fun getPlayerState(): PlayerState = currentState
@@ -26,34 +30,35 @@ class AudioPlayerInteractorImpl(
     }
 
     override fun playMusic() {
-        mediaPlayer.start()
+        audioPlayerRepository.start()
         currentState = PlayerState.STATE_PLAYING
     }
 
     override fun pauseMusic() {
-        mediaPlayer.pause()
+        audioPlayerRepository.pause()
         currentState = PlayerState.STATE_PAUSED
     }
 
     override fun destroyPlayer() {
-        mediaPlayer.destroy()
+        audioPlayerRepository.destroy()
     }
 
-    override fun getCurrentTime() = mediaPlayer.getCurrentTime()
+    override fun getCurrentTime() = audioPlayerRepository.getCurrentTime()
 
-    override fun playbackControl(onStartPlayer: () -> Unit, onPausePlayer: () -> Unit) {
+
+    override fun switchPlayer(onStateChangedTo: (s: PlayerState) -> Unit) {
         when (currentState) {
+            PlayerState.STATE_DEFAULT -> {}
+            PlayerState.STATE_PAUSED, PlayerState.STATE_PREPARED  -> {
+                playMusic()
+                onStateChangedTo(PlayerState.STATE_PLAYING)
+            }
             PlayerState.STATE_PLAYING -> {
-                onPausePlayer()
                 pauseMusic()
+                onStateChangedTo(PlayerState.STATE_PAUSED)
             }
 
-            PlayerState.STATE_PREPARED, PlayerState.STATE_PAUSED, PlayerState.STATE_DEFAULT -> {
-                onStartPlayer()
-                playMusic()
-            }
         }
     }
-
 
 }

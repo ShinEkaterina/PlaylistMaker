@@ -4,7 +4,7 @@ import com.example.playlistmaker.domain.model.Track
 
 interface AudioPlayerRepository {
 
-    fun prepare(prepare: () -> Unit, onComplete: () -> Unit)
+    fun prepare(url: String, prepare: () -> Unit, onComplete: () -> Unit)
     fun start()
     fun pause()
     fun destroy()

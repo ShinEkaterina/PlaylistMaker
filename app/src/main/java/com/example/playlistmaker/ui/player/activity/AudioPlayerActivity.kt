@@ -7,125 +7,124 @@ import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.util.App.Companion.TRACK
 import com.example.playlistmaker.R
 import com.example.playlistmaker.util.Creator
 import com.example.playlistmaker.databinding.ActivityPlayerBinding
-import com.example.playlistmaker.domain.player.api.AudioPlayerInteractor
 import com.example.playlistmaker.domain.model.PlayerState
 import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.presentation.Formater
+import com.example.playlistmaker.presentation.Mapper
+import com.example.playlistmaker.presentation.player.model.TrackInfo
+import com.example.playlistmaker.ui.player.view_model.AudioPlayerViewModel
 
 
 class AudioPlayerActivity() : AppCompatActivity() {
 
     private lateinit var binding: ActivityPlayerBinding
-    private lateinit var playerInteractor: AudioPlayerInteractor
+    private lateinit var viewModel: AudioPlayerViewModel
 
     fun isDarkThemeEnabled(): Boolean {
         val nightMode = AppCompatDelegate.getDefaultNightMode()
         return nightMode == AppCompatDelegate.MODE_NIGHT_YES
     }
 
-
-    private val handler = Handler(Looper.getMainLooper())
-    private val runnable: Runnable by lazy {
-        Runnable {
-            binding.durationTrackPlay.text =
-                Formater.formayMillsTimeToDuration(playerInteractor.getCurrentTime())
-            handler.postDelayed(runnable, 300)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //Go back arrow button
+        binding.toolbar.setNavigationOnClickListener { finish() }
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        toolbar.setNavigationOnClickListener { finish() }
-
-
+        //define track
         val track = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra(TRACK, Track::class.java)
         } else {
             intent.getParcelableExtra(TRACK)
         } as Track
 
-        initPlayerScreen(track)
-        preparePlayer(track)
+        val trackInfo = Mapper.mapTrackToTrackInfo(track)
+        val url = track.previewUrl // url превью 30 сек.
 
-        binding.playButton.setOnClickListener {
-            playerInteractor.playbackControl(onStartPlayer = {
-                if (isDarkThemeEnabled()) (binding.playButton.setImageResource(R.drawable.pause_button_night))
-                else {
-                    binding.playButton.setImageResource(R.drawable.pause_button)
+        viewModel = ViewModelProvider(
+            this,
+            AudioPlayerViewModel.getViewModelFactory()
+        )[AudioPlayerViewModel::class.java]
 
-                }
-                playerInteractor.setPlayerState(PlayerState.STATE_PLAYING)
-                handler.post(runnable)
-            }, onPausePlayer = {
-                if (isDarkThemeEnabled()) (binding.playButton.setImageResource(R.drawable.play_button_night))
-                else {
-                    binding.playButton.setImageResource(R.drawable.play_button)
+        viewModel.getStatePlayerLiveData().observe(this) { state ->
+            changeState(state)
+        }
 
-                }
-                handler.removeCallbacks(runnable)
-                playerInteractor.setPlayerState(PlayerState.STATE_PAUSED)
+        viewModel.getCurrentTimerLiveData().observe(this) { currentTimer ->
+            changeTimer(currentTimer)
+        }
+        viewModel.preparePlayer(url)
+
+        binding.playButton.setOnClickListener{
+            viewModel.changePlayerState()
+        }
+
+        initPlayerScreen(trackInfo)
+    }
+
+    private fun changeTimer(currentTimer: Long) {
+        binding.durationTrackPlay.text = Formater.formayMillsTimeToDuration(currentTimer)
+    }
+
+    private fun changeState(state: PlayerState) {
+        when (state) {
+            PlayerState.STATE_PAUSED -> {
+                binding.playButton.setImageResource(R.drawable.play_button)
             }
 
-            )
+            PlayerState.STATE_PLAYING -> {
+                binding.playButton.setImageResource(R.drawable.pause_button)
+            }
+
+            PlayerState.STATE_PREPARED, PlayerState.STATE_DEFAULT -> {
+                binding.playButton.setImageResource(R.drawable.play_button)
+                binding.durationTrackPlay.text = "00:00"
+            }
         }
     }
 
-
-    private fun preparePlayer(track: Track) {
-        playerInteractor = Creator.provideAudioPlayerInteractor(track)
-        playerInteractor.preparePlayer(prepare = {
-            binding.playButton.isEnabled = true
-        }, onComplete = {
-            if (isDarkThemeEnabled()) (binding.playButton.setImageResource(R.drawable.play_button_night))
-            else {
-                binding.playButton.setImageResource(R.drawable.play_button)
-
-            }
-            binding.durationTrackPlay.setText(R.string.time_00)
-            handler.removeCallbacks(runnable)
-        })
-    }
-
-
     override fun onPause() {
         super.onPause()
-        playerInteractor.pauseMusic()
+        viewModel.onPause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        playerInteractor.destroyPlayer()
-        handler.removeCallbacks(runnable)
+        viewModel.onDestroy()
+
     }
 
-    private fun initPlayerScreen(track: Track) {
-        binding.trackName.text = track.trackName
-        binding.artistName.text = track.artistName
-        binding.trackDuration.text = Formater.formayMillsTimeToDuration(track.trackTimeMillis)
+    override fun onResume() {
+        viewModel.onResume()
+        super.onResume()
+
+    }
+
+    private fun initPlayerScreen(trackInfo: TrackInfo) {
+        binding.trackName.text = trackInfo.name
+        binding.artistName.text = trackInfo.artistName
+        binding.trackDuration.text = trackInfo.duration
         binding.durationTrackPlay.setText(R.string.time_00)
 
-        if (track.collectionName.isNullOrEmpty()) {
+        if (trackInfo.collectionName.isNullOrEmpty()) {
             binding.trackAlbum.visibility = View.GONE
             binding.album.visibility = View.GONE
         } else {
-            binding.trackAlbum.text = track.collectionName
+            binding.trackAlbum.text = trackInfo.collectionName
         }
 
-        binding.trackYear.text = track.getReleaseDateOnlyYear()
-        binding.trackGenre.text = track.primaryGenreName
-        binding.trackCountry.text = track.country
-        Glide.with(binding.trackImage).load(track.getCoverArtwork())
+        binding.trackYear.text = trackInfo.releaseYear
+        binding.trackGenre.text = trackInfo.genreName
+        binding.trackCountry.text = trackInfo.country
+        Glide.with(binding.trackImage).load(trackInfo.artworkUrl)
             .placeholder(R.drawable.placeholder).centerCrop()
             .transform(RoundedCorners(resources.getDimensionPixelSize(R.dimen.album_radius)))
             .into(binding.trackImage)

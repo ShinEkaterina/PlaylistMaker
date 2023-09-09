@@ -24,11 +24,11 @@ import com.example.playlistmaker.domain.sharing.SharingInteractor
 import com.example.playlistmaker.domain.sharing.impl.SharingInteractorImpl
 
 object Creator {
-    private fun provideAudioPlayerRepository(track: Track): AudioPlayerRepository = AudioPlayerRepositoryImpl(track)
+    private fun provideAudioPlayerRepository(): AudioPlayerRepository = AudioPlayerRepositoryImpl()
 
-    fun provideAudioPlayerInteractor(track: Track): AudioPlayerInteractorImpl {
-        val rep = provideAudioPlayerRepository(track)
-        return AudioPlayerInteractorImpl(rep, track)
+    fun provideAudioPlayerInteractor(): AudioPlayerInteractorImpl {
+        val rep = provideAudioPlayerRepository()
+        return AudioPlayerInteractorImpl(rep)
     }
 
     private fun getTracksRepository(context: Context): TrackRepository {
