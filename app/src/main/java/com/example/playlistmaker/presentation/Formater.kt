@@ -10,4 +10,8 @@ object Formater {
     fun formayMillsTimeToDuration(millsTima: Long): String = SimpleDateFormat(
         timePattern, Locale.getDefault()
     ).format(millsTima)
+
+    fun formayMillsTimeToDuration(millsTima: Int): String = SimpleDateFormat(
+        timePattern, Locale.getDefault()
+    ).format(millsTima)
 }

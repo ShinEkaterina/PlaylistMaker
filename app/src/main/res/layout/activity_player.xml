@@ -28,13 +28,14 @@
         android:id="@+id/textsBarrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="duration, album, year, genre, country"
+        app:constraint_referenced_ids="tvDurationName, album, year, genre, country"
         app:barrierDirection="end" />
 
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        style="@style/ToolBarStyle"/>
+        style="@style/ToolBarStyle"
+        app:navigationIcon="@drawable/ic_arrow_back"/>
 
     <ImageView
         android:id="@+id/trackImage"
@@ -92,14 +93,14 @@
         app:layout_constraintStart_toStartOf="@+id/leftBorder" />
 
     <TextView
-        android:id="@+id/duration"
+        android:id="@+id/tvDurationName"
         style="@style/audio_player_title"
         android:text="@string/duration_track"
-        app:layout_constraintBottom_toTopOf="@+id/trackAlbum"
+        app:layout_constraintBottom_toTopOf="@+id/tvAlbum"
         app:layout_constraintStart_toStartOf="@+id/leftBorder" />
 
     <TextView
-        android:id="@+id/trackCountry"
+        android:id="@+id/tvCountry"
         style="@style/audio_player_data_value"
         android:layout_marginBottom="28dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -108,65 +109,68 @@
         tools:text="Australia" />
 
     <TextView
-        android:id="@+id/trackGenre"
+        android:id="@+id/tvGenre"
         style="@style/audio_player_data_value"
-        app:layout_constraintBottom_toTopOf="@+id/trackCountry"
+        app:layout_constraintBottom_toTopOf="@+id/tvCountry"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toEndOf="@id/textsBarrier"
         tools:text="Music" />
 
     <TextView
-        android:id="@+id/trackYear"
+        android:id="@+id/tvYear"
         style="@style/audio_player_data_value"
-        app:layout_constraintBottom_toTopOf="@+id/trackGenre"
+        app:layout_constraintBottom_toTopOf="@+id/tvGenre"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toEndOf="@id/textsBarrier"
         tools:text="2006" />
 
     <TextView
-        android:id="@+id/trackAlbum"
+        android:id="@+id/tvAlbum"
         style="@style/audio_player_data_value"
-        app:layout_constraintBottom_toTopOf="@+id/trackYear"
+        app:layout_constraintBottom_toTopOf="@+id/tvYear"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toEndOf="@id/textsBarrier"
         tools:text="Album name" />
 
     <TextView
-        android:id="@+id/trackDuration"
+        android:id="@+id/tvDuration"
         style="@style/audio_player_data_value"
         android:maxLines="2"
-        app:layout_constraintBottom_toTopOf="@+id/trackAlbum"
+        app:layout_constraintBottom_toTopOf="@+id/tvAlbum"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toEndOf="@id/textsBarrier"
         tools:text="0:30" />
 
     <TextView
-        android:id="@+id/durationTrackPlay"
+        android:id="@+id/tvDurationPlay"
         style="@style/audio_player_duration_track_play"
         tools:text="0:30"
-        app:layout_constraintBottom_toTopOf="@+id/duration"
+        app:layout_constraintBottom_toTopOf="@+id/tvDurationName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/addButton"
+        android:id="@+id/ivAddButton"
         style="@style/audio_player_add_button"
-        app:layout_constraintBottom_toTopOf="@+id/duration"
-        app:layout_constraintEnd_toStartOf="@+id/playButton"
-        app:layout_constraintStart_toStartOf="@+id/leftBorder" />
+        app:layout_constraintBottom_toTopOf="@+id/tvDurationName"
+        app:layout_constraintEnd_toStartOf="@+id/ivPlayButton"
+        app:layout_constraintStart_toStartOf="@+id/leftBorder"
+        android:src="@drawable/add_to_list_button"/>
 
     <ImageView
-        android:id="@+id/likeButton"
+        android:id="@+id/ivLikeButton"
         style="@style/audio_player_like_button"
-        app:layout_constraintBottom_toTopOf="@+id/trackDuration"
+        app:layout_constraintBottom_toTopOf="@+id/tvDuration"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
-        app:layout_constraintStart_toEndOf="@+id/playButton" />
+        app:layout_constraintStart_toEndOf="@+id/ivPlayButton"
+        android:src="@drawable/like_button"/>
 
     <ImageView
-        android:id="@+id/playButton"
+        android:id="@+id/ivPlayButton"
         style="@style/audio_player_play_button"
+        android:src="@drawable/play_button"
         app:layout_constraintTop_toBottomOf="@+id/artistName"
-        app:layout_constraintBottom_toTopOf="@+id/durationTrackPlay"
+        app:layout_constraintBottom_toTopOf="@+id/tvDurationPlay"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toStartOf="@+id/leftBorder" />
 
