@@ -17,34 +17,34 @@ class AudioPlayerViewModel(application: Application) : AndroidViewModel(applicat
 
 
     private val audioPlayerInterator = Creator.provideAudioPlayerInteractor()
+
     private var mainThreadHandler = Handler(Looper.getMainLooper())
     private val timerRunnable = createUpdateTimerTask()
     private var statePlayerLiveData = MutableLiveData(PlayerState.STATE_PREPARED)
 
     fun getStatePlayerLiveData(): LiveData<PlayerState> = statePlayerLiveData
 
-    private var currentTimerLiveData = MutableLiveData<Long>(0)
+    private var currentTimerLiveData = MutableLiveData<Int>(0)
 
-    fun getCurrentTimerLiveData(): LiveData<Long> = currentTimerLiveData
+    fun getCurrentTimerLiveData(): LiveData<Int> = currentTimerLiveData
 
 
     fun preparePlayer(url: String) {
-        audioPlayerInterator.preparePlayer(
-            url,
-            prepare = {
-                statePlayerLiveData.postValue(PlayerState.STATE_PREPARED)
-                mainThreadHandler.removeCallbacks(timerRunnable)
-            },
-            onComplete = {
-                mainThreadHandler.removeCallbacks(timerRunnable)
+        audioPlayerInterator.preparePlayer(url) { state ->
+            when (state) {
+                PlayerState.STATE_PREPARED, PlayerState.STATE_DEFAULT -> {
+                    statePlayerLiveData.postValue(PlayerState.STATE_PREPARED)
+                    mainThreadHandler.removeCallbacks(timerRunnable)
+                }
+                else -> Unit
             }
-        )
+        }
     }
 
     fun createUpdateTimerTask(): Runnable {
         return object : Runnable {
             override fun run() {
-                var currentTimerPosition = audioPlayerInterator.getCurrentTime()
+                var currentTimerPosition = audioPlayerInterator.currentPosition()
                 mainThreadHandler.postDelayed(this, DELAY_UPDATE_TIMER_MC)
                 currentTimerLiveData.postValue(currentTimerPosition)
             }
@@ -79,7 +79,7 @@ class AudioPlayerViewModel(application: Application) : AndroidViewModel(applicat
     fun onPause() {
         mainThreadHandler.removeCallbacks(timerRunnable)
         statePlayerLiveData.postValue(PlayerState.STATE_PAUSED)
-        audioPlayerInterator.pauseMusic()
+        audioPlayerInterator.pausePlayer()
 
     }
 
@@ -95,7 +95,9 @@ class AudioPlayerViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     companion object {
+
         const val DELAY_UPDATE_TIMER_MC = 300L
+
         fun getViewModelFactory(): ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 AudioPlayerViewModel(this[APPLICATION_KEY] as Application)

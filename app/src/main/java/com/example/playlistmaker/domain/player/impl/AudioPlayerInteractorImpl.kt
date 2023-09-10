@@ -6,59 +6,30 @@ import com.example.playlistmaker.domain.model.PlayerState
 
 
 class AudioPlayerInteractorImpl(
-    private var audioPlayerRepository: AudioPlayerRepository
+    private val mediaPlayerRepository: AudioPlayerRepository
 ) : AudioPlayerInteractor {
 
-    private var currentState: PlayerState = PlayerState.STATE_DEFAULT
-
-
-    override fun preparePlayer(url: String,prepare: () -> Unit, onComplete: () -> Unit) {
-        audioPlayerRepository.prepare(
+    override fun preparePlayer(url: String, onStateChanged: (s: PlayerState) -> Unit) {
+        mediaPlayerRepository.preparePlayer(
             url,
-            prepare,
-            onComplete
+            onStateChanged
         )
-        currentState = PlayerState.STATE_PREPARED
-        prepare()
     }
 
-    override fun getPlayerState(): PlayerState = currentState
-
-
-    override fun setPlayerState(state: PlayerState) {
-        currentState = state
+    override fun pausePlayer() {
+        mediaPlayerRepository.pause()
     }
 
-    override fun playMusic() {
-        audioPlayerRepository.start()
-        currentState = PlayerState.STATE_PLAYING
+    override fun currentPosition(): Int {
+        return mediaPlayerRepository.currentPosition()
     }
-
-    override fun pauseMusic() {
-        audioPlayerRepository.pause()
-        currentState = PlayerState.STATE_PAUSED
-    }
-
-    override fun destroyPlayer() {
-        audioPlayerRepository.destroy()
-    }
-
-    override fun getCurrentTime() = audioPlayerRepository.getCurrentTime()
-
 
     override fun switchPlayer(onStateChangedTo: (s: PlayerState) -> Unit) {
-        when (currentState) {
-            PlayerState.STATE_DEFAULT -> {}
-            PlayerState.STATE_PAUSED, PlayerState.STATE_PREPARED  -> {
-                playMusic()
-                onStateChangedTo(PlayerState.STATE_PLAYING)
-            }
-            PlayerState.STATE_PLAYING -> {
-                pauseMusic()
-                onStateChangedTo(PlayerState.STATE_PAUSED)
-            }
+        mediaPlayerRepository.switchPlayerState(onStateChangedTo)
 
-        }
     }
+
+
+
 
 }

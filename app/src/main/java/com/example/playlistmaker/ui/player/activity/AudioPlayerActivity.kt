@@ -27,10 +27,6 @@ class AudioPlayerActivity() : AppCompatActivity() {
     private lateinit var binding: ActivityPlayerBinding
     private lateinit var viewModel: AudioPlayerViewModel
 
-    fun isDarkThemeEnabled(): Boolean {
-        val nightMode = AppCompatDelegate.getDefaultNightMode()
-        return nightMode == AppCompatDelegate.MODE_NIGHT_YES
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,11 +62,12 @@ class AudioPlayerActivity() : AppCompatActivity() {
         binding.playButton.setOnClickListener{
             viewModel.changePlayerState()
         }
+        viewModel.preparePlayer(url)
 
         initPlayerScreen(trackInfo)
     }
 
-    private fun changeTimer(currentTimer: Long) {
+    private fun changeTimer(currentTimer: Int) {
         binding.durationTrackPlay.text = Formater.formayMillsTimeToDuration(currentTimer)
     }
 
