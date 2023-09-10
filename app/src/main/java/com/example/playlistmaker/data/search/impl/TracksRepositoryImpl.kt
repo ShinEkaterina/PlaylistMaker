@@ -8,21 +8,32 @@ import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.data.search.network.ErrorCode
 import com.example.playlistmaker.util.Resource
 
+const val SUCCESS_RESULT_CODE = 200
+const val NO_INTERNET_RESULT_CODE = -1
+
+
 class TrackRepositoryImpl(private val networkClient: NetworkClient) : TrackRepository {
+
+    companion object {
+        private const val UNKNOWN_ERROR_MESSAGE = "Server error"
+        private const val NO_INTERNET_MESSAGE = "Check internet connection"
+        private const val NOTHING_FOUND_MESSAGE = "Nothing found. Results list is empty"
+
+    }
 
     override fun searchTracks(expression: String): Resource<List<Track>> {
         val response = networkClient.doRequest(TracksSearchRequest(expression))
 
         when (response.resultCode) {
-            -1 -> {
-                return Resource.Error(ErrorCode.NO_INTERNET, "Check internet connection")
+            NO_INTERNET_RESULT_CODE -> {
+                return Resource.Error(ErrorCode.NO_INTERNET, NO_INTERNET_MESSAGE)
             }
 
-            200 -> {
+            SUCCESS_RESULT_CODE -> {
                 if ((response as TrackSearchResponse).results.isEmpty()) {
                     return Resource.Error(
                         ErrorCode.NOTHING_FOUND,
-                        "Nothing found. Results list is empty"
+                        NOTHING_FOUND_MESSAGE
                     )
                 } else {
                     return Resource.Success((response as TrackSearchResponse).results.map {
@@ -43,7 +54,7 @@ class TrackRepositoryImpl(private val networkClient: NetworkClient) : TrackRepos
             }
 
             else -> {
-                return Resource.Error(ErrorCode.UNKNOWN_ERROR, "Server error")
+                return Resource.Error(ErrorCode.UNKNOWN_ERROR, UNKNOWN_ERROR_MESSAGE)
             }
         }
     }

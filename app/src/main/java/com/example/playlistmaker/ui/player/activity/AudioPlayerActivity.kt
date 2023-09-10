@@ -59,7 +59,7 @@ class AudioPlayerActivity() : AppCompatActivity() {
         }
         viewModel.preparePlayer(url)
 
-        binding.playButton.setOnClickListener{
+        binding.ivPlayButton.setOnClickListener{
             viewModel.changePlayerState()
         }
         viewModel.preparePlayer(url)
@@ -68,22 +68,22 @@ class AudioPlayerActivity() : AppCompatActivity() {
     }
 
     private fun changeTimer(currentTimer: Int) {
-        binding.durationTrackPlay.text = Formater.formayMillsTimeToDuration(currentTimer)
+        binding.tvDurationPlay.text = Formater.formayMillsTimeToDuration(currentTimer)
     }
 
     private fun changeState(state: PlayerState) {
         when (state) {
             PlayerState.STATE_PAUSED -> {
-                binding.playButton.setImageResource(R.drawable.play_button)
+                binding.ivPlayButton.setImageResource(R.drawable.play_button)
             }
 
             PlayerState.STATE_PLAYING -> {
-                binding.playButton.setImageResource(R.drawable.pause_button)
+                binding.ivPlayButton.setImageResource(R.drawable.pause_button)
             }
 
             PlayerState.STATE_PREPARED, PlayerState.STATE_DEFAULT -> {
-                binding.playButton.setImageResource(R.drawable.play_button)
-                binding.durationTrackPlay.text = "00:00"
+                binding.ivPlayButton.setImageResource(R.drawable.play_button)
+                binding.tvDurationPlay.text = "00:00"
             }
         }
     }
@@ -108,19 +108,19 @@ class AudioPlayerActivity() : AppCompatActivity() {
     private fun initPlayerScreen(trackInfo: TrackInfo) {
         binding.trackName.text = trackInfo.name
         binding.artistName.text = trackInfo.artistName
-        binding.trackDuration.text = trackInfo.duration
-        binding.durationTrackPlay.setText(R.string.time_00)
+        binding.tvDuration.text = trackInfo.duration
+        binding.tvDurationPlay.setText(R.string.time_00)
 
         if (trackInfo.collectionName.isNullOrEmpty()) {
-            binding.trackAlbum.visibility = View.GONE
+            binding.tvAlbum.visibility = View.GONE
             binding.album.visibility = View.GONE
         } else {
-            binding.trackAlbum.text = trackInfo.collectionName
+            binding.tvAlbum.text = trackInfo.collectionName
         }
 
-        binding.trackYear.text = trackInfo.releaseYear
-        binding.trackGenre.text = trackInfo.genreName
-        binding.trackCountry.text = trackInfo.country
+        binding.tvYear.text = trackInfo.releaseYear
+        binding.tvGenre.text = trackInfo.genreName
+        binding.tvCountry.text = trackInfo.country
         Glide.with(binding.trackImage).load(trackInfo.artworkUrl)
             .placeholder(R.drawable.placeholder).centerCrop()
             .transform(RoundedCorners(resources.getDimensionPixelSize(R.dimen.album_radius)))

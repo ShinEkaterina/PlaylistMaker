@@ -49,7 +49,7 @@ class HistoryInteractorImpl(private val historyRepository: HistoryRepository) : 
         }
         return historyList
     }
-    
+
 
     fun createJsonFromTrackList(trackList: ArrayList<Track>): String {
         return Gson().toJson(trackList)

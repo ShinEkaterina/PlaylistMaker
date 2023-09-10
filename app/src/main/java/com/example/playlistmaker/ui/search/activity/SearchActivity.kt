@@ -11,6 +11,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.playlistmaker.ui.search.TrackAdapter
@@ -190,58 +191,58 @@ class SearchActivity : AppCompatActivity(), TrackAdapter.Listener {
 
     fun showLoading() {
         binding.apply {
-            recycleViewTracks.visibility = View.GONE
-            binding.trackNotFoundVidget.setVisibility(View.GONE)
-            binding.noInternetVidget.setVisibility(View.GONE)
-            progressBar.visibility = View.VISIBLE
-            clearHistoryButton.visibility = View.GONE
-            searchHistory.visibility = View.GONE
+            recycleViewTracks.isVisible = false
+            binding.trackNotFoundVidget.isVisible = false
+            binding.noInternetVidget.isVisible = false
+            progressBar.isVisible = true
+            clearHistoryButton.isVisible = false
+            searchHistory.isVisible = false
         }
     }
 
     fun showError() {
         binding.apply {
-            recycleViewTracks.visibility = View.GONE
-            progressBar.visibility = View.GONE
-            clearHistoryButton.visibility = View.GONE
-            searchHistory.visibility = View.GONE
-            binding.trackNotFoundVidget.setVisibility(View.GONE)
-            binding.noInternetVidget.setVisibility(View.VISIBLE)
+            recycleViewTracks.isVisible = false
+            progressBar.isVisible = false
+            clearHistoryButton.isVisible = false
+            searchHistory.isVisible = false
+            binding.trackNotFoundVidget.isVisible = false
+            binding.noInternetVidget.isVisible = true
         }
     }
 
     fun showEmpty() {
         binding.apply {
-            recycleViewTracks.visibility = View.GONE
-            progressBar.visibility = View.GONE
-            clearHistoryButton.visibility = View.GONE
-            searchHistory.visibility = View.GONE
-            binding.trackNotFoundVidget.setVisibility(View.VISIBLE)
-            binding.noInternetVidget.setVisibility(View.GONE)
+            recycleViewTracks.isVisible = false
+            progressBar.isVisible = false
+            clearHistoryButton.isVisible = false
+            searchHistory.isVisible = false
+            binding.trackNotFoundVidget.isVisible = true
+            binding.noInternetVidget.isVisible = false
         }
     }
 
     fun showContent(tracks: List<Track>) {
         binding.apply {
             recycleViewTracks.adapter = TrackAdapter(ArrayList(tracks), this@SearchActivity)
-            recycleViewTracks.visibility = View.VISIBLE
-            binding.trackNotFoundVidget.setVisibility(View.GONE)
-            binding.noInternetVidget.setVisibility(View.GONE)
-            progressBar.visibility = View.GONE
-            clearHistoryButton.visibility = View.GONE
-            searchHistory.visibility = View.GONE
+            recycleViewTracks.isVisible = true
+            binding.trackNotFoundVidget.isVisible = false
+            binding.noInternetVidget.isVisible = false
+            progressBar.isVisible = false
+            clearHistoryButton.isVisible = false
+            searchHistory.isVisible = false
         }
     }
 
     fun showHistoryUI(updatedHistory: List<Track>) {
         binding.apply {
             recycleViewTracks.adapter = TrackAdapter(ArrayList(updatedHistory), this@SearchActivity)
-            recycleViewTracks.visibility = View.VISIBLE
-            binding.trackNotFoundVidget.setVisibility(View.GONE)
-            binding.noInternetVidget.setVisibility(View.GONE)
-            progressBar.visibility = View.GONE
-            clearHistoryButton.visibility = View.VISIBLE
-            searchHistory.visibility = View.VISIBLE
+            recycleViewTracks.isVisible = true
+            binding.trackNotFoundVidget.isVisible = false
+            binding.noInternetVidget.isVisible = false
+            progressBar.isVisible = false
+            clearHistoryButton.isVisible = true
+            searchHistory.isVisible = true
 
         }
     }
