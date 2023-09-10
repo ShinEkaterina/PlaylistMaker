@@ -3,7 +3,6 @@ package com.example.playlistmaker.data.player
 import android.media.MediaPlayer
 import com.example.playlistmaker.domain.model.PlayerState
 import com.example.playlistmaker.domain.player.api.AudioPlayerRepository
-import com.example.playlistmaker.domain.model.Track
 
 
 class AudioPlayerRepositoryImpl : AudioPlayerRepository {
@@ -15,7 +14,7 @@ class AudioPlayerRepositoryImpl : AudioPlayerRepository {
         url: String,
         onStateChangedTo: (s: PlayerState) -> Unit
     ) {
-        var mediaPlayer = MediaPlayer()
+        val mediaPlayer = MediaPlayer()
         mediaPlayer.setDataSource(url)
         mediaPlayer.prepareAsync()
         mediaPlayer.setOnPreparedListener {
@@ -30,7 +29,6 @@ class AudioPlayerRepositoryImpl : AudioPlayerRepository {
         this.mediaPlayer = mediaPlayer
 
     }
-
 
 
     override fun pause() {
@@ -52,6 +50,7 @@ class AudioPlayerRepositoryImpl : AudioPlayerRepository {
                 onStateChangedTo(PlayerState.STATE_PLAYING)
 
             }
+
             PlayerState.STATE_PLAYING -> {
                 mediaPlayer.pause()
                 playerState = PlayerState.STATE_PAUSED
@@ -60,8 +59,6 @@ class AudioPlayerRepositoryImpl : AudioPlayerRepository {
             }
         }
     }
-
-
 
 
     override fun exit() {

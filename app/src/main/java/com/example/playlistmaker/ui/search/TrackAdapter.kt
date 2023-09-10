@@ -13,9 +13,9 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 
-class TrackAdapter(var tracks: ArrayList<Track>,  var listener: Listener) :
+class TrackAdapter(var tracks: ArrayList<Track>, var listener: Listener) :
     RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
-   // var tracks: ArrayList<Track> = arrayListOf()
+    // var tracks: ArrayList<Track> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val layoutInspector = LayoutInflater.from(parent.context)
@@ -32,15 +32,16 @@ class TrackAdapter(var tracks: ArrayList<Track>,  var listener: Listener) :
     override fun getItemCount(): Int {
         return tracks.size
     }
+
     interface Listener {
         fun onClick(track: Track)
     }
 
-     class TrackViewHolder(private val binding: TrackViewCardBinding) :
+    class TrackViewHolder(private val binding: TrackViewCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(model: Track) {
             binding.trackName.text = model.trackName
-            binding.artistName.text= model.artistName
+            binding.artistName.text = model.artistName
             binding.trackTime.text =
                 SimpleDateFormat("mm:ss", Locale.getDefault()).format(model.trackTimeMillis)
             Glide

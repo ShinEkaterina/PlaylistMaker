@@ -13,7 +13,6 @@ import com.example.playlistmaker.domain.history.HistoryInteractor
 import com.example.playlistmaker.domain.history.impl.HistoryInteractorImpl
 import com.example.playlistmaker.domain.player.api.AudioPlayerRepository
 import com.example.playlistmaker.domain.player.impl.AudioPlayerInteractorImpl
-import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.domain.navigation.InternalNavigationInteractor
 import com.example.playlistmaker.domain.navigation.impl.InternalNavigationInteractorImpl
 import com.example.playlistmaker.domain.search.TracksInteractor
@@ -38,21 +37,25 @@ object Creator {
     fun provideTracksInteractor(context: Context): TracksInteractor {
         return TracksInteractorImpl(getTracksRepository(context))
     }
+
     fun provideSettingInteractor(context: Context): SettingsInteractor {
         return SettingsInteractorImpl(getSettingRepository(context))
     }
+
     fun provideSharingInteractor(context: Context): SharingInteractor {
         return SharingInteractorImpl(getSharingRepository(context))
     }
+
     fun getSettingRepository(context: Context): SettingsRepositoryImpl {
         return SettingsRepositoryImpl(context)
     }
+
     fun getSharingRepository(context: Context): ExternalNavigationImpl {
         return ExternalNavigationImpl(context)
     }
 
     fun provideNavigationInteractor(context: Context): InternalNavigationInteractor {
-        return InternalNavigationInteractorImpl( InternalNavigationRepositoryImpl(context))
+        return InternalNavigationInteractorImpl(InternalNavigationRepositoryImpl(context))
     }
 
     fun provideHistoryInteractor(context: Context): HistoryInteractor {

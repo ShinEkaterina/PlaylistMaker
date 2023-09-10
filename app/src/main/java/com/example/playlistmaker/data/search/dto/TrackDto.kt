@@ -16,11 +16,5 @@ data class TrackDto(
     val country: String, // Страна исполнителя
     val previewUrl: String //ссылка на отрывок трека для прослушивания
 ) : Parcelable {
-    fun getReleaseDateOnlyYear(): String {
-        val answer = releaseDate.split("-")
-        return answer[0]
-    }
-
-    fun getCoverArtwork() = artworkUrl100.replaceAfterLast('/', "512x512bb.jpg")
 
 }

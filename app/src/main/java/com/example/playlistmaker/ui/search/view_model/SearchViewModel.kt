@@ -13,7 +13,8 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.playlistmaker.data.search.network.ErrorCode
 import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.domain.search.TracksInteractor
-import com.example.playlistmaker.ui.search.activity.TracksState
+import com.example.playlistmaker.presentation.player.model.ErrorType
+import com.example.playlistmaker.presentation.player.model.SearchScreenState
 import com.example.playlistmaker.util.Creator
 
 class SearchViewModel(
@@ -26,9 +27,9 @@ class SearchViewModel(
         Creator.provideNavigationInteractor(getApplication<Application>())
 
 
-    private var searchTrackStatusLiveData = MutableLiveData<TracksState>()
+    private var searchTrackStatusLiveData = MutableLiveData<SearchScreenState>()
 
-    fun getSearchTrackStatusLiveData(): LiveData<TracksState> = searchTrackStatusLiveData
+    fun getSearchTrackStatusLiveData(): LiveData<SearchScreenState> = searchTrackStatusLiveData
 
 
     private var trackList = ArrayList<Track>()
@@ -69,11 +70,10 @@ class SearchViewModel(
 
     fun showHistory() {
         searchTrackStatusLiveData.postValue(
-            TracksState(
+            SearchScreenState(
                 emptyList(),
                 false,
-                null,
-                needToUpdate = false,
+                errorType = null,
                 toShowHistory = true,
                 history = getHistory(),
             )
@@ -96,11 +96,10 @@ class SearchViewModel(
 
         if (newSearchText.isNotEmpty()) {
             searchTrackStatusLiveData.postValue(
-                TracksState(
+                SearchScreenState(
                     trackList,
                     true,
                     null,
-                    needToUpdate = false,
                     toShowHistory = false,
                     history = emptyList(),
                 )
@@ -123,11 +122,10 @@ class SearchViewModel(
                         when (errorCode) {
                             ErrorCode.NO_INTERNET -> {
                                 searchTrackStatusLiveData.postValue(
-                                    TracksState(
+                                    SearchScreenState(
                                         emptyList(),
                                         false,
-                                        ERROR_CONNECTION,
-                                        needToUpdate = true,
+                                        ErrorType.NO_INTERNET,
                                         toShowHistory = false,
                                         history = emptyList(),
                                     )
@@ -136,11 +134,10 @@ class SearchViewModel(
 
                             ErrorCode.UNKNOWN_ERROR -> {
                                 searchTrackStatusLiveData.postValue(
-                                    TracksState(
+                                    SearchScreenState(
                                         emptyList(),
                                         false,
-                                        ERROR_CONNECTION,
-                                        needToUpdate = true,
+                                        ErrorType.NO_INTERNET,
                                         toShowHistory = false,
                                         history = emptyList(),
                                     )
@@ -149,11 +146,10 @@ class SearchViewModel(
 
                             ErrorCode.NOTHING_FOUND -> {
                                 searchTrackStatusLiveData.postValue(
-                                    TracksState(
+                                    SearchScreenState(
                                         emptyList(),
                                         false,
-                                        ERROR_EMPTY_LIST,
-                                        needToUpdate = false,
+                                        ErrorType.NOTHINF_FOUND,
                                         toShowHistory = false,
                                         history = emptyList(),
                                     )
@@ -163,11 +159,10 @@ class SearchViewModel(
                         }
                     } else {
                         searchTrackStatusLiveData.postValue(
-                            TracksState(
+                            SearchScreenState(
                                 trackList,
                                 false,
                                 null,
-                                needToUpdate = false,
                                 toShowHistory = false,
                                 history = emptyList(),
                             )
@@ -183,8 +178,6 @@ class SearchViewModel(
 
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
-        private const val ERROR_CONNECTION = -1
-        private const val ERROR_EMPTY_LIST = -2
 
         fun getViewModelFactory(): ViewModelProvider.Factory =
             viewModelFactory {

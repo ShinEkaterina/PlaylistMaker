@@ -11,6 +11,4 @@ interface TracksInteractor {
         fun consume(foundTracks: List<Track>?, errorCode: ErrorCode?, errorMessage: String?)
     }
 
-   // fun loadTracks(onComplete : (Boolean) -> Unit)
-
 }

@@ -10,7 +10,8 @@ import com.example.playlistmaker.util.Creator
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val internalNavigationInteractor = Creator.provideNavigationInteractor(getApplication<Application>())
+    private val internalNavigationInteractor =
+        Creator.provideNavigationInteractor(getApplication<Application>())
 
 
     fun toSettingsScreen() {

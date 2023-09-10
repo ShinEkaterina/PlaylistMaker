@@ -19,7 +19,8 @@ class SettingsRepositoryImpl(context: Context) : SettingsRepository {
 
     override fun getThemeSettings(): ThemeSettings {
         val intMode = sharedPreferences.getBoolean(DARK_THEME_KEY, false)
-        return fromBooltoThemeState(intMode) ?: ThemeSettings.MODE_DARK_NO    }
+        return fromBooltoThemeState(intMode) ?: ThemeSettings.MODE_DARK_NO
+    }
 
     override fun updateThemeSetting(settings: ThemeSettings) {
         sharedPreferences.edit().putBoolean(DARK_THEME_KEY, settings.intMode).apply()

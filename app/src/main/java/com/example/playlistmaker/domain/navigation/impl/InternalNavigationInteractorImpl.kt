@@ -4,7 +4,7 @@ import com.example.playlistmaker.data.navigation.InternalNavigationRepository
 import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.domain.navigation.InternalNavigationInteractor
 
-class InternalNavigationInteractorImpl (private val internalNavigationRepository: InternalNavigationRepository) :
+class InternalNavigationInteractorImpl(private val internalNavigationRepository: InternalNavigationRepository) :
     InternalNavigationInteractor {
     override fun toSettingsScreen() {
         internalNavigationRepository.toSettingsScreen()

@@ -9,24 +9,14 @@ import com.google.gson.reflect.TypeToken
 const val MAX_NUMBER_OF_TRACK = 10
 
 
+class HistoryInteractorImpl(private val historyRepository: HistoryRepository) : HistoryInteractor {
 
-class HistoryInteractorImpl (private val historyRepository: HistoryRepository) : HistoryInteractor {
+    override fun getHistoryString(): String = historyRepository.getHistoryString()
 
-//TODO rewrite short
-    override fun getHistoryString(): String {
-        var historyString = historyRepository.getHistoryString()
-        return if (historyString !=null) {
-            historyString
-        } else {
-            ""
-        }
-    }
-
-    override fun getHistoryList() : ArrayList<Track> {
+    override fun getHistoryList(): ArrayList<Track> {
         if (getHistoryString().isNotEmpty()) {
             return createTrackListFromJson(getHistoryString())
-        }
-        else {
+        } else {
             return arrayListOf<Track>()
         }
     }
@@ -41,8 +31,8 @@ class HistoryInteractorImpl (private val historyRepository: HistoryRepository) :
         updateHistory(historyTrackList)
     }
 
-    override fun updateHistory(updatedHistory: ArrayList<Track>) {
-        val updatedHistoryJson = createJsonFromTrackList(updatedHistory)
+    override fun updateHistory(updatedHistoryList: ArrayList<Track>) {
+        val updatedHistoryJson = createJsonFromTrackList(updatedHistoryList)
         historyRepository.updateTrackHistory(updatedHistoryJson)
     }
 
@@ -59,10 +49,7 @@ class HistoryInteractorImpl (private val historyRepository: HistoryRepository) :
         }
         return historyList
     }
-
-    fun createTrackList1FromJson(json: String): Array<Track> {
-        return Gson().fromJson(json, Array<Track>::class.java)
-    }
+    
 
     fun createJsonFromTrackList(trackList: ArrayList<Track>): String {
         return Gson().toJson(trackList)

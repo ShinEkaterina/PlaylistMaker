@@ -36,6 +36,7 @@ class AudioPlayerViewModel(application: Application) : AndroidViewModel(applicat
                     statePlayerLiveData.postValue(PlayerState.STATE_PREPARED)
                     mainThreadHandler.removeCallbacks(timerRunnable)
                 }
+
                 else -> Unit
             }
         }
@@ -44,7 +45,7 @@ class AudioPlayerViewModel(application: Application) : AndroidViewModel(applicat
     fun createUpdateTimerTask(): Runnable {
         return object : Runnable {
             override fun run() {
-                var currentTimerPosition = audioPlayerInterator.currentPosition()
+                val currentTimerPosition = audioPlayerInterator.currentPosition()
                 mainThreadHandler.postDelayed(this, DELAY_UPDATE_TIMER_MC)
                 currentTimerLiveData.postValue(currentTimerPosition)
             }
@@ -61,10 +62,12 @@ class AudioPlayerViewModel(application: Application) : AndroidViewModel(applicat
                     mainThreadHandler.post(timerRunnable)
                     statePlayerLiveData.postValue(PlayerState.STATE_PLAYING)
                 }
+
                 PlayerState.STATE_PAUSED -> {
                     mainThreadHandler.removeCallbacks(timerRunnable)
                     statePlayerLiveData.postValue(PlayerState.STATE_PAUSED)
                 }
+
                 PlayerState.STATE_PREPARED -> {
                     mainThreadHandler.removeCallbacks(timerRunnable)
                     mainThreadHandler.post(timerRunnable)

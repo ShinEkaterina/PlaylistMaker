@@ -23,8 +23,9 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
             }
         }
     }
+
     fun isDarkModeOnStart(): Boolean {
-        var modeStart = settingsInteractor.getThemeSettings()
+        val modeStart = settingsInteractor.getThemeSettings()
         return modeStart == ThemeSettings.MODE_DARK_YES
     }
 
@@ -33,7 +34,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     fun getModeLiveData(): LiveData<Boolean> = modeLiveData
 
     init {
-        var mode = settingsInteractor.getThemeSettings()
+        val mode = settingsInteractor.getThemeSettings()
         if (mode == ThemeSettings.MODE_DARK_YES) {
             modeLiveData.postValue(true)
         } else if (mode == ThemeSettings.MODE_DARK_NO) {
@@ -51,8 +52,9 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
             modeLiveData.postValue(false)
         }
     }
-    fun openSupport(subject: String, text: String) {
-        sharingInteractor.openSupport()
+
+    fun openSupport(subject:String, message:String) {
+        sharingInteractor.openSupport(subject,message)
     }
 
     fun shareApp() {

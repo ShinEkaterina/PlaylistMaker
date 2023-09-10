@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.playlistmaker.ui.search.TrackAdapter
 import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.domain.model.Track
+import com.example.playlistmaker.presentation.player.model.ErrorType
+import com.example.playlistmaker.presentation.player.model.SearchScreenState
 import com.example.playlistmaker.ui.search.view_model.SearchViewModel
 
 class SearchActivity : AppCompatActivity(), TrackAdapter.Listener {
@@ -133,7 +135,7 @@ class SearchActivity : AppCompatActivity(), TrackAdapter.Listener {
                 searchText = s.toString()
                 searchTrackViewModel.searchDebounce(searchText)
             }
-              binding.clearButton.visibility = clearButtonVisibility(s)
+            binding.clearButton.visibility = clearButtonVisibility(s)
         }
 
         override fun afterTextChanged(s: Editable?) {
@@ -142,14 +144,13 @@ class SearchActivity : AppCompatActivity(), TrackAdapter.Listener {
     }
 
 
-
-       private fun clearButtonVisibility(s: CharSequence?): Int {
-            return if (s.isNullOrEmpty()) {
-                View.GONE
-            } else {
-                View.VISIBLE
-            }
+    private fun clearButtonVisibility(s: CharSequence?): Int {
+        return if (s.isNullOrEmpty()) {
+            View.GONE
+        } else {
+            View.VISIBLE
         }
+    }
 
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -157,7 +158,7 @@ class SearchActivity : AppCompatActivity(), TrackAdapter.Listener {
         outState.putString(SEARCH_TEXT, searchText)
     }
 
-    fun updatedViewBasedOnStatus(updatedStatus: TracksState) {
+    fun updatedViewBasedOnStatus(updatedStatus: SearchScreenState) {
         when {
             updatedStatus.isLoading -> showLoading()
             updatedStatus.toShowHistory ->
@@ -166,16 +167,26 @@ class SearchActivity : AppCompatActivity(), TrackAdapter.Listener {
                     else -> showHistoryIsEmpty(updatedStatus.history)
                 }
 
-            updatedStatus.placeholderMessage != null ->
-                when {
-                    updatedStatus.needToUpdate -> showError()
-                    else -> showEmpty()
+            (updatedStatus.errorType != null) ->
+                when (updatedStatus.errorType) {
+                    ErrorType.NOTHINF_FOUND -> showEmpty()
+                    ErrorType.NO_INTERNET -> showError()
                 }
 
             else -> showContent(updatedStatus.tracks)
         }
 
     }
+    override fun onDestroy() {
+        super.onDestroy()
+        searchTrackViewModel.onDestroy()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        searchTrackViewModel.onResume()
+    }
+
 
     fun showLoading() {
         binding.apply {
