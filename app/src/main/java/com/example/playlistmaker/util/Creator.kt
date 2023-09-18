@@ -22,6 +22,7 @@ import com.example.playlistmaker.domain.settings.impl.SettingsInteractorImpl
 import com.example.playlistmaker.domain.sharing.SharingInteractor
 import com.example.playlistmaker.domain.sharing.impl.SharingInteractorImpl
 
+/*
 object Creator {
     private fun provideAudioPlayerRepository(): AudioPlayerRepository = AudioPlayerRepositoryImpl()
 
@@ -66,3 +67,4 @@ object Creator {
 
 }
 
+*/
