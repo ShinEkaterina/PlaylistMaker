@@ -16,7 +16,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-const val ITUNES_BASE_URL = "http://itunes.apple.com"
+const val ITUNES_BASE_URL = "https://itunes.apple.com"
 const val SHARED_PREFS_DARK_MODE = "shared_prefs_dark_mode"
 const val SHARED_PREFS_SEARCH_HISTORY = "search_history"
 
@@ -25,7 +25,7 @@ val dataModule = module {
 
     single<iTunesApi> {
         Retrofit.Builder()
-            .baseUrl("https://itunes.apple.com")
+            .baseUrl(ITUNES_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(iTunesApi::class.java)
