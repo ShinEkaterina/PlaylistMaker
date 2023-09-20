@@ -33,7 +33,7 @@ val interactorModule = module {
         AudioPlayerInteractorImpl(get())
     }
 
-    single<SettingsInteractor> {
+   single<SettingsInteractor> {
         SettingsInteractorImpl(get())
     }
 
@@ -41,7 +41,7 @@ val interactorModule = module {
         SharingInteractorImpl(get())
     }
 
-    factory { Gson() }
+  //  factory { Gson() }
 
 
 

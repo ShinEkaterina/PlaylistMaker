@@ -17,14 +17,13 @@ import org.koin.android.ext.android.inject
 class App : Application(), KoinComponent {
 
     /*    var darkTheme = ThemeSettings.MODE_DARK_NO*/
-    private val settingsInteractor: SettingsInteractor by inject()
+   // private val settingsInteractor: SettingsInteractor by inject()
 
     companion object {
         const val TRACK = "track"
     }
 
     override fun onCreate() {
-        super.onCreate()
 
         startKoin {
             androidContext(this@App)
@@ -35,10 +34,11 @@ class App : Application(), KoinComponent {
                 viewModelModule
             )
         }
-
-     //   val settingsInteractor = getKoin().get<SettingsInteractor>()
+       val settingsInteractor = getKoin().get<SettingsInteractor>()
 
         switchTheme(settingsInteractor.getThemeSettings())
+        super.onCreate()
+
     }
 
     fun switchTheme(isDarkMode: ThemeSettings) {

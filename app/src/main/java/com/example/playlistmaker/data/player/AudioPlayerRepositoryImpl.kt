@@ -10,7 +10,6 @@ class AudioPlayerRepositoryImpl(
 ) : AudioPlayerRepository {
 
     private var playerState = PlayerState.STATE_PREPARED
-/*    private lateinit var mediaPlayer: MediaPlayer*/
 
     override fun preparePlayer(
         url: String,

@@ -9,6 +9,7 @@ import com.example.playlistmaker.data.search.network.RetrofitNetworkClient
 import com.example.playlistmaker.data.search.network.iTunesApi
 import com.example.playlistmaker.data.settings.SettingsRepository
 import com.example.playlistmaker.data.settings.impl.SettingsRepositoryImpl
+import com.google.gson.Gson
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -24,7 +25,7 @@ val dataModule = module {
 
     single<iTunesApi> {
         Retrofit.Builder()
-            .baseUrl(ITUNES_BASE_URL)
+            .baseUrl("https://itunes.apple.com")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(iTunesApi::class.java)
@@ -54,9 +55,11 @@ val dataModule = module {
         RetrofitNetworkClient(get(), androidContext())
     }
 
+
     single<SettingsRepository> {
         SettingsRepositoryImpl(get())
     }
+    factory { Gson() }
 
     single {
         return@single MediaPlayer()
