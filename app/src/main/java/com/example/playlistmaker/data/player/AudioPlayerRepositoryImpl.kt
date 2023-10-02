@@ -5,10 +5,11 @@ import com.example.playlistmaker.domain.model.PlayerState
 import com.example.playlistmaker.domain.player.api.AudioPlayerRepository
 
 
-class AudioPlayerRepositoryImpl : AudioPlayerRepository {
+class AudioPlayerRepositoryImpl(
+    private var mediaPlayer: MediaPlayer
+) : AudioPlayerRepository {
 
     private var playerState = PlayerState.STATE_PREPARED
-    private lateinit var mediaPlayer: MediaPlayer
 
     override fun preparePlayer(
         url: String,

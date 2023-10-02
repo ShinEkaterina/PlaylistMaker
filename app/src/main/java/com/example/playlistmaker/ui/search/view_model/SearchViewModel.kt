@@ -1,31 +1,23 @@
 package com.example.playlistmaker.ui.search.view_model
 
-import android.app.Application
 import android.os.Handler
 import android.os.Looper
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.lifecycle.ViewModel
 import com.example.playlistmaker.data.search.network.ErrorCode
+import com.example.playlistmaker.domain.history.HistoryInteractor
 import com.example.playlistmaker.domain.model.Track
+import com.example.playlistmaker.domain.navigation.InternalNavigationInteractor
 import com.example.playlistmaker.domain.search.TracksInteractor
 import com.example.playlistmaker.presentation.player.model.ErrorType
 import com.example.playlistmaker.presentation.player.model.SearchScreenState
-import com.example.playlistmaker.util.Creator
 
 class SearchViewModel(
-    application: Application,
-) : AndroidViewModel(application) {
-
-    private val searchInteractor = Creator.provideTracksInteractor(getApplication<Application>())
-    private val historyInteractor = Creator.provideHistoryInteractor(getApplication<Application>())
-    private val internalNavigationInteractor =
-        Creator.provideNavigationInteractor(getApplication<Application>())
-
+    private val searchInteractor: TracksInteractor,
+    private val historyInteractor: HistoryInteractor,
+    private val internalNavigationInteractor: InternalNavigationInteractor
+) : ViewModel() {
 
     private var searchTrackStatusLiveData = MutableLiveData<SearchScreenState>()
 
@@ -61,7 +53,7 @@ class SearchViewModel(
     fun searchDebounce(changedText: String) {
         this.lastSearchText = changedText
         handler.removeCallbacks(searchRunnable)
-        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
+        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY_MILLIS)
     }
 
     fun getHistory(): ArrayList<Track> {
@@ -177,14 +169,7 @@ class SearchViewModel(
 
 
     companion object {
-        private const val SEARCH_DEBOUNCE_DELAY = 2000L
-
-        fun getViewModelFactory(): ViewModelProvider.Factory =
-            viewModelFactory {
-                initializer {
-                    SearchViewModel(this[APPLICATION_KEY] as Application)
-                }
-            }
+        private const val SEARCH_DEBOUNCE_DELAY_MILLIS = 2000L
     }
 
 }

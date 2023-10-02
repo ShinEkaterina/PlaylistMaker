@@ -12,7 +12,6 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.playlistmaker.ui.search.TrackAdapter
 import com.example.playlistmaker.databinding.ActivitySearchBinding
@@ -20,6 +19,8 @@ import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.presentation.player.model.ErrorType
 import com.example.playlistmaker.presentation.player.model.SearchScreenState
 import com.example.playlistmaker.ui.search.view_model.SearchViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class SearchActivity : AppCompatActivity(), TrackAdapter.Listener {
 
@@ -27,17 +28,15 @@ class SearchActivity : AppCompatActivity(), TrackAdapter.Listener {
 
     private lateinit var binding: ActivitySearchBinding
 
-    private lateinit var searchTrackViewModel: SearchViewModel
+    private val searchTrackViewModel by viewModel<SearchViewModel>()
+
+    private val handler = Handler(Looper.getMainLooper())
+    private var isClickAllowed = true
 
     companion object {
         const val SEARCH_TEXT = "SEARCH_TEXT"
         private const val CLICK_DEBOUNCE_DELAY_ML = 1000L
     }
-
-
-    private val handler = Handler(Looper.getMainLooper())
-    private var isClickAllowed = true
-
 
     private fun clickDebounce(): Boolean {
         val current = isClickAllowed
@@ -56,12 +55,6 @@ class SearchActivity : AppCompatActivity(), TrackAdapter.Listener {
         setContentView(binding.root)
 
         binding.searchToolbar.setNavigationOnClickListener { finish() }
-
-        // create viewModel
-        searchTrackViewModel = ViewModelProvider(
-            this,
-            SearchViewModel.getViewModelFactory()
-        )[SearchViewModel::class.java]
 
         searchTrackViewModel.getSearchTrackStatusLiveData().observe(this) { updatedStatus ->
             updatedViewBasedOnStatus(updatedStatus)

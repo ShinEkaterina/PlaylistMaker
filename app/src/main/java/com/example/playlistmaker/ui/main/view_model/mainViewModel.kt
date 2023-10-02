@@ -1,39 +1,22 @@
 package com.example.playlistmaker.ui.main.view_model
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.playlistmaker.util.Creator
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+import androidx.lifecycle.ViewModel
+import com.example.playlistmaker.domain.navigation.InternalNavigationInteractor
 
-    private val internalNavigationInteractor =
-        Creator.provideNavigationInteractor(getApplication<Application>())
+class MainViewModel(private val internalNavigationInteractor: InternalNavigationInteractor) :
+    ViewModel() {
 
-
-    fun toSettingsScreen() {
+    fun goToSettingsScreen() {
         internalNavigationInteractor.toSettingsScreen()
     }
 
-    fun toLibraryScreen() {
+    fun goToLibraryScreen() {
         internalNavigationInteractor.toLibraryScreen()
     }
 
-    fun toSearchScreen() {
+    fun goToSearchScreen() {
         internalNavigationInteractor.toSearchScreen()
     }
 
-
-    companion object {
-
-
-        fun getViewModelFactory(): ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                MainViewModel(this[APPLICATION_KEY] as Application)
-            }
-        }
-    }
 }

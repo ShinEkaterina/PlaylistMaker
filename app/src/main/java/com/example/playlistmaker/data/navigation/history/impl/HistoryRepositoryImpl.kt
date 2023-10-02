@@ -1,17 +1,15 @@
 package com.example.playlistmaker.data.navigation.history.impl
 
-import android.content.Context
+import android.content.SharedPreferences
 import com.example.playlistmaker.data.navigation.history.HistoryRepository
 
-const val SEARCH_HISTORY = "search_history"
+
 const val KEY_FOR_HISTORY_LIST = "KEY_FOR_HISTORY_LIST"
 
 
-class HistoryRepositoryImpl(context: Context) : HistoryRepository {
-
-
-    private var sharedPref = context.getSharedPreferences(SEARCH_HISTORY, Context.MODE_PRIVATE)
-
+class HistoryRepositoryImpl(
+    private val sharedPref: SharedPreferences,
+) : HistoryRepository {
 
     override fun updateTrackHistory(updatedHistory: String) {
         sharedPref.edit().putString(KEY_FOR_HISTORY_LIST, updatedHistory)

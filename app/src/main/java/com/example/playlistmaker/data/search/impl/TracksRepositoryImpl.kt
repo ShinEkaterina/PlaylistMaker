@@ -8,6 +8,7 @@ import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.data.search.network.ErrorCode
 import com.example.playlistmaker.util.Resource
 
+
 const val SUCCESS_RESULT_CODE = 200
 const val NO_INTERNET_RESULT_CODE = -1
 
