@@ -19,6 +19,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 const val ITUNES_BASE_URL = "https://itunes.apple.com"
 const val SHARED_PREFS_DARK_MODE = "shared_prefs_dark_mode"
 const val SHARED_PREFS_SEARCH_HISTORY = "search_history"
+const val LOCAL_STORAGE = "local_storage"
+
 
 
 val dataModule = module {
@@ -44,7 +46,7 @@ val dataModule = module {
 
     single {
         androidContext()
-            .getSharedPreferences("local_storage", Context.MODE_PRIVATE)
+            .getSharedPreferences(LOCAL_STORAGE, Context.MODE_PRIVATE)
     }
 
     single<HistoryRepository> {

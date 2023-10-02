@@ -53,7 +53,7 @@ class SearchViewModel(
     fun searchDebounce(changedText: String) {
         this.lastSearchText = changedText
         handler.removeCallbacks(searchRunnable)
-        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
+        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY_MILLIS)
     }
 
     fun getHistory(): ArrayList<Track> {
@@ -169,7 +169,7 @@ class SearchViewModel(
 
 
     companion object {
-        private const val SEARCH_DEBOUNCE_DELAY = 2000L
+        private const val SEARCH_DEBOUNCE_DELAY_MILLIS = 2000L
     }
 
 }

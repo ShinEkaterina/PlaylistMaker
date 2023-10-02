@@ -7,15 +7,15 @@ import com.example.playlistmaker.domain.navigation.InternalNavigationInteractor
 class MainViewModel(private val internalNavigationInteractor: InternalNavigationInteractor) :
     ViewModel() {
 
-    fun toSettingsScreen() {
+    fun goToSettingsScreen() {
         internalNavigationInteractor.toSettingsScreen()
     }
 
-    fun toLibraryScreen() {
+    fun goToLibraryScreen() {
         internalNavigationInteractor.toLibraryScreen()
     }
 
-    fun toSearchScreen() {
+    fun goToSearchScreen() {
         internalNavigationInteractor.toSearchScreen()
     }
 

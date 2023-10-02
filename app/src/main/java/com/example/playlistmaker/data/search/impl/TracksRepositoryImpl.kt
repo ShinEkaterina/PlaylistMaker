@@ -7,7 +7,6 @@ import com.example.playlistmaker.data.search.network.TracksSearchRequest
 import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.data.search.network.ErrorCode
 import com.example.playlistmaker.util.Resource
-import android.util.Log
 
 
 const val SUCCESS_RESULT_CODE = 200
@@ -25,7 +24,6 @@ class TrackRepositoryImpl(private val networkClient: NetworkClient) : TrackRepos
 
     override fun searchTracks(expression: String): Resource<List<Track>> {
         val response = networkClient.doRequest(TracksSearchRequest(expression))
-        Log.d("TAG", "$response")
 
         when (response.resultCode) {
             NO_INTERNET_RESULT_CODE -> {

@@ -18,14 +18,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.searchButton.setOnClickListener {
-            viewModel.toSearchScreen()
+            viewModel.goToSearchScreen()
         }
         binding.libraryButton.setOnClickListener {
-            viewModel.toLibraryScreen()
+            viewModel.goToLibraryScreen()
         }
         binding.settingsButton.setOnClickListener {
 
-            viewModel.toSettingsScreen()
+            viewModel.goToSettingsScreen()
         }
     }
 
