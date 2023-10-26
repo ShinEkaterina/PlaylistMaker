@@ -4,7 +4,7 @@ import com.example.playlistmaker.domain.model.Track
 
 interface InternalNavigationRepository {
 
-    fun toSettingsScreen()
+  //  fun toSettingsScreen()
 
     fun toLibraryScreen()
 

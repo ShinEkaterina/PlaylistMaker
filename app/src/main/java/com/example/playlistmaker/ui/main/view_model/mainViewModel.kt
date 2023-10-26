@@ -7,9 +7,9 @@ import com.example.playlistmaker.domain.navigation.InternalNavigationInteractor
 class MainViewModel(private val internalNavigationInteractor: InternalNavigationInteractor) :
     ViewModel() {
 
-    fun goToSettingsScreen() {
+/*    fun goToSettingsScreen() {
         internalNavigationInteractor.toSettingsScreen()
-    }
+    }*/
 
     fun goToLibraryScreen() {
         internalNavigationInteractor.toLibraryScreen()

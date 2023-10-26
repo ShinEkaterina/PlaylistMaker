@@ -6,9 +6,9 @@ import com.example.playlistmaker.domain.navigation.InternalNavigationInteractor
 
 class InternalNavigationInteractorImpl(private val internalNavigationRepository: InternalNavigationRepository) :
     InternalNavigationInteractor {
-    override fun toSettingsScreen() {
+/*    override fun toSettingsScreen() {
         internalNavigationRepository.toSettingsScreen()
-    }
+    }*/
 
     override fun toLibraryScreen() {
         internalNavigationRepository.toLibraryScreen()

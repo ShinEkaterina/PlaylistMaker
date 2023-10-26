@@ -7,16 +7,15 @@ import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.ui.library.activity.LibraryActivity
 import com.example.playlistmaker.ui.player.activity.AudioPlayerActivity
 import com.example.playlistmaker.ui.search.activity.SearchActivity
-import com.example.playlistmaker.ui.settings.activity.SettingsActivity
 import com.example.playlistmaker.util.App
 
 class InternalNavigationRepositoryImpl(private val context: Context) :
     InternalNavigationRepository {
-    override fun toSettingsScreen() {
+/*    override fun toSettingsScreen() {
         val displayIntent =
             Intent(context, SettingsActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(displayIntent)
-    }
+    }*/
 
     override fun toLibraryScreen() {
         val displayIntent =
