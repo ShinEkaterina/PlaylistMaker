@@ -14,9 +14,9 @@ class InternalNavigationInteractorImpl(private val internalNavigationRepository:
         internalNavigationRepository.toLibraryScreen()
     }
 
-    override fun toSearchScreen() {
+/*    override fun toSearchScreen() {
         internalNavigationRepository.toSearchScreen()
-    }
+    }*/
 
     override fun openTrack(track: Track) {
         internalNavigationRepository.openTrack(track)

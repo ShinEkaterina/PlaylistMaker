@@ -8,7 +8,7 @@ interface InternalNavigationRepository {
 
     fun toLibraryScreen()
 
-    fun toSearchScreen()
+   // fun toSearchScreen()
 
     fun openTrack(track: Track)
 

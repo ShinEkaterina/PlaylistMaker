@@ -7,56 +7,83 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.playlistmaker.ui.search.TrackAdapter
+import com.example.playlistmaker.R
+import com.example.playlistmaker.databinding.FragmentSearchBinding
 import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.presentation.player.model.ErrorType
 import com.example.playlistmaker.presentation.player.model.SearchScreenState
+import com.example.playlistmaker.ui.main.activity.MainFragment
+import com.example.playlistmaker.ui.search.TrackAdapter
 import com.example.playlistmaker.ui.search.view_model.SearchViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+class SearchFragment : Fragment(), TrackAdapter.Listener {
+    companion object {
+        const val SEARCH_TEXT = "SEARCH_TEXT"
+        private const val CLICK_DEBOUNCE_DELAY_ML = 1000L
 
-/*
-class SearchActivity : AppCompatActivity(), TrackAdapter.Listener {
+        const val TAG = "SearchFragment"
+
+        fun newInstance(): Fragment {
+            return SearchFragment()
+        }
+    }
 
     private var searchText: String = ""
-
-   // private lateinit var binding: ActivitySearchBinding
 
     private val searchTrackViewModel by viewModel<SearchViewModel>()
 
     private val handler = Handler(Looper.getMainLooper())
     private var isClickAllowed = true
-
-    companion object {
-        const val SEARCH_TEXT = "SEARCH_TEXT"
-        private const val CLICK_DEBOUNCE_DELAY_ML = 1000L
-    }
+    private lateinit var binding: FragmentSearchBinding
 
     private fun clickDebounce(): Boolean {
         val current = isClickAllowed
         if (isClickAllowed) {
             isClickAllowed = false
-            handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY_ML)
+            handler.postDelayed({ isClickAllowed = true }, SearchFragment.CLICK_DEBOUNCE_DELAY_ML)
         }
         return current
     }
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentSearchBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        binding = ActivitySearchBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        binding.searchToolbar.setNavigationOnClickListener { finish() }
+        binding.searchToolbar.setNavigationOnClickListener {
+            parentFragmentManager.commit {
+                replace(
+                    // Указали, в каком контейнере работаем
+                    R.id.rootFragmentContainerView,
+                    // Создали фрагмент
+                    MainFragment.newInstance(),
+                    // Указали тег фрагмента
+                    MainFragment.TAG
+                )
 
-        searchTrackViewModel.getSearchTrackStatusLiveData().observe(this) { updatedStatus ->
+                // Добавляем фрагмент в Back Stack
+                addToBackStack(MainFragment.TAG)
+            }
+        }
+
+        searchTrackViewModel.getSearchTrackStatusLiveData().observe(viewLifecycleOwner) { updatedStatus ->
             updatedViewBasedOnStatus(updatedStatus)
         }
 
@@ -67,9 +94,9 @@ class SearchActivity : AppCompatActivity(), TrackAdapter.Listener {
             binding.searchEditText.setText("")
 
             //Hide the keyboard
-            val keyboard = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+/*            val keyboard = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             keyboard.hideSoftInputFromWindow(binding.searchEditText.windowToken, 0)
-            binding.searchEditText.clearFocus()
+            binding.searchEditText.clearFocus()*/
 
             // show history
             searchTrackViewModel.showHistory()
@@ -118,7 +145,6 @@ class SearchActivity : AppCompatActivity(), TrackAdapter.Listener {
         }
     }
 
-
     private val searchTextWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             // empty
@@ -137,7 +163,6 @@ class SearchActivity : AppCompatActivity(), TrackAdapter.Listener {
         }
     }
 
-
     private fun clearButtonVisibility(s: CharSequence?): Int {
         return if (s.isNullOrEmpty()) {
             View.GONE
@@ -147,10 +172,10 @@ class SearchActivity : AppCompatActivity(), TrackAdapter.Listener {
     }
 
 
-    override fun onSaveInstanceState(outState: Bundle) {
+/*    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(SEARCH_TEXT, searchText)
-    }
+        outState.putString(SearchActivity.SEARCH_TEXT, searchText)
+    }*/
 
     fun updatedViewBasedOnStatus(updatedStatus: SearchScreenState) {
         when {
@@ -171,6 +196,7 @@ class SearchActivity : AppCompatActivity(), TrackAdapter.Listener {
         }
 
     }
+
     override fun onDestroy() {
         super.onDestroy()
         searchTrackViewModel.onDestroy()
@@ -184,65 +210,65 @@ class SearchActivity : AppCompatActivity(), TrackAdapter.Listener {
 
     fun showLoading() {
         binding.apply {
-            recycleViewTracks.isVisible = false
-            binding.trackNotFoundVidget.isVisible = false
-            binding.noInternetVidget.isVisible = false
-            progressBar.isVisible = true
-            clearHistoryButton.isVisible = false
-            searchHistory.isVisible = false
+            recycleViewTracks.visibility = View.GONE
+            binding.trackNotFoundVidget.visibility = View.GONE
+            binding.noInternetVidget.visibility = View.GONE
+            progressBar.visibility = View.VISIBLE
+            clearHistoryButton.visibility = View.GONE
+            searchHistory.visibility = View.GONE
         }
     }
 
     fun showError() {
         binding.apply {
-            recycleViewTracks.isVisible = false
-            progressBar.isVisible = false
-            clearHistoryButton.isVisible = false
-            searchHistory.isVisible = false
-            binding.trackNotFoundVidget.isVisible = false
-            binding.noInternetVidget.isVisible = true
+            recycleViewTracks.visibility = View.GONE
+            progressBar.visibility = View.GONE
+            clearHistoryButton.visibility = View.GONE
+            searchHistory.visibility = View.GONE
+            binding.trackNotFoundVidget.visibility = View.GONE
+            binding.noInternetVidget.visibility = View.VISIBLE
         }
     }
 
     fun showEmpty() {
         binding.apply {
-            recycleViewTracks.isVisible = false
-            progressBar.isVisible = false
-            clearHistoryButton.isVisible = false
-            searchHistory.isVisible = false
-            binding.trackNotFoundVidget.isVisible = true
-            binding.noInternetVidget.isVisible = false
+            recycleViewTracks.visibility = View.GONE
+            progressBar.visibility = View.GONE
+            clearHistoryButton.visibility = View.GONE
+            searchHistory.visibility = View.GONE
+            binding.trackNotFoundVidget.visibility = View.VISIBLE
+            binding.noInternetVidget.visibility = View.GONE
         }
     }
 
     fun showContent(tracks: List<Track>) {
         binding.apply {
-            recycleViewTracks.adapter = TrackAdapter(ArrayList(tracks), this@SearchActivity)
-            recycleViewTracks.isVisible = true
-            binding.trackNotFoundVidget.isVisible = false
-            binding.noInternetVidget.isVisible = false
-            progressBar.isVisible = false
-            clearHistoryButton.isVisible = false
-            searchHistory.isVisible = false
+            recycleViewTracks.adapter = TrackAdapter(ArrayList(tracks), this@SearchFragment)
+            recycleViewTracks.visibility = View.VISIBLE
+            binding.trackNotFoundVidget.visibility = View.GONE
+            binding.noInternetVidget.visibility = View.GONE
+            progressBar.visibility = View.GONE
+            clearHistoryButton.visibility = View.GONE
+            searchHistory.visibility = View.GONE
         }
     }
 
     fun showHistoryUI(updatedHistory: List<Track>) {
         binding.apply {
-            recycleViewTracks.adapter = TrackAdapter(ArrayList(updatedHistory), this@SearchActivity)
-            recycleViewTracks.isVisible = true
-            binding.trackNotFoundVidget.isVisible = false
-            binding.noInternetVidget.isVisible = false
-            progressBar.isVisible = false
-            clearHistoryButton.isVisible = true
-            searchHistory.isVisible = true
+            recycleViewTracks.adapter = TrackAdapter(ArrayList(updatedHistory), this@SearchFragment)
+            recycleViewTracks.visibility = View.VISIBLE
+            binding.trackNotFoundVidget.visibility = View.GONE
+            binding.noInternetVidget.visibility = View.GONE
+            progressBar.visibility = View.GONE
+            clearHistoryButton.visibility = View.VISIBLE
+            searchHistory.visibility = View.VISIBLE
 
         }
     }
 
     fun showHistoryIsEmpty(updatedHistory: List<Track>) {
         binding.apply {
-            recycleViewTracks.adapter = TrackAdapter(ArrayList(updatedHistory), this@SearchActivity)
+            recycleViewTracks.adapter = TrackAdapter(ArrayList(updatedHistory), this@SearchFragment)
             recycleViewTracks.visibility = View.VISIBLE
             binding.trackNotFoundVidget.setVisibility(View.GONE)
             binding.noInternetVidget.setVisibility(View.GONE)
@@ -255,7 +281,7 @@ class SearchActivity : AppCompatActivity(), TrackAdapter.Listener {
 
     private fun init() {
         binding.apply {
-            recycleViewTracks.layoutManager = LinearLayoutManager(this@SearchActivity)
+            recycleViewTracks.layoutManager = LinearLayoutManager(requireContext())
         }
     }
-}*/
+}

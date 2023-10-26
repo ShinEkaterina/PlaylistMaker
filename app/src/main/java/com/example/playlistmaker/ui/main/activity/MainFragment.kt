@@ -9,6 +9,7 @@ import androidx.fragment.app.commit
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.FragmentMainBinding
 import com.example.playlistmaker.ui.main.view_model.MainViewModel
+import com.example.playlistmaker.ui.search.activity.SearchFragment
 import com.example.playlistmaker.ui.settings.activity.SettingsFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -38,7 +39,20 @@ class MainFragment:Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.searchButton.setOnClickListener {
-            viewModel.goToSearchScreen()
+           // viewModel.goToSearchScreen()
+            parentFragmentManager.commit {
+                replace(
+                    // Указали, в каком контейнере работаем
+                    R.id.rootFragmentContainerView,
+                    // Создали фрагмент
+                    SearchFragment.newInstance(),
+                    // Указали тег фрагмента
+                    SearchFragment.TAG
+                )
+
+                // Добавляем фрагмент в Back Stack
+                addToBackStack(SearchFragment.TAG)
+            }
         }
         binding.libraryButton.setOnClickListener {
             viewModel.goToLibraryScreen()
