@@ -1,7 +1,7 @@
 package com.example.playlistmaker.ui.search.activity
 
 import android.annotation.SuppressLint
-import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -83,9 +83,10 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
             }
         }
 
-        searchTrackViewModel.getSearchTrackStatusLiveData().observe(viewLifecycleOwner) { updatedStatus ->
-            updatedViewBasedOnStatus(updatedStatus)
-        }
+        searchTrackViewModel.getSearchTrackStatusLiveData()
+            .observe(viewLifecycleOwner) { updatedStatus ->
+                updatedViewBasedOnStatus(updatedStatus)
+            }
 
         binding.searchEditText.setText(searchText)
 
@@ -94,9 +95,10 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
             binding.searchEditText.setText("")
 
             //Hide the keyboard
-/*            val keyboard = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val keyboard =
+                requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             keyboard.hideSoftInputFromWindow(binding.searchEditText.windowToken, 0)
-            binding.searchEditText.clearFocus()*/
+            binding.searchEditText.clearFocus()
 
             // show history
             searchTrackViewModel.showHistory()
@@ -172,10 +174,10 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
     }
 
 
-/*    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(SearchActivity.SEARCH_TEXT, searchText)
-    }*/
+    /*    override fun onSaveInstanceState(outState: Bundle) {
+            super.onSaveInstanceState(outState)
+            outState.putString(SearchActivity.SEARCH_TEXT, searchText)
+        }*/
 
     fun updatedViewBasedOnStatus(updatedStatus: SearchScreenState) {
         when {
@@ -197,8 +199,8 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         searchTrackViewModel.onDestroy()
     }
 

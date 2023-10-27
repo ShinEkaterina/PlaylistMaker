@@ -10,9 +10,9 @@ class InternalNavigationInteractorImpl(private val internalNavigationRepository:
         internalNavigationRepository.toSettingsScreen()
     }*/
 
-    override fun toLibraryScreen() {
+/*    override fun toLibraryScreen() {
         internalNavigationRepository.toLibraryScreen()
-    }
+    }*/
 
 /*    override fun toSearchScreen() {
         internalNavigationRepository.toSearchScreen()

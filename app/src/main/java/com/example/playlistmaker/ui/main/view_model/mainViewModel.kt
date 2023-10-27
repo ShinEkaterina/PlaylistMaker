@@ -11,9 +11,9 @@ class MainViewModel(private val internalNavigationInteractor: InternalNavigation
         internalNavigationInteractor.toSettingsScreen()
     }*/
 
-    fun goToLibraryScreen() {
+/*    fun goToLibraryScreen() {
         internalNavigationInteractor.toLibraryScreen()
-    }
+    }*/
 
 /*    fun goToSearchScreen() {
         internalNavigationInteractor.toSearchScreen()

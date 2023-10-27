@@ -6,7 +6,7 @@ interface InternalNavigationInteractor {
 
    // fun toSettingsScreen()
 
-    fun toLibraryScreen()
+   // fun toLibraryScreen()
 
    // fun toSearchScreen()
 

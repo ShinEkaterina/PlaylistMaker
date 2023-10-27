@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.FragmentMainBinding
+import com.example.playlistmaker.ui.library.activity.LibraryFragment
 import com.example.playlistmaker.ui.main.view_model.MainViewModel
 import com.example.playlistmaker.ui.search.activity.SearchFragment
 import com.example.playlistmaker.ui.settings.activity.SettingsFragment
@@ -55,7 +56,20 @@ class MainFragment:Fragment() {
             }
         }
         binding.libraryButton.setOnClickListener {
-            viewModel.goToLibraryScreen()
+           // viewModel.goToLibraryScreen()
+            parentFragmentManager.commit {
+                replace(
+                    // Указали, в каком контейнере работаем
+                    R.id.rootFragmentContainerView,
+                    // Создали фрагмент
+                    LibraryFragment.newInstance(),
+                    // Указали тег фрагмента
+                    LibraryFragment.TAG
+                )
+
+                // Добавляем фрагмент в Back Stack
+                addToBackStack(LibraryFragment.TAG)
+            }
         }
         binding.settingsButton.setOnClickListener {
 

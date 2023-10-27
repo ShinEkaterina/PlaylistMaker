@@ -32,12 +32,6 @@
         <activity
             android:name=".ui.player.activity.AudioPlayerActivity"
             android:exported="false" />
-        <activity
-            android:name=".ui.search.activity.SearchActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.library.activity.LibraryActivity"
-            android:exported="false" />
     </application>
 
 </manifest>

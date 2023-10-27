@@ -1,10 +1,15 @@
 package com.example.playlistmaker.ui.library
 
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.playlistmaker.ui.library.activity.LibraryActivity
 
-class ViewPageLibraryAdapter (libraryActivity: LibraryActivity, private val list: List<Fragment>): FragmentStateAdapter(libraryActivity) {
+class ViewPageLibraryAdapter(
+    fragmentManager: FragmentManager,
+    lifecycle: Lifecycle,
+    private val list: List<Fragment>
+) : FragmentStateAdapter(fragmentManager, lifecycle) {
 
     override fun getItemCount(): Int {
         return list.size
