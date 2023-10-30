@@ -1,4 +1,4 @@
-package com.example.playlistmaker.ui.search.activity
+package com.example.playlistmaker.ui.search.fragment
 
 import android.annotation.SuppressLint
 import android.content.Context.INPUT_METHOD_SERVICE
@@ -20,6 +20,7 @@ import com.example.playlistmaker.databinding.FragmentSearchBinding
 import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.presentation.player.model.ErrorType
 import com.example.playlistmaker.presentation.player.model.SearchScreenState
+import com.example.playlistmaker.ui.player.activity.AudioPlayerActivity
 import com.example.playlistmaker.ui.search.TrackAdapter
 import com.example.playlistmaker.ui.search.view_model.SearchViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -28,12 +29,6 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
     companion object {
         const val SEARCH_TEXT = "SEARCH_TEXT"
         private const val CLICK_DEBOUNCE_DELAY_ML = 1000L
-
-        const val TAG = "SearchFragment"
-
-        fun newInstance(): Fragment {
-            return SearchFragment()
-        }
     }
 
     private var searchText: String = ""
@@ -128,7 +123,10 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
         if (clickDebounce()) {
             searchTrackViewModel.addNewTrackToHistory(track)
             searchTrackViewModel.getHistory()
-            findNavController().navigate(R.id.action_searchFragment_to_audioPlayerActivity)
+            findNavController().navigate(
+                R.id.action_searchFragment_to_audioPlayerActivity,
+                AudioPlayerActivity.createArgs(track)
+            )
 
         }
     }

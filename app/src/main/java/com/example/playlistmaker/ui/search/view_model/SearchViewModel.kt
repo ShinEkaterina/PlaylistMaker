@@ -78,9 +78,6 @@ class SearchViewModel(
         historyInteractor.addTrackToHistory(track)
     }
 
-/*    fun openTrackAudioPlayer(track: Track) {
-        internalNavigationInteractor.openTrack(track)
-    }*/
 
     fun searchAction(newSearchText: String) {
 

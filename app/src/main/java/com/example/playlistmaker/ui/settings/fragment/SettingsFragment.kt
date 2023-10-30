@@ -1,4 +1,4 @@
-package com.example.playlistmaker.ui.settings.activity
+package com.example.playlistmaker.ui.settings.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,21 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.FragmentSettingsBinding
 import com.example.playlistmaker.ui.settings.view_model.SettingsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SettingsFragment: Fragment() {
-    companion object{
-        const val TAG = "SettingsFragment"
+class SettingsFragment : Fragment() {
 
-        fun newInstance(): Fragment {
-            return SettingsFragment()
-        }
-    }
-    private lateinit var binding:FragmentSettingsBinding
+    private lateinit var binding: FragmentSettingsBinding
     private val viewModel by viewModel<SettingsViewModel>()
 
     override fun onCreateView(
@@ -28,7 +21,7 @@ class SettingsFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSettingsBinding.inflate(inflater,container,false)
+        binding = FragmentSettingsBinding.inflate(inflater, container, false)
         return binding.root
     }
 

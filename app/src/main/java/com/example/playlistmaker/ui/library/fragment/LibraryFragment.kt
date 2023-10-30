@@ -1,11 +1,10 @@
-package com.example.playlistmaker.ui.library.activity
+package com.example.playlistmaker.ui.library.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.FragmentLibraryBinding
 import com.example.playlistmaker.ui.library.ViewPageLibraryAdapter
@@ -13,13 +12,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 
 class LibraryFragment : Fragment() {
-    companion object {
-        const val TAG = "LibraryFragment"
 
-        fun newInstance(): Fragment {
-            return LibraryFragment()
-        }
-    }
 
     private val fragList = listOf(
         LibraryTracksFragment.newInstance(),
@@ -46,11 +39,11 @@ class LibraryFragment : Fragment() {
             getString(R.string.fav_playlists)
         )
 
-
         val adapter = ViewPageLibraryAdapter(
             fragmentManager = childFragmentManager,
             lifecycle = lifecycle,
-            fragList)
+            fragList
+        )
         binding.viewPagerLibrary.adapter = adapter
 
         tabMediator = TabLayoutMediator(binding.tabLayout, binding.viewPagerLibrary) { tab, pos ->

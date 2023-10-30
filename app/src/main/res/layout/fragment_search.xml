@@ -3,10 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?attr/colorSecondary"
     android:orientation="vertical"
-    tools:context="com.example.playlistmaker.ui.search.activity.SearchFragment">
+    tools:context="com.example.playlistmaker.ui.search.fragment.SearchFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/searchToolbar"
@@ -104,7 +103,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="24dp"
         android:layout_weight="0"
-        android:text="Очистить историю"
+        android:text="@string/clear_history"
         android:textAllCaps="false"
         android:textSize="@dimen/text_size_14" />
 
