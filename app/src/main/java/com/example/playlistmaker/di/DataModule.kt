@@ -2,8 +2,8 @@ package com.example.playlistmaker.di
 
 import android.content.Context
 import android.media.MediaPlayer
-import com.example.playlistmaker.data.navigation.history.HistoryRepository
-import com.example.playlistmaker.data.navigation.history.impl.HistoryRepositoryImpl
+import com.example.playlistmaker.data.history.HistoryRepository
+import com.example.playlistmaker.data.history.impl.HistoryRepositoryImpl
 import com.example.playlistmaker.data.search.NetworkClient
 import com.example.playlistmaker.data.search.network.RetrofitNetworkClient
 import com.example.playlistmaker.data.search.network.iTunesApi

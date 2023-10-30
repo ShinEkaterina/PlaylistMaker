@@ -1,9 +1,7 @@
 package com.example.playlistmaker.di
 
-import com.example.playlistmaker.data.navigation.InternalNavigationRepository
-import com.example.playlistmaker.data.navigation.history.HistoryRepository
-import com.example.playlistmaker.data.navigation.history.impl.HistoryRepositoryImpl
-import com.example.playlistmaker.data.navigation.impl.InternalNavigationRepositoryImpl
+import com.example.playlistmaker.data.history.HistoryRepository
+import com.example.playlistmaker.data.history.impl.HistoryRepositoryImpl
 import com.example.playlistmaker.data.player.AudioPlayerRepositoryImpl
 import com.example.playlistmaker.data.search.TrackRepository
 import com.example.playlistmaker.data.search.impl.TrackRepositoryImpl
@@ -22,9 +20,6 @@ val repositoryModule = module {
         TrackRepositoryImpl(get())
     }
 
-    single<InternalNavigationRepository> {
-        InternalNavigationRepositoryImpl(androidContext())
-    }
 
     single<AudioPlayerRepository> {
         AudioPlayerRepositoryImpl(get())

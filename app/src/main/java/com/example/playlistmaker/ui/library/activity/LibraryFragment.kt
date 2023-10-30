@@ -9,7 +9,6 @@ import androidx.fragment.app.commit
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.FragmentLibraryBinding
 import com.example.playlistmaker.ui.library.ViewPageLibraryAdapter
-import com.example.playlistmaker.ui.main.activity.MainFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 
@@ -46,21 +45,7 @@ class LibraryFragment : Fragment() {
             getString(R.string.fav_tracks),
             getString(R.string.fav_playlists)
         )
-        binding.libraryToolbar.setOnClickListener {
-            parentFragmentManager.commit {
-                replace(
-                    // Указали, в каком контейнере работаем
-                    R.id.rootFragmentContainerView,
-                    // Создали фрагмент
-                    MainFragment.newInstance(),
-                    // Указали тег фрагмента
-                    MainFragment.TAG
-                )
 
-                // Добавляем фрагмент в Back Stack
-                addToBackStack(MainFragment.TAG)
-            }
-        }
 
         val adapter = ViewPageLibraryAdapter(
             fragmentManager = childFragmentManager,

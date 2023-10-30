@@ -2,8 +2,6 @@ package com.example.playlistmaker.di
 
 import com.example.playlistmaker.domain.history.HistoryInteractor
 import com.example.playlistmaker.domain.history.impl.HistoryInteractorImpl
-import com.example.playlistmaker.domain.navigation.InternalNavigationInteractor
-import com.example.playlistmaker.domain.navigation.impl.InternalNavigationInteractorImpl
 import com.example.playlistmaker.domain.player.api.AudioPlayerInteractor
 import com.example.playlistmaker.domain.player.impl.AudioPlayerInteractorImpl
 import com.example.playlistmaker.domain.search.TracksInteractor
@@ -12,7 +10,6 @@ import com.example.playlistmaker.domain.settings.SettingsInteractor
 import com.example.playlistmaker.domain.settings.impl.SettingsInteractorImpl
 import com.example.playlistmaker.domain.sharing.SharingInteractor
 import com.example.playlistmaker.domain.sharing.impl.SharingInteractorImpl
-import com.google.gson.Gson
 import org.koin.dsl.module
 
 val interactorModule = module {
@@ -25,9 +22,6 @@ val interactorModule = module {
         HistoryInteractorImpl(get())
     }
 
-    single<InternalNavigationInteractor> {
-        InternalNavigationInteractorImpl(get())
-    }
 
     single<AudioPlayerInteractor> {
         AudioPlayerInteractorImpl(get())

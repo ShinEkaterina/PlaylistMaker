@@ -5,12 +5,13 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?attr/colorSecondary"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.example.playlistmaker.ui.search.activity.SearchFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/searchToolbar"
         style="@style/ToolBarStyle"
-        app:navigationIcon="@drawable/ic_arrow_back">
+        >
 
         <TextView
             style="@style/TextHeaderStyle"

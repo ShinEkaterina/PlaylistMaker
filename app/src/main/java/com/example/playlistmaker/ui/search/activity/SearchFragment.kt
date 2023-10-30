@@ -13,14 +13,13 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.FragmentSearchBinding
 import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.presentation.player.model.ErrorType
 import com.example.playlistmaker.presentation.player.model.SearchScreenState
-import com.example.playlistmaker.ui.main.activity.MainFragment
 import com.example.playlistmaker.ui.search.TrackAdapter
 import com.example.playlistmaker.ui.search.view_model.SearchViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -67,21 +66,7 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.searchToolbar.setNavigationOnClickListener {
-            parentFragmentManager.commit {
-                replace(
-                    // Указали, в каком контейнере работаем
-                    R.id.rootFragmentContainerView,
-                    // Создали фрагмент
-                    MainFragment.newInstance(),
-                    // Указали тег фрагмента
-                    MainFragment.TAG
-                )
 
-                // Добавляем фрагмент в Back Stack
-                addToBackStack(MainFragment.TAG)
-            }
-        }
 
         searchTrackViewModel.getSearchTrackStatusLiveData()
             .observe(viewLifecycleOwner) { updatedStatus ->
@@ -143,7 +128,8 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
         if (clickDebounce()) {
             searchTrackViewModel.addNewTrackToHistory(track)
             searchTrackViewModel.getHistory()
-            searchTrackViewModel.openTrackAudioPlayer(track)
+            findNavController().navigate(R.id.action_searchFragment_to_audioPlayerActivity)
+
         }
     }
 
