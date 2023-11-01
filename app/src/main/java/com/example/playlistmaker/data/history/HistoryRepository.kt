@@ -1,4 +1,4 @@
-package com.example.playlistmaker.data.navigation.history
+package com.example.playlistmaker.data.history
 
 interface HistoryRepository {
 

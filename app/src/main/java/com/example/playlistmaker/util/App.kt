@@ -11,20 +11,11 @@ import com.example.playlistmaker.di.dataModule
 import com.example.playlistmaker.di.interactorModule
 import com.example.playlistmaker.di.repositoryModule
 import com.example.playlistmaker.di.viewModelModule
-import org.koin.android.ext.android.inject
 
 
 class App : Application(), KoinComponent {
 
-    /*    var darkTheme = ThemeSettings.MODE_DARK_NO*/
-   // private val settingsInteractor: SettingsInteractor by inject()
-
-    companion object {
-        const val TRACK = "track"
-    }
-
     override fun onCreate() {
-
         startKoin {
             androidContext(this@App)
             modules(
@@ -48,5 +39,9 @@ class App : Application(), KoinComponent {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
 
+    }
+
+    companion object {
+        const val TRACK = "track"
     }
 }

@@ -1,27 +1,34 @@
-package com.example.playlistmaker.ui.settings.activity
-
+package com.example.playlistmaker.ui.settings.fragment
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
 import com.example.playlistmaker.R
-import com.example.playlistmaker.databinding.ActivitySettingsBinding
+import com.example.playlistmaker.databinding.FragmentSettingsBinding
 import com.example.playlistmaker.ui.settings.view_model.SettingsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SettingsActivity : AppCompatActivity() {
+class SettingsFragment : Fragment() {
 
-    private lateinit var binding: ActivitySettingsBinding
     private val viewModel by viewModel<SettingsViewModel>()
+    private var _binding: FragmentSettingsBinding? = null
+    private val binding get() = _binding!!
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivitySettingsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        viewModel.getModeLiveData().observe(this) { isDarkMode ->
+        viewModel.getModeLiveData().observe(viewLifecycleOwner) { isDarkMode ->
             changeThemeMode(isDarkMode)
         }
 
@@ -44,7 +51,6 @@ class SettingsActivity : AppCompatActivity() {
             viewModel.legalAgreement()
         }
 
-        binding.toolbar.setNavigationOnClickListener { finish() }
     }
 
     private fun changeThemeMode(isDarkMode: Boolean) {
@@ -57,4 +63,8 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

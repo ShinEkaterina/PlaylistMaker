@@ -8,21 +8,18 @@ import androidx.lifecycle.ViewModel
 import com.example.playlistmaker.data.search.network.ErrorCode
 import com.example.playlistmaker.domain.history.HistoryInteractor
 import com.example.playlistmaker.domain.model.Track
-import com.example.playlistmaker.domain.navigation.InternalNavigationInteractor
 import com.example.playlistmaker.domain.search.TracksInteractor
 import com.example.playlistmaker.presentation.player.model.ErrorType
 import com.example.playlistmaker.presentation.player.model.SearchScreenState
 
 class SearchViewModel(
     private val searchInteractor: TracksInteractor,
-    private val historyInteractor: HistoryInteractor,
-    private val internalNavigationInteractor: InternalNavigationInteractor
+    private val historyInteractor: HistoryInteractor
 ) : ViewModel() {
 
     private var searchTrackStatusLiveData = MutableLiveData<SearchScreenState>()
 
     fun getSearchTrackStatusLiveData(): LiveData<SearchScreenState> = searchTrackStatusLiveData
-
 
     private var trackList = ArrayList<Track>()
     private val handler = Handler(Looper.getMainLooper())
@@ -80,9 +77,6 @@ class SearchViewModel(
         historyInteractor.addTrackToHistory(track)
     }
 
-    fun openTrackAudioPlayer(track: Track) {
-        internalNavigationInteractor.openTrack(track)
-    }
 
     fun searchAction(newSearchText: String) {
 
@@ -166,7 +160,6 @@ class SearchViewModel(
             }
         })
     }
-
 
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY_MILLIS = 2000L

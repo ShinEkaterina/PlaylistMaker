@@ -15,7 +15,6 @@ import java.util.Locale
 
 class TrackAdapter(var tracks: ArrayList<Track>, var listener: Listener) :
     RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
-    // var tracks: ArrayList<Track> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val layoutInspector = LayoutInflater.from(parent.context)

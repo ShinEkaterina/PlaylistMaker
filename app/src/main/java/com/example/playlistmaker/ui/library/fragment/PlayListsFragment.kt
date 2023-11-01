@@ -1,4 +1,4 @@
-package com.example.playlistmaker.ui.library.activity
+package com.example.playlistmaker.ui.library.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,8 +17,10 @@ class PlayListsFragment : Fragment() {
     private var _binding: FragmentLibraryPlaylistsBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         _binding = FragmentLibraryPlaylistsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -28,7 +30,10 @@ class PlayListsFragment : Fragment() {
 
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     companion object {
         @JvmStatic

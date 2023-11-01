@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
@@ -14,7 +15,6 @@ import com.example.playlistmaker.presentation.Formater
 import com.example.playlistmaker.presentation.Mapper
 import com.example.playlistmaker.presentation.player.model.TrackInfo
 import com.example.playlistmaker.ui.player.view_model.AudioPlayerViewModel
-import com.example.playlistmaker.util.App.Companion.TRACK
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -29,7 +29,9 @@ class AudioPlayerActivity() : AppCompatActivity() {
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //Go back arrow button
-        binding.toolbar.setNavigationOnClickListener { finish() }
+        binding.toolbar.setNavigationOnClickListener {
+            finish()
+        }
 
         //define track
         val track = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -50,7 +52,7 @@ class AudioPlayerActivity() : AppCompatActivity() {
         }
         viewModel.preparePlayer(url)
 
-        binding.ivPlayButton.setOnClickListener{
+        binding.ivPlayButton.setOnClickListener {
             viewModel.changePlayerState()
         }
         viewModel.preparePlayer(url)
@@ -74,7 +76,7 @@ class AudioPlayerActivity() : AppCompatActivity() {
 
             PlayerState.STATE_PREPARED, PlayerState.STATE_DEFAULT -> {
                 binding.ivPlayButton.setImageResource(R.drawable.play_button)
-                binding.tvDurationPlay.text = "00:00"
+                binding.tvDurationPlay.text = getString(R.string.time_00)
             }
         }
     }
@@ -118,4 +120,9 @@ class AudioPlayerActivity() : AppCompatActivity() {
             .into(binding.trackImage)
     }
 
+    companion object {
+        const val TRACK = "track"
+
+        fun createArgs(track: Track): Bundle = bundleOf(TRACK to track)
+    }
 }

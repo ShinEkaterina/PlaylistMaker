@@ -1,4 +1,4 @@
-package com.example.playlistmaker.ui.library.activity
+package com.example.playlistmaker.ui.library.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,6 @@ import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 
 class LibraryTracksFragment : Fragment() {
-
     private val libTracksFragmentViewModel: LibraryTracksFragmentViewModel by activityViewModel()
 
     private var _binding: FragmentLibraryTracksBinding? = null
@@ -21,13 +20,18 @@ class LibraryTracksFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentLibraryTracksBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

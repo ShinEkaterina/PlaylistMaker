@@ -93,7 +93,6 @@ class AudioPlayerViewModel(
     }
 
     companion object {
-
         const val DELAY_UPDATE_TIMER_MC = 300L
     }
 }

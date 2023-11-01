@@ -1,6 +1,6 @@
 package com.example.playlistmaker.domain.history.impl
 
-import com.example.playlistmaker.data.navigation.history.HistoryRepository
+import com.example.playlistmaker.data.history.HistoryRepository
 import com.example.playlistmaker.domain.history.HistoryInteractor
 import com.example.playlistmaker.domain.model.Track
 import com.google.gson.Gson
