@@ -9,6 +9,7 @@
     >
 
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:background="?attr/colorSecondary"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -175,7 +176,6 @@
         app:layout_constraintBottom_toTopOf="@+id/tvDurationPlay"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toStartOf="@+id/leftBorder" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

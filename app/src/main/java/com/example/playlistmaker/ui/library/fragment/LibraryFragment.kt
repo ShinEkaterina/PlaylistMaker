@@ -10,25 +10,27 @@ import com.example.playlistmaker.databinding.FragmentLibraryBinding
 import com.example.playlistmaker.ui.library.ViewPageLibraryAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
-
 class LibraryFragment : Fragment() {
 
-
-    private val fragList = listOf(
+    private val fragmentList = listOf(
         LibraryTracksFragment.newInstance(),
         PlayListsFragment.newInstance()
     )
     private lateinit var fragListTitles: List<String>
     private lateinit var tabMediator: TabLayoutMediator
-    private lateinit var binding: FragmentLibraryBinding
+
+    private var _binding: FragmentLibraryBinding? = null
+    private val binding get() = _binding!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentLibraryBinding.inflate(inflater, container, false)
-        return binding.root
+        _binding = FragmentLibraryBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,7 +44,7 @@ class LibraryFragment : Fragment() {
         val adapter = ViewPageLibraryAdapter(
             fragmentManager = childFragmentManager,
             lifecycle = lifecycle,
-            fragList
+            fragmentList
         )
         binding.viewPagerLibrary.adapter = adapter
 
@@ -54,6 +56,7 @@ class LibraryFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        _binding = null
         tabMediator.detach()
 
     }

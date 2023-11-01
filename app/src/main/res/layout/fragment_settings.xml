@@ -10,11 +10,9 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/ToolBarStyle">
-
         <TextView
             style="@style/TextHeaderStyle"
             android:text="@string/settings" />
-
     </androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.switchmaterial.SwitchMaterial
@@ -28,42 +26,30 @@
         android:textSize="@dimen/text_size_16" />
 
     <LinearLayout style="@style/SettingsElementStyle">
-
         <TextView
             style="@style/SettingsTextStyle"
             android:text="@string/share_app" />
-
         <ImageView
             android:id="@+id/shareAppIcon"
             style="@style/SettingsIconStyle"
             android:src="@drawable/ic_share" />
-
     </LinearLayout>
-
     <LinearLayout style="@style/SettingsElementStyle">
-
         <TextView
             style="@style/SettingsTextStyle"
             android:text="@string/write_to_support" />
-
         <ImageView
             android:id="@+id/supportIcon"
             style="@style/SettingsIconStyle"
             android:src="@drawable/ic_support" />
-
     </LinearLayout>
-
     <LinearLayout style="@style/SettingsElementStyle">
-
         <TextView
             style="@style/SettingsTextStyle"
             android:text="@string/user_agreement" />
-
         <ImageView
             android:id="@+id/agreementIcon"
             style="@style/SettingsIconStyle"
             android:src="@drawable/ic_arrow_forward" />
-
     </LinearLayout>
-
 </LinearLayout>

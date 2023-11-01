@@ -165,7 +165,5 @@
                 android:textAllCaps="false"
                 android:textSize="@dimen/text_size_14" />
         </LinearLayout>
-
     </FrameLayout>
-
 </LinearLayout>

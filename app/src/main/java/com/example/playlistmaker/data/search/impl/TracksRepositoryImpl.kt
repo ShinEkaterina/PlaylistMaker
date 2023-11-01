@@ -15,13 +15,6 @@ const val NO_INTERNET_RESULT_CODE = -1
 
 class TrackRepositoryImpl(private val networkClient: NetworkClient) : TrackRepository {
 
-    companion object {
-        private const val UNKNOWN_ERROR_MESSAGE = "Server error"
-        private const val NO_INTERNET_MESSAGE = "Check internet connection"
-        private const val NOTHING_FOUND_MESSAGE = "Nothing found. Results list is empty"
-
-    }
-
     override fun searchTracks(expression: String): Resource<List<Track>> {
         val response = networkClient.doRequest(TracksSearchRequest(expression))
 
@@ -58,6 +51,12 @@ class TrackRepositoryImpl(private val networkClient: NetworkClient) : TrackRepos
                 return Resource.Error(ErrorCode.UNKNOWN_ERROR, UNKNOWN_ERROR_MESSAGE)
             }
         }
+    }
+
+    companion object {
+        private const val UNKNOWN_ERROR_MESSAGE = "Server error"
+        private const val NO_INTERNET_MESSAGE = "Check internet connection"
+        private const val NOTHING_FOUND_MESSAGE = "Nothing found. Results list is empty"
     }
 }
 

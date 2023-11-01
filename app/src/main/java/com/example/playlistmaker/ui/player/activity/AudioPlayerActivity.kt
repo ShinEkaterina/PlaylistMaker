@@ -20,13 +20,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AudioPlayerActivity() : AppCompatActivity() {
 
-    companion object {
-        const val TRACK = "track"
-
-        fun createArgs(track: Track): Bundle = bundleOf(TRACK to track)
-
-    }
-
     private lateinit var binding: ActivityPlayerBinding
     private val viewModel by viewModel<AudioPlayerViewModel>()
 
@@ -46,8 +39,6 @@ class AudioPlayerActivity() : AppCompatActivity() {
         } else {
             intent.getParcelableExtra(TRACK)
         } as Track
-
-
 
         val trackInfo = Mapper.mapTrackToTrackInfo(track)
         val url = track.previewUrl // url превью 30 сек.
@@ -129,4 +120,9 @@ class AudioPlayerActivity() : AppCompatActivity() {
             .into(binding.trackImage)
     }
 
+    companion object {
+        const val TRACK = "track"
+
+        fun createArgs(track: Track): Bundle = bundleOf(TRACK to track)
+    }
 }

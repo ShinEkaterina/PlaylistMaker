@@ -11,7 +11,6 @@ import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 
 class LibraryTracksFragment : Fragment() {
-
     private val libTracksFragmentViewModel: LibraryTracksFragmentViewModel by activityViewModel()
 
     private var _binding: FragmentLibraryTracksBinding? = null
@@ -21,7 +20,7 @@ class LibraryTracksFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentLibraryTracksBinding.inflate(inflater, container, false)
         return binding.root
     }

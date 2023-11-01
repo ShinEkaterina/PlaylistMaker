@@ -21,7 +21,6 @@ class SearchViewModel(
 
     fun getSearchTrackStatusLiveData(): LiveData<SearchScreenState> = searchTrackStatusLiveData
 
-
     private var trackList = ArrayList<Track>()
     private val handler = Handler(Looper.getMainLooper())
     private var lastSearchText: String? = null
@@ -161,7 +160,6 @@ class SearchViewModel(
             }
         })
     }
-
 
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY_MILLIS = 2000L

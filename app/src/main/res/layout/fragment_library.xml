@@ -15,7 +15,6 @@
         android:id="@+id/library_toolbar"
         style="@style/ToolBarStyle"
         >
-
         <TextView
             style="@style/TextHeaderStyle"
             android:text="@string/library" />

@@ -26,10 +26,6 @@ import com.example.playlistmaker.ui.search.view_model.SearchViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment(), TrackAdapter.Listener {
-    companion object {
-        const val SEARCH_TEXT = "SEARCH_TEXT"
-        private const val CLICK_DEBOUNCE_DELAY_ML = 1000L
-    }
 
     private var searchText: String = ""
 
@@ -37,13 +33,15 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
 
     private val handler = Handler(Looper.getMainLooper())
     private var isClickAllowed = true
-    private lateinit var binding: FragmentSearchBinding
+
+    private var _binding: FragmentSearchBinding? = null
+    private val binding get() = _binding!!
 
     private fun clickDebounce(): Boolean {
         val current = isClickAllowed
         if (isClickAllowed) {
             isClickAllowed = false
-            handler.postDelayed({ isClickAllowed = true }, SearchFragment.CLICK_DEBOUNCE_DELAY_ML)
+            handler.postDelayed({ isClickAllowed = true }, SearchFragment.CLICK_DEBOUNCE_DELAY_MLS)
         }
         return current
     }
@@ -54,7 +52,7 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSearchBinding.inflate(inflater, container, false)
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -156,12 +154,6 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
             View.VISIBLE
         }
     }
-
-
-    /*    override fun onSaveInstanceState(outState: Bundle) {
-            super.onSaveInstanceState(outState)
-            outState.putString(SearchActivity.SEARCH_TEXT, searchText)
-        }*/
 
     fun updatedViewBasedOnStatus(updatedStatus: SearchScreenState) {
         when {
@@ -269,5 +261,10 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
         binding.apply {
             recycleViewTracks.layoutManager = LinearLayoutManager(requireContext())
         }
+    }
+
+    companion object {
+        const val SEARCH_TEXT = "SEARCH_TEXT"
+        private const val CLICK_DEBOUNCE_DELAY_MLS = 1000L
     }
 }
