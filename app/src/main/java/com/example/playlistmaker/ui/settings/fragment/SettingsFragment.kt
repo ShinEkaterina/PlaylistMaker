@@ -51,7 +51,6 @@ class SettingsFragment : Fragment() {
             viewModel.legalAgreement()
         }
 
-
     }
 
     private fun changeThemeMode(isDarkMode: Boolean) {
@@ -62,5 +61,10 @@ class SettingsFragment : Fragment() {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             binding.themeSwitcher.isChecked = false
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

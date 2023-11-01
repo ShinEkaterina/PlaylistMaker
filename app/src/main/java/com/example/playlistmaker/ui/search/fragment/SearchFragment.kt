@@ -41,7 +41,7 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
         val current = isClickAllowed
         if (isClickAllowed) {
             isClickAllowed = false
-            handler.postDelayed({ isClickAllowed = true }, SearchFragment.CLICK_DEBOUNCE_DELAY_MLS)
+            handler.postDelayed({ isClickAllowed = true }, SearchFragment.CLICK_DEBOUNCE_DELAY_MILLISECONDS)
         }
         return current
     }
@@ -177,6 +177,7 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        _binding = null
         searchTrackViewModel.onDestroy()
     }
 
@@ -265,6 +266,6 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
 
     companion object {
         const val SEARCH_TEXT = "SEARCH_TEXT"
-        private const val CLICK_DEBOUNCE_DELAY_MLS = 1000L
+        private const val CLICK_DEBOUNCE_DELAY_MILLISECONDS = 1000L
     }
 }
