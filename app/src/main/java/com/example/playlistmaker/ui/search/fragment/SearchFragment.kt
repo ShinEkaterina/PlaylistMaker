@@ -3,8 +3,6 @@ package com.example.playlistmaker.ui.search.fragment
 import android.annotation.SuppressLint
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -13,6 +11,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.playlistmaker.R
@@ -23,6 +22,7 @@ import com.example.playlistmaker.presentation.player.model.SearchScreenState
 import com.example.playlistmaker.ui.player.activity.AudioPlayerActivity
 import com.example.playlistmaker.ui.search.TrackAdapter
 import com.example.playlistmaker.ui.search.view_model.SearchViewModel
+import com.example.playlistmaker.util.debounce
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment(), TrackAdapter.Listener {
@@ -31,17 +31,18 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
 
     private val searchTrackViewModel by viewModel<SearchViewModel>()
 
-    private val handler = Handler(Looper.getMainLooper())
     private var isClickAllowed = true
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
+    private lateinit var onTrackClickDebounce: (Unit) -> Unit
+
 
     private fun clickDebounce(): Boolean {
         val current = isClickAllowed
         if (isClickAllowed) {
             isClickAllowed = false
-            handler.postDelayed({ isClickAllowed = true }, SearchFragment.CLICK_DEBOUNCE_DELAY_MILLISECONDS)
+            onTrackClickDebounce(Unit)
         }
         return current
     }
@@ -59,12 +60,18 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         searchTrackViewModel.getSearchTrackStatusLiveData()
             .observe(viewLifecycleOwner) { updatedStatus ->
                 updatedViewBasedOnStatus(updatedStatus)
             }
+        onTrackClickDebounce = debounce<Unit>(
+            delayMillis = CLICK_DEBOUNCE_DELAY_MILLISECONDS,
+            coroutineScope = viewLifecycleOwner.lifecycleScope,
+            useLastParam = true,
+            action = {
+                isClickAllowed = true
+            }
+        )
 
         binding.searchEditText.setText(searchText)
 
@@ -178,7 +185,6 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        searchTrackViewModel.onDestroy()
     }
 
     override fun onResume() {

@@ -5,12 +5,16 @@ import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.playlistmaker.data.search.network.ErrorCode
 import com.example.playlistmaker.domain.history.HistoryInteractor
 import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.domain.search.TracksInteractor
 import com.example.playlistmaker.presentation.player.model.ErrorType
 import com.example.playlistmaker.presentation.player.model.SearchScreenState
+import com.example.playlistmaker.util.debounce
+import kotlinx.coroutines.Job
+
 
 class SearchViewModel(
     private val searchInteractor: TracksInteractor,
@@ -24,8 +28,12 @@ class SearchViewModel(
     private var trackList = ArrayList<Track>()
     private val handler = Handler(Looper.getMainLooper())
     private var lastSearchText: String? = null
-
-    private val searchRunnable = Runnable {
+    private var searchJob: Job? = null
+    private var onSearchDebounce: (Unit) -> Unit = debounce<Unit>(
+        SEARCH_DEBOUNCE_DELAY_MILLISECONDS,
+        viewModelScope,
+        false
+    ) {
         val newSearchText = lastSearchText
         if (newSearchText!!.isEmpty()) {
             getHistory()
@@ -33,10 +41,7 @@ class SearchViewModel(
         } else {
             searchAction(newSearchText)
         }
-    }
 
-    fun onDestroy() {
-        handler.removeCallbacks(searchRunnable)
     }
 
     fun onResume() {
@@ -48,9 +53,11 @@ class SearchViewModel(
 
     // поиск по вводу каждые 2 сек
     fun searchDebounce(changedText: String) {
-        this.lastSearchText = changedText
-        handler.removeCallbacks(searchRunnable)
-        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY_MILLIS)
+        if (lastSearchText == changedText) {
+            return
+        }
+        lastSearchText = changedText
+        onSearchDebounce(Unit)
     }
 
     fun getHistory(): ArrayList<Track> {
@@ -162,7 +169,7 @@ class SearchViewModel(
     }
 
     companion object {
-        private const val SEARCH_DEBOUNCE_DELAY_MILLIS = 2000L
+        private const val SEARCH_DEBOUNCE_DELAY_MILLISECONDS = 2000L
     }
 
 }
