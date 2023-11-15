@@ -15,4 +15,6 @@ interface AudioPlayerRepository {
     fun switchPlayerState(onStateChangedTo: (s: PlayerState) -> Unit)
 
     fun exit()
+
+    fun isPlaying(): Boolean
 }

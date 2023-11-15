@@ -8,5 +8,7 @@ interface AudioPlayerInteractor {
     fun currentPosition(): Int
     fun switchPlayer(onStateChangedTo: (s: PlayerState) -> Unit)
 
+    fun isPlaying(): Boolean
+
 
 }

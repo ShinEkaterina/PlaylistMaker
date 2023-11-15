@@ -29,4 +29,8 @@ class AudioPlayerInteractorImpl(
 
     }
 
+    override fun isPlaying(): Boolean {
+        return mediaPlayerRepository.isPlaying()
+    }
+
 }

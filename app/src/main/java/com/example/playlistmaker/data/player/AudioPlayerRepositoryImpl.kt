@@ -66,4 +66,8 @@ class AudioPlayerRepositoryImpl(
         mediaPlayer.stop()
         mediaPlayer.release()
     }
+
+    override fun isPlaying(): Boolean {
+        return mediaPlayer.isPlaying
+    }
 }
