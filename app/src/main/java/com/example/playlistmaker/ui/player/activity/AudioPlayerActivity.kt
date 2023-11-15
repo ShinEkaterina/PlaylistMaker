@@ -88,8 +88,6 @@ class AudioPlayerActivity() : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.onDestroy()
-
     }
 
     override fun onResume() {

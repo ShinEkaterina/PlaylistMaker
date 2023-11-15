@@ -1,7 +1,5 @@
 package com.example.playlistmaker.ui.search.view_model
 
-import android.os.Handler
-import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,26 +11,21 @@ import com.example.playlistmaker.domain.search.TracksInteractor
 import com.example.playlistmaker.presentation.player.model.ErrorType
 import com.example.playlistmaker.presentation.player.model.SearchScreenState
 import com.example.playlistmaker.util.debounce
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 
 class SearchViewModel(
-    private val searchInteractor: TracksInteractor,
-    private val historyInteractor: HistoryInteractor
+    private val searchInteractor: TracksInteractor, private val historyInteractor: HistoryInteractor
 ) : ViewModel() {
 
     private var searchTrackStatusLiveData = MutableLiveData<SearchScreenState>()
-
     fun getSearchTrackStatusLiveData(): LiveData<SearchScreenState> = searchTrackStatusLiveData
 
     private var trackList = ArrayList<Track>()
-    private val handler = Handler(Looper.getMainLooper())
     private var lastSearchText: String? = null
-    private var searchJob: Job? = null
+
     private var onSearchDebounce: (Unit) -> Unit = debounce<Unit>(
-        SEARCH_DEBOUNCE_DELAY_MILLISECONDS,
-        viewModelScope,
-        false
+        SEARCH_DEBOUNCE_DELAY_MILLISECONDS, viewModelScope, false
     ) {
         val newSearchText = lastSearchText
         if (newSearchText!!.isEmpty()) {
@@ -98,14 +91,10 @@ class SearchViewModel(
                 )
             )
         }
-
-        searchInteractor.searchTracks(newSearchText, object : TracksInteractor.TrackConsumer {
-            override fun consume(
-                foundTracks: List<Track>?,
-                errorCode: ErrorCode?,
-                errorMessage: String?
-            ) {
-                handler.post {
+        viewModelScope.launch {
+            searchInteractor.searchTracks(newSearchText).collect { pair ->
+                    val foundTracks = pair.first
+                    val errorCode = pair.second
                     if (foundTracks != null) {
                         trackList.clear()
                         trackList.addAll(foundTracks)
@@ -164,9 +153,9 @@ class SearchViewModel(
 
 
                 }
-            }
-        })
+        }
     }
+
 
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY_MILLISECONDS = 2000L
