@@ -1,10 +1,10 @@
 package com.example.playlistmaker.player.ui.view_model
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.playlistmaker.R
 import com.example.playlistmaker.player.domain.model.PlayerState
 import com.example.playlistmaker.player.domain.api.AudioPlayerInteractor
 import kotlinx.coroutines.Job
@@ -30,7 +30,8 @@ class AudioPlayerViewModel(
             when (state) {
                 PlayerState.STATE_PREPARED, PlayerState.STATE_DEFAULT -> {
                     statePlayerLiveData.postValue(PlayerState.STATE_PREPARED)
-                    //  mainThreadHandler.removeCallbacks(timerRunnable)
+                    currentTimerLiveData.postValue(0)
+
                 }
 
                 else -> Unit
@@ -41,10 +42,11 @@ class AudioPlayerViewModel(
     private fun startTimer() {
         timerJob = viewModelScope.launch {
             while (audioPlayerInterator.isPlaying()) {
-                delay(300L)
+                delay(DELAY_UPDATE_TIMER_MC)
                 currentTimerLiveData.postValue(audioPlayerInterator.currentPosition())
             }
-         //   currentTimerLiveData.postValue(R.string.time_00)
+            Log.d("MY LOG","set 00")
+            currentTimerLiveData.postValue(0)
         }
     }
 
@@ -63,7 +65,7 @@ class AudioPlayerViewModel(
 
                 PlayerState.STATE_PREPARED -> {
                     statePlayerLiveData.postValue(PlayerState.STATE_PREPARED)
-                    currentTimerLiveData.postValue(R.string.time_00)
+                    currentTimerLiveData.postValue(0)
 
                 }
 

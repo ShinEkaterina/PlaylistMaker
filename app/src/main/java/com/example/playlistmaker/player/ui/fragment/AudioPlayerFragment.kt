@@ -1,5 +1,6 @@
-package com.example.playlistmaker.player.ui.activity
+package com.example.playlistmaker.player.ui.fragment
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,7 +29,7 @@ class AudioPlayerFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentPlayerBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -43,28 +44,31 @@ class AudioPlayerFragment : Fragment() {
             )
         }
 
-        // получаем трек
-        val track = requireArguments().getParcelable(TRACK, Track::class.java)!!
+        //define track
+        val track = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requireArguments().getParcelable(TRACK, Track::class.java)
+        } else {
+            requireArguments().getParcelable(TRACK)
+        } as Track
 
 
         val trackInfo = Mapper.mapTrackToTrackInfo(track)
         val url = track.previewUrl // url превью 30 сек.
 
-        viewModel.getStatePlayerLiveData().observe(this) { state ->
+        viewModel.getStatePlayerLiveData().observe(viewLifecycleOwner) { state ->
             changeState(state)
         }
 
-        viewModel.getCurrentTimerLiveData().observe(this) { currentTimer ->
+        viewModel.getCurrentTimerLiveData().observe(viewLifecycleOwner) { currentTimer ->
             changeTimer(currentTimer)
         }
         viewModel.preparePlayer(url)
+        initPlayerScreen(trackInfo)
 
         binding.ivPlayButton.setOnClickListener {
             viewModel.changePlayerState()
         }
-        viewModel.preparePlayer(url)
 
-        initPlayerScreen(trackInfo)
     }
 
     override fun onDestroyView() {

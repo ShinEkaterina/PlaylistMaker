@@ -10,6 +10,7 @@ class AudioPlayerRepositoryImpl(
 ) : AudioPlayerRepository {
 
     private var playerState = PlayerState.STATE_PREPARED
+    private var customCurrentPosition: Int = 0
 
     override fun preparePlayer(
         url: String,
@@ -24,6 +25,7 @@ class AudioPlayerRepositoryImpl(
         }
         mediaPlayer.setOnCompletionListener {
             playerState = PlayerState.STATE_PREPARED
+            customCurrentPosition = 0
             onStateChangedTo(PlayerState.STATE_PREPARED)
 
         }

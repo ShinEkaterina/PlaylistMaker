@@ -19,7 +19,7 @@ import com.example.playlistmaker.databinding.FragmentSearchBinding
 import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.player.presentation.model.ErrorType
 import com.example.playlistmaker.player.presentation.model.SearchScreenState
-import com.example.playlistmaker.player.ui.activity.AudioPlayerFragment
+import com.example.playlistmaker.player.ui.fragment.AudioPlayerFragment
 import com.example.playlistmaker.search.ui.TrackAdapter
 import com.example.playlistmaker.search.ui.view_model.SearchViewModel
 import com.example.playlistmaker.util.debounce
@@ -52,7 +52,7 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -107,7 +107,7 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
             searchTrackViewModel.showHistory()
         }
 
-        binding.searchEditText.setOnFocusChangeListener { view, hasFocus ->
+        binding.searchEditText.setOnFocusChangeListener { _, hasFocus ->
             focusVisibility(hasFocus)
         }
     }
@@ -271,7 +271,6 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
     }
 
     companion object {
-        const val SEARCH_TEXT = "SEARCH_TEXT"
         private const val CLICK_DEBOUNCE_DELAY_MILLISECONDS = 1000L
     }
 }
