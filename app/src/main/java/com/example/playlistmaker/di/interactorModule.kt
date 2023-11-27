@@ -1,15 +1,15 @@
 package com.example.playlistmaker.di
 
-import com.example.playlistmaker.domain.history.HistoryInteractor
-import com.example.playlistmaker.domain.history.impl.HistoryInteractorImpl
-import com.example.playlistmaker.domain.player.api.AudioPlayerInteractor
-import com.example.playlistmaker.domain.player.impl.AudioPlayerInteractorImpl
-import com.example.playlistmaker.domain.search.TracksInteractor
-import com.example.playlistmaker.domain.search.impl.TracksInteractorImpl
-import com.example.playlistmaker.domain.settings.SettingsInteractor
-import com.example.playlistmaker.domain.settings.impl.SettingsInteractorImpl
-import com.example.playlistmaker.domain.sharing.SharingInteractor
-import com.example.playlistmaker.domain.sharing.impl.SharingInteractorImpl
+import com.example.playlistmaker.history.domain.HistoryInteractor
+import com.example.playlistmaker.history.domain.impl.HistoryInteractorImpl
+import com.example.playlistmaker.player.domain.api.AudioPlayerInteractor
+import com.example.playlistmaker.player.domain.impl.AudioPlayerInteractorImpl
+import com.example.playlistmaker.search.domain.TracksInteractor
+import com.example.playlistmaker.search.domain.impl.TracksInteractorImpl
+import com.example.playlistmaker.settings.domain.SettingsInteractor
+import com.example.playlistmaker.settings.domain.impl.SettingsInteractorImpl
+import com.example.playlistmaker.settings.domain.SharingInteractor
+import com.example.playlistmaker.settings.domain.impl.SharingInteractorImpl
 import org.koin.dsl.module
 
 val interactorModule = module {

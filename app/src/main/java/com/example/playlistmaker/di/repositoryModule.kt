@@ -1,15 +1,15 @@
 package com.example.playlistmaker.di
 
-import com.example.playlistmaker.data.history.HistoryRepository
-import com.example.playlistmaker.data.history.impl.HistoryRepositoryImpl
-import com.example.playlistmaker.data.player.AudioPlayerRepositoryImpl
-import com.example.playlistmaker.data.search.TrackRepository
-import com.example.playlistmaker.data.search.impl.TrackRepositoryImpl
-import com.example.playlistmaker.data.settings.SettingsRepository
-import com.example.playlistmaker.data.settings.impl.SettingsRepositoryImpl
-import com.example.playlistmaker.data.sharing.ExternalNavigator
-import com.example.playlistmaker.data.sharing.impl.ExternalNavigationImpl
-import com.example.playlistmaker.domain.player.api.AudioPlayerRepository
+import com.example.playlistmaker.history.data.HistoryRepository
+import com.example.playlistmaker.history.data.impl.HistoryRepositoryImpl
+import com.example.playlistmaker.player.data.AudioPlayerRepositoryImpl
+import com.example.playlistmaker.search.data.TrackRepository
+import com.example.playlistmaker.search.data.impl.TrackRepositoryImpl
+import com.example.playlistmaker.settings.data.SettingsRepository
+import com.example.playlistmaker.settings.data.impl.SettingsRepositoryImpl
+import com.example.playlistmaker.settings.data.sharing.ExternalNavigator
+import com.example.playlistmaker.settings.data.sharing.impl.ExternalNavigationImpl
+import com.example.playlistmaker.player.domain.api.AudioPlayerRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
 import org.koin.dsl.module

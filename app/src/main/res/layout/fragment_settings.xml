@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="?attr/colorSecondary"
     android:orientation="vertical"
-    tools:context="com.example.playlistmaker.ui.settings.fragment.SettingsFragment">
+    tools:context="com.example.playlistmaker.settings.ui.fragment.SettingsFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

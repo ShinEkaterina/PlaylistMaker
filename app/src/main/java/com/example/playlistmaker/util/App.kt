@@ -2,8 +2,8 @@ package com.example.playlistmaker.util
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-import com.example.playlistmaker.domain.settings.SettingsInteractor
-import com.example.playlistmaker.domain.settings.model.ThemeSettings
+import com.example.playlistmaker.settings.domain.SettingsInteractor
+import com.example.playlistmaker.settings.domain.model.ThemeSettings
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.context.startKoin

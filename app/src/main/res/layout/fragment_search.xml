@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="?attr/colorSecondary"
     android:orientation="vertical"
-    tools:context="com.example.playlistmaker.ui.search.fragment.SearchFragment">
+    tools:context="com.example.playlistmaker.search.ui.fragment.SearchFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/searchToolbar"
