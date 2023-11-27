@@ -15,18 +15,18 @@ class RetrofitNetworkClient(
 
     override suspend fun doRequest(dto: Any): Response {
         if (isConnected() == false) {
-            return Response().apply { resultCode = -1 }
+            return Response().apply { resultCode = Response.NO_INTERNET }
         }
         if (dto !is TracksSearchRequest) {
-            return Response().apply { resultCode = 400 }
+            return Response().apply { resultCode = Response.BAD_REQUEST }
         }
 
         return withContext(Dispatchers.IO) {
             try {
                 val response = itunesService.searchTracks(dto.expression)
-                response.apply { resultCode = 200 }
+                response.apply { resultCode = Response.SUCCESS }
             } catch (e: Throwable) {
-                Response().apply { resultCode = 500 }
+                Response().apply { resultCode = Response.ERROR }
             }
         }
     }
