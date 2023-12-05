@@ -1,6 +1,6 @@
 package com.example.playlistmaker.util
 
-import com.example.playlistmaker.data.search.network.ErrorCode
+import com.example.playlistmaker.search.data.network.ErrorCode
 
 sealed class Resource<T>(
     val data: T? = null,

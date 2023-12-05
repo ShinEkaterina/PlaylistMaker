@@ -2,13 +2,13 @@ package com.example.playlistmaker.di
 
 import android.content.Context
 import android.media.MediaPlayer
-import com.example.playlistmaker.data.history.HistoryRepository
-import com.example.playlistmaker.data.history.impl.HistoryRepositoryImpl
-import com.example.playlistmaker.data.search.NetworkClient
-import com.example.playlistmaker.data.search.network.RetrofitNetworkClient
-import com.example.playlistmaker.data.search.network.iTunesApi
-import com.example.playlistmaker.data.settings.SettingsRepository
-import com.example.playlistmaker.data.settings.impl.SettingsRepositoryImpl
+import com.example.playlistmaker.history.data.HistoryRepository
+import com.example.playlistmaker.history.data.impl.HistoryRepositoryImpl
+import com.example.playlistmaker.search.data.NetworkClient
+import com.example.playlistmaker.search.data.network.RetrofitNetworkClient
+import com.example.playlistmaker.search.data.network.iTunesApi
+import com.example.playlistmaker.settings.data.SettingsRepository
+import com.example.playlistmaker.settings.data.impl.SettingsRepositoryImpl
 import com.google.gson.Gson
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
