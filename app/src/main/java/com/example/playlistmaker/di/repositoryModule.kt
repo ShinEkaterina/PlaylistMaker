@@ -2,6 +2,7 @@ package com.example.playlistmaker.di
 
 import com.example.playlistmaker.history.data.HistoryRepository
 import com.example.playlistmaker.history.data.impl.HistoryRepositoryImpl
+import com.example.playlistmaker.library.data.db.mapper.TrackDbMapper
 import com.example.playlistmaker.player.data.AudioPlayerRepositoryImpl
 import com.example.playlistmaker.search.data.TrackRepository
 import com.example.playlistmaker.search.data.impl.TrackRepositoryImpl
@@ -36,5 +37,7 @@ val repositoryModule = module {
     single<HistoryRepository> {
         HistoryRepositoryImpl(get(named(SHARED_PREFS_SEARCH_HISTORY)))
     }
+
+    factory { TrackDbMapper() }
 
 }

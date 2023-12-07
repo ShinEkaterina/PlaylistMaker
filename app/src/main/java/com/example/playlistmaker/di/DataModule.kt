@@ -2,8 +2,10 @@ package com.example.playlistmaker.di
 
 import android.content.Context
 import android.media.MediaPlayer
+import androidx.room.Room
 import com.example.playlistmaker.history.data.HistoryRepository
 import com.example.playlistmaker.history.data.impl.HistoryRepositoryImpl
+import com.example.playlistmaker.library.data.db.AppDatabase
 import com.example.playlistmaker.search.data.NetworkClient
 import com.example.playlistmaker.search.data.network.RetrofitNetworkClient
 import com.example.playlistmaker.search.data.network.iTunesApi
@@ -22,7 +24,6 @@ const val SHARED_PREFS_SEARCH_HISTORY = "search_history"
 const val LOCAL_STORAGE = "local_storage"
 
 
-
 val dataModule = module {
 
     single<iTunesApi> {
@@ -34,12 +35,12 @@ val dataModule = module {
 
     }
 
-    factory (named(SHARED_PREFS_SEARCH_HISTORY)){
+    factory(named(SHARED_PREFS_SEARCH_HISTORY)) {
         androidContext()
             .getSharedPreferences(SHARED_PREFS_SEARCH_HISTORY, Context.MODE_PRIVATE)
     }
 
-    factory (named(SHARED_PREFS_DARK_MODE)){
+    factory(named(SHARED_PREFS_DARK_MODE)) {
         androidContext()
             .getSharedPreferences(SHARED_PREFS_DARK_MODE, Context.MODE_PRIVATE)
     }
@@ -65,5 +66,10 @@ val dataModule = module {
 
     single {
         return@single MediaPlayer()
+    }
+// Database
+    single {
+        Room.databaseBuilder(androidContext(), AppDatabase::class.java, "database.db")
+            .build()
     }
 }
