@@ -9,10 +9,10 @@ data class TrackEntity(
     val id: Long,
     val name: String,
     val artistName: String,
-    val duration: String,
+    val trackTimeMillis: Long, // Продолжительность трека
     val artworkUrl: String,
     val collectionName: String,
-    val releaseYear: String,
+    val releaseDate: String,// Год релиза трека
     val genreName: String,
     val country: String,
     val previewUrl: String
