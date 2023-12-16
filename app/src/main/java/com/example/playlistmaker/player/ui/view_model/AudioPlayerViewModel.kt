@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.playlistmaker.common.domain.model.Track
+import com.example.playlistmaker.library.domain.db.FavoriteTracksInteractor
 import com.example.playlistmaker.player.domain.model.PlayerState
 import com.example.playlistmaker.player.domain.api.AudioPlayerInteractor
 import kotlinx.coroutines.Job
@@ -13,17 +15,22 @@ import kotlinx.coroutines.launch
 
 
 class AudioPlayerViewModel(
-    private val audioPlayerInterator: AudioPlayerInteractor
+    private val audioPlayerInterator: AudioPlayerInteractor,
+    private val favoriteTracksInteractor: FavoriteTracksInteractor
 ) : ViewModel() {
 
     private var statePlayerLiveData = MutableLiveData(PlayerState.STATE_PREPARED)
     private var timerJob: Job? = null
 
-    fun getStatePlayerLiveData(): LiveData<PlayerState> = statePlayerLiveData
+
 
     private var currentTimerLiveData = MutableLiveData<Int>(0)
+    private var isFavorite: MutableLiveData<Boolean> = MutableLiveData(false)
 
     fun getCurrentTimerLiveData(): LiveData<Int> = currentTimerLiveData
+    fun getStatePlayerLiveData(): LiveData<PlayerState> = statePlayerLiveData
+
+    fun getIsFavorite(): LiveData<Boolean> = isFavorite
 
     fun preparePlayer(url: String) {
         audioPlayerInterator.preparePlayer(url) { state ->
@@ -45,7 +52,7 @@ class AudioPlayerViewModel(
                 delay(DELAY_UPDATE_TIMER_MC)
                 currentTimerLiveData.postValue(audioPlayerInterator.currentPosition())
             }
-            Log.d("MY LOG","set 00")
+            Log.d("MY LOG", "set 00")
             currentTimerLiveData.postValue(0)
         }
     }
@@ -70,6 +77,20 @@ class AudioPlayerViewModel(
                 }
 
                 else -> Unit
+            }
+        }
+    }
+
+    fun onFavoriteClicked(track: Track) {
+        viewModelScope.launch {
+            if (track.isFavorite){
+                favoriteTracksInteractor.delete(track)
+                track.isFavorite = false
+                isFavorite.postValue(track.isFavorite)
+            }else{
+                favoriteTracksInteractor.add(track)
+                track.isFavorite = true
+                isFavorite.postValue(track.isFavorite)
             }
         }
     }
