@@ -1,5 +1,6 @@
 package com.example.playlistmaker.player.ui.view_model
 
+import android.os.Build
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,6 +10,8 @@ import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.library.domain.db.FavoriteTracksInteractor
 import com.example.playlistmaker.player.domain.model.PlayerState
 import com.example.playlistmaker.player.domain.api.AudioPlayerInteractor
+import com.example.playlistmaker.player.presentation.model.TrackInfo
+import com.example.playlistmaker.player.ui.fragment.AudioPlayerFragment
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -23,7 +26,6 @@ class AudioPlayerViewModel(
     private var timerJob: Job? = null
 
 
-
     private var currentTimerLiveData = MutableLiveData<Int>(0)
     private var isFavorite: MutableLiveData<Boolean> = MutableLiveData(false)
 
@@ -31,6 +33,10 @@ class AudioPlayerViewModel(
     fun getStatePlayerLiveData(): LiveData<PlayerState> = statePlayerLiveData
 
     fun getIsFavorite(): LiveData<Boolean> = isFavorite
+
+    private fun renderFavorite(favorite: Boolean) {
+        isFavorite.postValue(favorite)
+    }
 
     fun preparePlayer(url: String) {
         audioPlayerInterator.preparePlayer(url) { state ->
@@ -83,15 +89,16 @@ class AudioPlayerViewModel(
 
     fun onFavoriteClicked(track: Track) {
         viewModelScope.launch {
-            if (track.isFavorite){
+            val favorite = isFavorite.value ?: false
+
+            if (favorite) {
                 favoriteTracksInteractor.delete(track)
-                track.isFavorite = false
                 isFavorite.postValue(track.isFavorite)
-            }else{
+            } else {
                 favoriteTracksInteractor.add(track)
-                track.isFavorite = true
                 isFavorite.postValue(track.isFavorite)
             }
+            renderFavorite(!favorite)
         }
     }
 
@@ -105,6 +112,14 @@ class AudioPlayerViewModel(
     fun onResume() {
         statePlayerLiveData.postValue(PlayerState.STATE_PAUSED)
 
+    }
+
+    fun updateLikeButton(trackId: Long) {
+        viewModelScope.launch {
+            favoriteTracksInteractor.checkFavorite(trackId).collect {
+                renderFavorite(it)
+            }
+        }
     }
 
     companion object {

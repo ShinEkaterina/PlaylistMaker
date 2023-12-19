@@ -16,7 +16,8 @@ object Mapper {
             releaseYear = track.getReleaseDateOnlyYear(),
             genreName = track.primaryGenreName,
             country = track.country,
-            previewUrl = track.previewUrl
+            previewUrl = track.previewUrl,
+            ifFavorite = track.isFavorite
         )
     }
 }

@@ -63,12 +63,20 @@ class AudioPlayerFragment : Fragment() {
             changeTimer(currentTimer)
         }
         viewModel.preparePlayer(url)
+
         initPlayerScreen(trackInfo)
 
         binding.ivPlayButton.setOnClickListener {
             viewModel.changePlayerState()
         }
 
+        binding.ivLikeButton.setOnClickListener {
+            viewModel.onFavoriteClicked(track)
+        }
+        viewModel.getIsFavorite().observe(viewLifecycleOwner ){isFavorite ->
+            changeLikeButton(isFavorite)
+
+        }
     }
 
     override fun onDestroyView() {
@@ -85,6 +93,7 @@ class AudioPlayerFragment : Fragment() {
     override fun onResume() {
         viewModel.onResume()
         super.onResume()
+
 
     }
 
@@ -109,6 +118,14 @@ class AudioPlayerFragment : Fragment() {
         }
     }
 
+    private fun changeLikeButton(isFavorite: Boolean){
+        if(isFavorite){
+            binding.ivLikeButton.setImageResource(R.drawable.like_button_on)
+        } else{
+            binding.ivLikeButton.setImageResource(R.drawable.like_button_off)
+        }
+    }
+
     private fun initPlayerScreen(trackInfo: TrackInfo) {
         binding.trackName.text = trackInfo.name
         binding.artistName.text = trackInfo.artistName
@@ -129,6 +146,7 @@ class AudioPlayerFragment : Fragment() {
             .placeholder(R.drawable.placeholder).centerCrop()
             .transform(RoundedCorners(resources.getDimensionPixelSize(R.dimen.album_radius)))
             .into(binding.trackImage)
+        viewModel.updateLikeButton(trackInfo.id)
     }
 
     companion object {

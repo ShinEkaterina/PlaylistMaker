@@ -13,7 +13,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class LibraryFragment : Fragment() {
 
     private val fragmentList = listOf(
-        LibraryTracksFragment.newInstance(),
+        FavoriteTracksFragment.newInstance(),
         PlayListsFragment.newInstance()
     )
     private lateinit var fragListTitles: List<String>

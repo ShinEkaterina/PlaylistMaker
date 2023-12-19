@@ -5,7 +5,6 @@ import com.example.playlistmaker.library.data.FavoriteTracksRepository
 import com.example.playlistmaker.library.data.db.AppDatabase
 import com.example.playlistmaker.library.data.db.entity.TrackEntity
 import com.example.playlistmaker.util.TrackDbMapper
-import com.example.playlistmaker.player.presentation.model.TrackInfo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -25,6 +24,11 @@ class FavoriteTracksRepositoryImpl(
     override fun getAll(): Flow<List<Track>> = flow {
         val tracks = appDatabase.trackDao().getTracks()
         emit(convertFromTrackEntity(tracks))
+    }
+
+    override fun checkFavorite(trackId: Long) = flow {
+        val answer = appDatabase.trackDao().isTrackFavorite(trackId) != null
+        emit(answer)
     }
 
     private fun convertFromTrackEntity(tracks: List<TrackEntity>): List<Track> {
