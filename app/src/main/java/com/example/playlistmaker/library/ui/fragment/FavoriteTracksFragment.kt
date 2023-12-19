@@ -1,4 +1,4 @@
-package com.example.playlistmaker.library.fragment
+package com.example.playlistmaker.library.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,13 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.databinding.FragmentFavoriteTracksBinding
-import com.example.playlistmaker.library.view_model.FavTracksFragmentState
-import com.example.playlistmaker.library.view_model.FavoriteTracksViewModel
+import com.example.playlistmaker.library.ui.view_model.FavTracksFragmentState
+import com.example.playlistmaker.library.ui.view_model.FavoriteTracksViewModel
 import com.example.playlistmaker.player.ui.fragment.AudioPlayerFragment
 import com.example.playlistmaker.search.ui.TrackAdapter
-import com.example.playlistmaker.search.ui.view_model.SearchViewModel
 import com.example.playlistmaker.util.debounce
-import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -39,6 +37,8 @@ class FavoriteTracksFragment : Fragment(), TrackAdapter.Listener {
 
     private lateinit var errorWidget: ConstraintLayout
     private lateinit var favoritesList: RecyclerView
+
+    private var adapter: TrackAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,6 +70,14 @@ class FavoriteTracksFragment : Fragment(), TrackAdapter.Listener {
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
+        adapter = TrackAdapter(ArrayList(),this@FavoriteTracksFragment)
+        favoritesList.adapter = adapter
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.fillData()
     }
 
     override fun onDestroyView() {
@@ -103,10 +111,12 @@ class FavoriteTracksFragment : Fragment(), TrackAdapter.Listener {
         binding.loadingIndicator.visibility = View.GONE
         errorWidget.visibility = View.GONE
         favoritesList.visibility = View.VISIBLE
-        favoritesList.adapter = TrackAdapter(ArrayList(favorites), this@FavoriteTracksFragment)
-      /*  adapter?.tracks?.clear()
+       // adapter = TrackAdapter(ArrayList(favorites), this@FavoriteTracksFragment)
+
+
+        adapter?.tracks?.clear()
         adapter?.tracks?.addAll(favorites)
-        adapter?.notifyDataSetChanged()*/
+        adapter?.notifyDataSetChanged()
     }
 
     companion object {

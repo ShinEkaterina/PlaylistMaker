@@ -39,9 +39,7 @@ class AudioPlayerFragment : Fragment() {
 
         //Go back arrow button
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigate(
-                R.id.action_playerFragment_to_searchFragment
-            )
+            findNavController().navigateUp()
         }
 
         //define track

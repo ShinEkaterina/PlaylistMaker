@@ -1,4 +1,4 @@
-package com.example.playlistmaker.library.view_model
+package com.example.playlistmaker.library.ui.view_model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,7 +18,7 @@ class FavoriteTracksViewModel(
         fillData()
     }
 
-    private fun fillData() {
+     fun fillData() {
         state.postValue(FavTracksFragmentState.LOADING)
         viewModelScope.launch {
             favoriteTracksInteractor.getAll().collect { favorites ->
