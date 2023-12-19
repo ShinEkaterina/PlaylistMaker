@@ -70,7 +70,7 @@ class FavoriteTracksFragment : Fragment(), TrackAdapter.Listener {
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
-        adapter = TrackAdapter(ArrayList(),this@FavoriteTracksFragment)
+        adapter = TrackAdapter(ArrayList(), this@FavoriteTracksFragment)
         favoritesList.adapter = adapter
 
     }
@@ -111,7 +111,7 @@ class FavoriteTracksFragment : Fragment(), TrackAdapter.Listener {
         binding.loadingIndicator.visibility = View.GONE
         errorWidget.visibility = View.GONE
         favoritesList.visibility = View.VISIBLE
-       // adapter = TrackAdapter(ArrayList(favorites), this@FavoriteTracksFragment)
+        // adapter = TrackAdapter(ArrayList(favorites), this@FavoriteTracksFragment)
 
 
         adapter?.tracks?.clear()

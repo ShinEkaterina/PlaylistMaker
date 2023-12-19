@@ -18,12 +18,12 @@ class FavoriteTracksViewModel(
         fillData()
     }
 
-     fun fillData() {
+    fun fillData() {
         state.postValue(FavTracksFragmentState.LOADING)
         viewModelScope.launch {
             favoriteTracksInteractor.getAll().collect { favorites ->
-                    processResult(favorites)
-                }
+                processResult(favorites)
+            }
         }
     }
 

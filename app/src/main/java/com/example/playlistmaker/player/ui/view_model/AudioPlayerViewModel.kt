@@ -1,6 +1,5 @@
 package com.example.playlistmaker.player.ui.view_model
 
-import android.os.Build
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,8 +9,6 @@ import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.library.domain.db.FavoriteTracksInteractor
 import com.example.playlistmaker.player.domain.model.PlayerState
 import com.example.playlistmaker.player.domain.api.AudioPlayerInteractor
-import com.example.playlistmaker.player.presentation.model.TrackInfo
-import com.example.playlistmaker.player.ui.fragment.AudioPlayerFragment
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -105,13 +102,10 @@ class AudioPlayerViewModel(
     fun onPause() {
         statePlayerLiveData.postValue(PlayerState.STATE_PAUSED)
         audioPlayerInterator.pausePlayer()
-
     }
-
 
     fun onResume() {
         statePlayerLiveData.postValue(PlayerState.STATE_PAUSED)
-
     }
 
     fun updateLikeButton(trackId: Long) {

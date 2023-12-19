@@ -71,7 +71,7 @@ class AudioPlayerFragment : Fragment() {
         binding.ivLikeButton.setOnClickListener {
             viewModel.onFavoriteClicked(track)
         }
-        viewModel.getIsFavorite().observe(viewLifecycleOwner ){isFavorite ->
+        viewModel.getIsFavorite().observe(viewLifecycleOwner) { isFavorite ->
             changeLikeButton(isFavorite)
 
         }
@@ -116,10 +116,10 @@ class AudioPlayerFragment : Fragment() {
         }
     }
 
-    private fun changeLikeButton(isFavorite: Boolean){
-        if(isFavorite){
+    private fun changeLikeButton(isFavorite: Boolean) {
+        if (isFavorite) {
             binding.ivLikeButton.setImageResource(R.drawable.like_button_on)
-        } else{
+        } else {
             binding.ivLikeButton.setImageResource(R.drawable.like_button_off)
         }
     }
