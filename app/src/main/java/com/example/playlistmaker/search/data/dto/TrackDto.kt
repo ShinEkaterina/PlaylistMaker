@@ -16,5 +16,4 @@ data class TrackDto(
     val country: String, // Страна исполнителя
     val previewUrl: String //ссылка на отрывок трека для прослушивания
 ) : Parcelable {
-
 }

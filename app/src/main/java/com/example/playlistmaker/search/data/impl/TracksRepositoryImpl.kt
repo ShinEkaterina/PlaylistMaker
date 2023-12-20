@@ -5,6 +5,7 @@ import com.example.playlistmaker.search.data.TrackRepository
 import com.example.playlistmaker.search.data.network.TrackSearchResponse
 import com.example.playlistmaker.search.data.network.TracksSearchRequest
 import com.example.playlistmaker.common.domain.model.Track
+import com.example.playlistmaker.library.data.db.AppDatabase
 import com.example.playlistmaker.search.data.network.ErrorCode
 import com.example.playlistmaker.util.Resource
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +16,10 @@ const val SUCCESS_RESULT_CODE = 200
 const val NO_INTERNET_RESULT_CODE = -1
 
 
-class TrackRepositoryImpl(private val networkClient: NetworkClient) : TrackRepository {
+class TrackRepositoryImpl(
+    private val networkClient: NetworkClient,
+    private val appDataBase: AppDatabase
+) : TrackRepository {
 
     override fun searchTracks(expression: String): Flow<Resource<List<Track>>> = flow {
         val response = networkClient.doRequest(TracksSearchRequest(expression))
@@ -34,6 +38,7 @@ class TrackRepositoryImpl(private val networkClient: NetworkClient) : TrackRepos
                         )
                     )
                 } else {
+                    val favTrackIds = appDataBase.trackDao().getTracksId()
                     emit(Resource.Success((response as TrackSearchResponse).results.map {
                         Track(
                             it.trackId,
@@ -45,8 +50,10 @@ class TrackRepositoryImpl(private val networkClient: NetworkClient) : TrackRepos
                             it.releaseDate,
                             it.primaryGenreName,
                             it.country,
-                            it.previewUrl
+                            it.previewUrl,
+                           isFavorite =  (it.trackId in favTrackIds)
                         )
+
                     }))
                 }
             }

@@ -166,7 +166,7 @@
         app:layout_constraintBottom_toTopOf="@+id/tvDuration"
         app:layout_constraintEnd_toStartOf="@+id/rightBorder"
         app:layout_constraintStart_toEndOf="@+id/ivPlayButton"
-        android:src="@drawable/like_button"/>
+        android:src="@drawable/like_button_off"/>
 
     <ImageView
         android:id="@+id/ivPlayButton"

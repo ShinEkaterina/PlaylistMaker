@@ -2,6 +2,9 @@ package com.example.playlistmaker.di
 
 import com.example.playlistmaker.history.data.HistoryRepository
 import com.example.playlistmaker.history.data.impl.HistoryRepositoryImpl
+import com.example.playlistmaker.library.data.FavoriteTracksRepository
+import com.example.playlistmaker.util.TrackDbMapper
+import com.example.playlistmaker.library.data.impl.FavoriteTracksRepositoryImpl
 import com.example.playlistmaker.player.data.AudioPlayerRepositoryImpl
 import com.example.playlistmaker.search.data.TrackRepository
 import com.example.playlistmaker.search.data.impl.TrackRepositoryImpl
@@ -17,7 +20,7 @@ import org.koin.dsl.module
 val repositoryModule = module {
 
     single<TrackRepository> {
-        TrackRepositoryImpl(get())
+        TrackRepositoryImpl(get(), get())
     }
 
 
@@ -35,6 +38,12 @@ val repositoryModule = module {
 
     single<HistoryRepository> {
         HistoryRepositoryImpl(get(named(SHARED_PREFS_SEARCH_HISTORY)))
+    }
+
+    factory { TrackDbMapper() }
+
+    single<FavoriteTracksRepository> {
+        FavoriteTracksRepositoryImpl(get(), get())
     }
 
 }
