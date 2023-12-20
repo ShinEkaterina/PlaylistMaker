@@ -11,15 +11,15 @@ import kotlinx.coroutines.launch
 class FavoriteTracksViewModel(
     private val favoriteTracksInteractor: FavoriteTracksInteractor
 ) : ViewModel() {
-    private val state = MutableLiveData<FavTracksFragmentState>()
-    fun observeState(): LiveData<FavTracksFragmentState> = state
+    private val _state = MutableLiveData<FavTracksFragmentState>()
+    fun observeState(): LiveData<FavTracksFragmentState> = _state
 
     init {
         fillData()
     }
 
     fun fillData() {
-        state.postValue(FavTracksFragmentState.LOADING)
+        _state.postValue(FavTracksFragmentState.Loading)
         viewModelScope.launch {
             favoriteTracksInteractor.getAll().collect { favorites ->
                 processResult(favorites)
@@ -29,9 +29,9 @@ class FavoriteTracksViewModel(
 
     private fun processResult(favorites: List<Track>) {
         if (favorites.isEmpty()) {
-            state.postValue(FavTracksFragmentState.NO_FAVORITE_TRACKS)
+            _state.postValue(FavTracksFragmentState.NoFavoriteTracks)
         } else {
-            state.postValue(FavTracksFragmentState.FAVORITES(favorites))
+            _state.postValue(FavTracksFragmentState.Favorites(favorites))
         }
     }
 }

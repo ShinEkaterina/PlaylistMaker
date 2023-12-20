@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.databinding.FragmentFavoriteTracksBinding
@@ -29,14 +28,10 @@ class FavoriteTracksFragment : Fragment(), TrackAdapter.Listener {
 
     private var onTrackClickDebounce: (Track) -> Unit = {}
 
-
     override fun onClick(track: Track) {
         onTrackClickDebounce(track)
     }
 
-
-    private lateinit var errorWidget: ConstraintLayout
-    private lateinit var favoritesList: RecyclerView
 
     private var adapter: TrackAdapter? = null
 
@@ -52,11 +47,8 @@ class FavoriteTracksFragment : Fragment(), TrackAdapter.Listener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        errorWidget = binding.errorWidget
-        favoritesList = binding.favoritesRecyclerView
-
         onTrackClickDebounce = debounce<Track>(
-            CLICK_DEBOUNCE_DELAY,
+            CLICK_DEBOUNCE_DELAY_MILLISECONDS,
             viewLifecycleOwner.lifecycleScope,
             false
         ) { track ->
@@ -71,7 +63,7 @@ class FavoriteTracksFragment : Fragment(), TrackAdapter.Listener {
             render(it)
         }
         adapter = TrackAdapter(ArrayList(), this@FavoriteTracksFragment)
-        favoritesList.adapter = adapter
+        binding.rvTracks.adapter = adapter
 
     }
 
@@ -89,31 +81,34 @@ class FavoriteTracksFragment : Fragment(), TrackAdapter.Listener {
 
     private fun render(state: FavTracksFragmentState) {
         when (state) {
-            is FavTracksFragmentState.FAVORITES -> showContent(state.favorites)
-            is FavTracksFragmentState.NO_FAVORITE_TRACKS -> showEmpty()
-            is FavTracksFragmentState.LOADING -> showLoading()
+            is FavTracksFragmentState.Favorites -> showContent(state.favorites)
+            is FavTracksFragmentState.NoFavoriteTracks -> showEmpty()
+            is FavTracksFragmentState.Loading -> showLoading()
         }
     }
 
     private fun showLoading() {
-        favoritesList.visibility = View.GONE
-        errorWidget.visibility = View.GONE
-        binding.loadingIndicator.visibility = View.VISIBLE
+        with(binding){
+            rvTracks.isVisible = false
+            clErrorWidget.isVisible = false
+            loadingIndicator.isVisible = true
+        }
     }
 
     private fun showEmpty() {
-        favoritesList.visibility = View.GONE
-        binding.loadingIndicator.visibility = View.GONE
-        errorWidget.visibility = View.VISIBLE
+        with(binding){
+            rvTracks.isVisible = false
+            loadingIndicator.isVisible = false
+            clErrorWidget.isVisible = true
+        }
     }
 
     private fun showContent(favorites: List<Track>) {
-        binding.loadingIndicator.visibility = View.GONE
-        errorWidget.visibility = View.GONE
-        favoritesList.visibility = View.VISIBLE
-        // adapter = TrackAdapter(ArrayList(favorites), this@FavoriteTracksFragment)
-
-
+        with(binding){
+            loadingIndicator.isVisible = false
+            clErrorWidget.isVisible = false
+            rvTracks.isVisible = true
+        }
         adapter?.tracks?.clear()
         adapter?.tracks?.addAll(favorites)
         adapter?.notifyDataSetChanged()
@@ -122,7 +117,7 @@ class FavoriteTracksFragment : Fragment(), TrackAdapter.Listener {
     companion object {
         @JvmStatic
         fun newInstance() = FavoriteTracksFragment()
-        private const val CLICK_DEBOUNCE_DELAY = 10L
+        private const val CLICK_DEBOUNCE_DELAY_MILLISECONDS = 10L
 
     }
 }
