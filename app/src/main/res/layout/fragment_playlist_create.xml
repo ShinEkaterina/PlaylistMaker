@@ -5,26 +5,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".library.ui.fragment.playlist.PlaylistCreateFragment">
+    tools:context=".library.ui.playlist.fragment.PlaylistCreateFragment">
 
-    <ImageView
-        android:id="@+id/ivBtnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_arrow_back"
-        app:tint="@color/dark"
-        android:layout_marginStart="20dp"/>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/playlistCreateToolbar"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        style ="@style/ToolBarStyle">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        style="@style/TextHeaderStyle"
-        android:text="@string/newPlaylist"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ivBtnBack"
-        android:gravity="center_vertical"/>
+        <TextView
+            style ="@style/TextHeaderStyle"
+            android:text="@string/newPlaylist" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <ImageView
         android:id="@+id/ivNewImage"
@@ -35,7 +27,7 @@
         android:layout_marginHorizontal="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivBtnBack"
+        app:layout_constraintTop_toBottomOf="@id/playlistCreateToolbar"
         android:background="@drawable/new_playlist"/>
 
     <com.google.android.material.textfield.TextInputLayout
