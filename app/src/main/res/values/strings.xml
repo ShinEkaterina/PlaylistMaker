@@ -26,4 +26,9 @@
     <string name="fav_tracks">Избранные треки</string>
     <string name="fav_playlists">Плейлисты</string>
     <string name="clear_history">Очистить историю</string>
+    <string name="create">Создать</string>
+    <string name="playlist_name">Название*</string>
+    <string name="playlist_description">Описание*</string>
+
+
 </resources>

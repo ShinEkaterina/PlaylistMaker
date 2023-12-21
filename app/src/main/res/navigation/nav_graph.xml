@@ -30,7 +30,7 @@
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/libraryFragment"
-        android:name="com.example.playlistmaker.library.ui.fragment.LibraryFragment"
+        android:name="com.example.playlistmaker.library.ui.fragment.root.LibraryFragment"
         android:label="fragment_library"
         tools:layout="@layout/fragment_library" >
         <action
