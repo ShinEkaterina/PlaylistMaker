@@ -66,7 +66,7 @@ class PlayListsFragment : Fragment() {
         }
     }
     private fun showPlaylists(listPlaylist: List<Playlist>) {
-        binding.clErrorWidget.visibility = View.GONE
+        binding.llErrorWidget.visibility = View.GONE
         binding.rvPlaylists.visibility = View.VISIBLE
 
         playlistAdapter?.playlists?.clear()
@@ -75,14 +75,14 @@ class PlayListsFragment : Fragment() {
     }
 
     private fun showEmpty() {
-        binding.clErrorWidget.visibility = View.VISIBLE
+        binding.llErrorWidget.visibility = View.VISIBLE
         binding.rvPlaylists.visibility = View.GONE
     }
 
     private fun showLoading() {
         with(binding){
             rvPlaylists.isVisible = false
-            clErrorWidget.isVisible = false
+            llErrorWidget.isVisible = false
             loadingIndicator.isVisible = true
         }
     }

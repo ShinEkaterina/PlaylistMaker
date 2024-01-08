@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.text.Editable
@@ -11,6 +12,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowInsets
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -88,8 +90,6 @@ class PlaylistCreateFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
                 findNavController().popBackStack()
-            } else {
-
             }
         }
 
@@ -132,6 +132,22 @@ class PlaylistCreateFragment : Fragment() {
             }
 
         })
+        hideNavigation()
+
+    }
+
+    private fun hideNavigation() {
+        // Скрыть нижнюю панель навигации
+        activity?.window?.decorView?.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        or View.SYSTEM_UI_FLAG_FULLSCREEN
+                )
+
+        // Скрыть панель навигации на устройствах с Android 10 (API уровень 29) и выше
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            activity?.window?.insetsController?.hide(WindowInsets.Type.navigationBars())
+        }
     }
 
     private fun closeKeybord() {
@@ -146,7 +162,7 @@ class PlaylistCreateFragment : Fragment() {
             .setMessage("Все несохраненные данные будут потеряны")
             .setNegativeButton("Отмена") { dialog, which ->
             }
-            .setPositiveButton("Да") { dialog, which ->
+            .setPositiveButton("Завершить") { dialog, which ->
                 findNavController().popBackStack()
             }
         dialog.show()
