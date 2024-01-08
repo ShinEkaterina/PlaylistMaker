@@ -5,7 +5,7 @@ import android.media.MediaPlayer
 import androidx.room.Room
 import com.example.playlistmaker.history.data.HistoryRepository
 import com.example.playlistmaker.history.data.impl.HistoryRepositoryImpl
-import com.example.playlistmaker.library.data.db.AppDatabase
+import com.example.playlistmaker.common.data.db.AppDatabase
 import com.example.playlistmaker.search.data.NetworkClient
 import com.example.playlistmaker.search.data.network.RetrofitNetworkClient
 import com.example.playlistmaker.search.data.network.iTunesApi
@@ -72,7 +72,14 @@ val dataModule = module {
     }
 // Database
     single {
-        Room.databaseBuilder(androidContext(), AppDatabase::class.java, "database.db").addMigrations(AppDatabase.MIGRATION_1_2)
+        Room.databaseBuilder(
+            androidContext(),
+            AppDatabase::class.java,
+            "database.db"
+        ).addMigrations(
+            AppDatabase.MIGRATION_1_2,
+            AppDatabase.MIGRATION_2_3
+        )
             .build()
     }
 }

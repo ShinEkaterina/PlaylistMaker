@@ -1,4 +1,4 @@
-package com.example.playlistmaker.library.data.db.dao
+package com.example.playlistmaker.common.data.db.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.TypeConverters
-import com.example.playlistmaker.library.data.db.entity.PlaylistEntity
+import com.example.playlistmaker.common.data.db.entity.PlaylistEntity
 import com.example.playlistmaker.util.PlaylistTracksConverter
 
 @Dao
