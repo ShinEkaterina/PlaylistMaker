@@ -19,10 +19,12 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.Playlist
 import com.example.playlistmaker.databinding.FragmentPlaylistCreateBinding
 import com.example.playlistmaker.library.ui.playlist.view_model.PlaylistCreateViewModel
@@ -164,7 +166,14 @@ class PlaylistCreateFragment : Fragment() {
             }
             .setPositiveButton("Завершить") { dialog, which ->
                 findNavController().popBackStack()
-            }
+            }.create()
+
+/*        // Установка цвета текста кнопок
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(R.attr.colorOnSecondary)
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(R.attr.colorOnSecondary)
+        }*/
+
         dialog.show()
     }
 

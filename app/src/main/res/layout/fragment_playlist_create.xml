@@ -9,6 +9,9 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/playlistCreateToolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_arrow_back"
         style ="@style/ToolBarStyle">
 

@@ -143,7 +143,10 @@ class AudioPlayerFragment : Fragment() {
             }
         })
 
-
+        binding.btnPlaylistCreate.setOnClickListener {
+           // preparedTrack = true
+            findNavController().navigate(R.id.action_playerFragment_to_playlistCreateFragment)
+        }
     }
 
     override fun onDestroyView() {

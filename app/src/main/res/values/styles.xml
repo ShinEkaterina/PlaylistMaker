@@ -297,7 +297,7 @@
         <item name="boxCornerRadiusBottomStart">8dp</item>
         <item name="boxCornerRadiusTopStart">8dp</item>
         <item name="android:layout_marginHorizontal">16dp</item>
-        <item name="android:textColorHint">@color/dark</item>
+        <item name="android:textColorHint">?attr/colorOnSecondary</item>
         <item name="boxStrokeColor">@drawable/edit_text_playlist_selector</item>
         <item name="hintTextColor">@drawable/edit_text_playlist_selector</item>
     </style>

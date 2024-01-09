@@ -13,17 +13,14 @@
 
         <Button
             android:id="@+id/btnPlaylistCreate"
+            style="@style/button_create_new_playlist"
             android:layout_width="160dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="46dp"
-            android:backgroundTint="@color/dark"
-            android:fontFamily="@font/ys_display_medium"
             android:text="@string/newPlaylist"
             android:textAllCaps="false"
-            android:textColor="@color/white"
             android:textFontWeight="500"
-            android:textSize="14sp"
             app:cornerRadius="54dp"
             tools:text="@string/newPlaylist" />
 
