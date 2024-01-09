@@ -144,7 +144,7 @@ class AudioPlayerViewModel(
 
     fun addTrackToPlaylist(playlist: Playlist, track: Track) {
         viewModelScope.launch {
-            if (playlist.tracks?.contains(track.trackId.toString() )== true)
+            if (playlist.tracks?.contains(track.trackId.toString()) == true)
                 _showToast.setValue("Трек уже добавлен в плейлист ${playlist.name}")
             else {
                 playlistInteractor.addTrackToPlaylist(playlist, track)

@@ -14,5 +14,5 @@ data class PlaylistEntity(
     val imageName: String?,
     @TypeConverters(PlaylistTracksConverter::class)
     val tracks: List<String>? = null,
-    val tracksNumber:Int = 0
+    val tracksNumber: Int = 0
 )

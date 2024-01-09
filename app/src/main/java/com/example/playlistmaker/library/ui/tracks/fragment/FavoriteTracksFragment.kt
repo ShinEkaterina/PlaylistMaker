@@ -88,7 +88,7 @@ class FavoriteTracksFragment : Fragment(), TrackAdapter.Listener {
     }
 
     private fun showLoading() {
-        with(binding){
+        with(binding) {
             rvTracks.isVisible = false
             clErrorWidget.isVisible = false
             loadingIndicator.isVisible = true
@@ -96,7 +96,7 @@ class FavoriteTracksFragment : Fragment(), TrackAdapter.Listener {
     }
 
     private fun showEmpty() {
-        with(binding){
+        with(binding) {
             rvTracks.isVisible = false
             loadingIndicator.isVisible = false
             clErrorWidget.isVisible = true
@@ -104,7 +104,7 @@ class FavoriteTracksFragment : Fragment(), TrackAdapter.Listener {
     }
 
     private fun showContent(favorites: List<Track>) {
-        with(binding){
+        with(binding) {
             loadingIndicator.isVisible = false
             clErrorWidget.isVisible = false
             rvTracks.isVisible = true

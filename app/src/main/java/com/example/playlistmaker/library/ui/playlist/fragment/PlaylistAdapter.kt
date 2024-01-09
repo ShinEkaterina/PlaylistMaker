@@ -4,7 +4,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.common.domain.model.Playlist
 
-class PlaylistAdapter(private val layoutRes: Int, private val clickListener: PlaylistClickListener) :
+class PlaylistAdapter(
+    private val layoutRes: Int,
+    private val clickListener: PlaylistClickListener
+) :
     RecyclerView.Adapter<PlaylistViewHolder>() {
 
     val playlists = ArrayList<Playlist>()

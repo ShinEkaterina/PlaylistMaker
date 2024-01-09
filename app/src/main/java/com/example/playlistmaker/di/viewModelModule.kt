@@ -15,15 +15,15 @@ val viewModelModule = module {
 
 
     viewModel {
-        AudioPlayerViewModel(get(), get (), get())
+        AudioPlayerViewModel(get(), get(), get())
     }
 
     viewModel {
-        SettingsViewModel(get(),get())
+        SettingsViewModel(get(), get())
     }
 
     viewModel {
-        SearchViewModel(get(),get())
+        SearchViewModel(get(), get())
     }
 
     viewModel {

@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -32,8 +31,6 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
     private var searchText: String = ""
 
     private val searchTrackViewModel by viewModel<SearchViewModel>()
-
-    private var isClickAllowed = true
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!

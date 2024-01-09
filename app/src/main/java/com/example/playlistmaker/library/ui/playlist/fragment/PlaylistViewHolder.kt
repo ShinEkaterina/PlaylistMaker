@@ -17,7 +17,6 @@ import com.example.playlistmaker.util.rightEnding
 import java.io.File
 
 
-
 class PlaylistViewHolder(
     parent: ViewGroup,
     layoutRes: Int,
@@ -45,12 +44,15 @@ class PlaylistViewHolder(
     }
 
     private fun showImage(name: String?) {
-        val filePath = File(itemView.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), PLAYLIST_STORAGE_NAME)
+        val filePath = File(
+            itemView.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+            PLAYLIST_STORAGE_NAME
+        )
         val file = File(filePath, name)
         val uri = file.toUri()
         Glide.with(itemView.context)
             .load(uri)
-            .placeholder(R.drawable.playlist_card_placeholder)
+            .placeholder(R.drawable.playlist_card)
             .centerCrop()
             .transform(RoundedCorners(dpToPx(2.0F, itemView.context)))
             .into(imagePlaylist)

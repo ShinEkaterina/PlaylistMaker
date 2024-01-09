@@ -38,9 +38,10 @@ class PlayListsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        onPlaylistClickDebounce = debounce(CLICK_DEBOUNCE_DELAY_MILLISECONDS, lifecycleScope, false) { playlist ->
+        onPlaylistClickDebounce =
+            debounce(CLICK_DEBOUNCE_DELAY_MILLISECONDS, lifecycleScope, false) { playlist ->
 
-        }
+            }
 
         playlistAdapter = PlaylistAdapter(R.layout.playlist_view_card) { playlist ->
             onPlaylistClickDebounce(playlist)
@@ -65,6 +66,7 @@ class PlayListsFragment : Fragment() {
             is PlaylistsFragmentState.Loading -> showLoading()
         }
     }
+
     private fun showPlaylists(listPlaylist: List<Playlist>) {
         binding.llErrorWidget.visibility = View.GONE
         binding.rvPlaylists.visibility = View.VISIBLE
@@ -80,7 +82,7 @@ class PlayListsFragment : Fragment() {
     }
 
     private fun showLoading() {
-        with(binding){
+        with(binding) {
             rvPlaylists.isVisible = false
             llErrorWidget.isVisible = false
             loadingIndicator.isVisible = true
@@ -91,13 +93,16 @@ class PlayListsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
     override fun onResume() {
         super.onResume()
         viewModel.getPlaylists()
     }
+
     companion object {
 
         private const val CLICK_DEBOUNCE_DELAY_MILLISECONDS = 1000L
+
         @JvmStatic
         fun newInstance() = PlayListsFragment()
     }

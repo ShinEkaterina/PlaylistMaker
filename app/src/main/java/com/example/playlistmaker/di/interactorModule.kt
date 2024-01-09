@@ -26,12 +26,11 @@ val interactorModule = module {
         HistoryInteractorImpl(get())
     }
 
-
     single<AudioPlayerInteractor> {
         AudioPlayerInteractorImpl(get())
     }
 
-   single<SettingsInteractor> {
+    single<SettingsInteractor> {
         SettingsInteractorImpl(get())
     }
 

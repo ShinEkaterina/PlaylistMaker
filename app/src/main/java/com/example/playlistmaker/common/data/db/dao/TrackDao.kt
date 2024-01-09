@@ -22,5 +22,5 @@ interface TrackDao {
     suspend fun getTracksId(): List<Long>
 
     @Query("SELECT * FROM tracks where id = :trackId")
-    suspend fun isTrackFavorite(trackId:Long): TrackEntity?
+    suspend fun isTrackFavorite(trackId: Long): TrackEntity?
 }

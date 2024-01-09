@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -144,7 +143,7 @@ class AudioPlayerFragment : Fragment() {
         })
 
         binding.btnPlaylistCreate.setOnClickListener {
-           // preparedTrack = true
+            // preparedTrack = true
             findNavController().navigate(R.id.action_playerFragment_to_playlistCreateFragment)
         }
     }
