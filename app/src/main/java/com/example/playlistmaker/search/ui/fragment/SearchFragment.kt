@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -36,17 +37,7 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
-    private lateinit var onTrackClickDebounce: (Unit) -> Unit
-
-
-    private fun clickDebounce(): Boolean {
-        val current = isClickAllowed
-        if (isClickAllowed) {
-            isClickAllowed = false
-            onTrackClickDebounce(Unit)
-        }
-        return current
-    }
+    private lateinit var onTrackClickDebounce: (Track) -> Unit
 
 
     override fun onCreateView(
@@ -65,14 +56,18 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
             .observe(viewLifecycleOwner) { updatedStatus ->
                 updatedViewBasedOnStatus(updatedStatus)
             }
-        onTrackClickDebounce = debounce<Unit>(
-            delayMillis = CLICK_DEBOUNCE_DELAY_MILLISECONDS,
-            coroutineScope = viewLifecycleOwner.lifecycleScope,
-            useLastParam = true,
-            action = {
-                isClickAllowed = true
-            }
-        )
+
+
+        onTrackClickDebounce = debounce(
+            CLICK_DEBOUNCE_DELAY_MILLISECONDS,
+            viewLifecycleOwner.lifecycleScope,
+            true
+        ) { track ->
+            findNavController().navigate(
+                R.id.action_searchFragment_to_audioPlayerFragment,
+                AudioPlayerFragment.createArgs(track)
+            )
+        }
 
         binding.searchEditText.setText(searchText)
 
@@ -126,15 +121,9 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
 
     // добавление трека в историю по клику и открыте в аудиоплеере
     override fun onClick(track: Track) {
-        if (clickDebounce()) {
-            searchTrackViewModel.addNewTrackToHistory(track)
-            searchTrackViewModel.getHistory()
-            findNavController().navigate(
-                R.id.action_searchFragment_to_audioPlayerActivity,
-                AudioPlayerFragment.createArgs(track)
-            )
-
-        }
+        searchTrackViewModel.addNewTrackToHistory(track)
+        searchTrackViewModel.getHistory()
+        onTrackClickDebounce(track)
     }
 
     private val searchTextWatcher = object : TextWatcher {
@@ -272,6 +261,6 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
     }
 
     companion object {
-        private const val CLICK_DEBOUNCE_DELAY_MILLISECONDS = 1000L
+        private const val CLICK_DEBOUNCE_DELAY_MILLISECONDS = 100L
     }
 }
