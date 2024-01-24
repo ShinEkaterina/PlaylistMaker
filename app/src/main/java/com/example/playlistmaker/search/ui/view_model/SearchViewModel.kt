@@ -102,7 +102,7 @@ class SearchViewModel(
                 }
                 if (errorCode != null) {
                     when (errorCode) {
-                        ErrorCode.NO_INTERNET -> {
+                        ErrorCode.NO_INTERNET, ErrorCode.UNKNOWN_ERROR -> {
                             searchTrackStatusLiveData.postValue(
                                 SearchScreenState(
                                     emptyList(),
@@ -114,17 +114,6 @@ class SearchViewModel(
                             )
                         }
 
-                        ErrorCode.UNKNOWN_ERROR -> {
-                            searchTrackStatusLiveData.postValue(
-                                SearchScreenState(
-                                    emptyList(),
-                                    false,
-                                    ErrorType.NO_INTERNET,
-                                    toShowHistory = false,
-                                    history = emptyList(),
-                                )
-                            )
-                        }
 
                         ErrorCode.NOTHING_FOUND -> {
                             searchTrackStatusLiveData.postValue(

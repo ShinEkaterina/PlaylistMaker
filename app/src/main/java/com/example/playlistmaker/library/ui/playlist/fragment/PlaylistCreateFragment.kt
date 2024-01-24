@@ -1,6 +1,8 @@
 package com.example.playlistmaker.library.ui.playlist.fragment
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -19,13 +21,18 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.Playlist
 import com.example.playlistmaker.databinding.FragmentPlaylistCreateBinding
 import com.example.playlistmaker.library.ui.playlist.view_model.PlaylistCreateViewModel
+import com.example.playlistmaker.util.dpToPx
 import com.example.playlistmaker.util.getNameForImage
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
@@ -48,6 +55,8 @@ class PlaylistCreateFragment : Fragment() {
             if (uri != null) {
                 Glide.with(requireContext())
                     .load(uri)
+                    .centerCrop()
+                    .transform(RoundedCorners(8))
                     .into(binding.ivNewImage)
             }
         }
@@ -166,8 +175,14 @@ class PlaylistCreateFragment : Fragment() {
                 findNavController().popBackStack()
             }.create()
 
-        dialog.show()
-    }
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(requireContext(), (R.color.blue)))
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(requireContext(), (R.color.blue)))
+
+        }
+
+            dialog.show()
+        }
 
     private fun addPlaylist() {
         viewLifecycleOwner.lifecycleScope.launch {

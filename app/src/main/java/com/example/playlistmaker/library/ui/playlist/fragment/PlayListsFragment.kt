@@ -43,12 +43,13 @@ class PlayListsFragment : Fragment() {
 
             }
 
-        playlistAdapter = PlaylistAdapter(R.layout.playlist_view_card) { playlist ->
+        playlistAdapter = PlaylistAdapter(R.layout.item_playlist_grid) { playlist ->
             onPlaylistClickDebounce(playlist)
         }
 
         binding.rvPlaylists.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.rvPlaylists.adapter = playlistAdapter
+
 
         viewModel.libraryPlaylist.observe(viewLifecycleOwner) {
             render(it)
