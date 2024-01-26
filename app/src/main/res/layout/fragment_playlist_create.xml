@@ -43,7 +43,7 @@
             android:id="@+id/tilPlaylistName"
             style="@style/PlaylistEditText"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="33dp"
             android:hint="@string/playlist_name"
             app:counterTextColor="@color/dark"
@@ -63,7 +63,7 @@
             android:id="@+id/tilPlaylistOverview"
             style="@style/PlaylistEditText"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/playlist_description"
             app:layout_constraintTop_toBottomOf="@+id/tilPlaylistName">
