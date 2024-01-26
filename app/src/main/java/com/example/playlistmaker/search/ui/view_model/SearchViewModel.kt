@@ -93,66 +93,55 @@ class SearchViewModel(
         }
         viewModelScope.launch {
             searchInteractor.searchTracks(newSearchText).collect { pair ->
-                    val foundTracks = pair.first
-                    val errorCode = pair.second
-                    if (foundTracks != null) {
-                        trackList.clear()
-                        trackList.addAll(foundTracks)
-
-                    }
-                    if (errorCode != null) {
-                        when (errorCode) {
-                            ErrorCode.NO_INTERNET -> {
-                                searchTrackStatusLiveData.postValue(
-                                    SearchScreenState(
-                                        emptyList(),
-                                        false,
-                                        ErrorType.NO_INTERNET,
-                                        toShowHistory = false,
-                                        history = emptyList(),
-                                    )
-                                )
-                            }
-
-                            ErrorCode.UNKNOWN_ERROR -> {
-                                searchTrackStatusLiveData.postValue(
-                                    SearchScreenState(
-                                        emptyList(),
-                                        false,
-                                        ErrorType.NO_INTERNET,
-                                        toShowHistory = false,
-                                        history = emptyList(),
-                                    )
-                                )
-                            }
-
-                            ErrorCode.NOTHING_FOUND -> {
-                                searchTrackStatusLiveData.postValue(
-                                    SearchScreenState(
-                                        emptyList(),
-                                        false,
-                                        ErrorType.NOTHINF_FOUND,
-                                        toShowHistory = false,
-                                        history = emptyList(),
-                                    )
-                                )
-                            }
-
-                        }
-                    } else {
-                        searchTrackStatusLiveData.postValue(
-                            SearchScreenState(
-                                trackList,
-                                false,
-                                null,
-                                toShowHistory = false,
-                                history = emptyList(),
-                            )
-                        )
-                    }
-
+                val foundTracks = pair.first
+                val errorCode = pair.second
+                if (foundTracks != null) {
+                    trackList.clear()
+                    trackList.addAll(foundTracks)
 
                 }
+                if (errorCode != null) {
+                    when (errorCode) {
+                        ErrorCode.NO_INTERNET, ErrorCode.UNKNOWN_ERROR -> {
+                            searchTrackStatusLiveData.postValue(
+                                SearchScreenState(
+                                    emptyList(),
+                                    false,
+                                    ErrorType.NO_INTERNET,
+                                    toShowHistory = false,
+                                    history = emptyList(),
+                                )
+                            )
+                        }
+
+
+                        ErrorCode.NOTHING_FOUND -> {
+                            searchTrackStatusLiveData.postValue(
+                                SearchScreenState(
+                                    emptyList(),
+                                    false,
+                                    ErrorType.NOTHINF_FOUND,
+                                    toShowHistory = false,
+                                    history = emptyList(),
+                                )
+                            )
+                        }
+
+                    }
+                } else {
+                    searchTrackStatusLiveData.postValue(
+                        SearchScreenState(
+                            trackList,
+                            false,
+                            null,
+                            toShowHistory = false,
+                            history = emptyList(),
+                        )
+                    )
+                }
+
+
+            }
         }
     }
 

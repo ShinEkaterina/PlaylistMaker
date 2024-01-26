@@ -1,7 +1,7 @@
 package com.example.playlistmaker.util
 
 import com.example.playlistmaker.common.domain.model.Track
-import com.example.playlistmaker.library.data.db.entity.TrackEntity
+import com.example.playlistmaker.common.data.db.entity.TrackEntity
 import com.example.playlistmaker.player.presentation.model.TrackInfo
 import com.example.playlistmaker.util.Formater
 
@@ -34,5 +34,11 @@ class TrackDbMapper {
             country = track.country,
             previewUrl = track.previewUrl
         )
+    }
+
+    fun map(tracksEntity: List<TrackEntity>): List<Track> {
+        return tracksEntity.map { trackEntity ->
+            map(trackEntity)
+        }
     }
 }

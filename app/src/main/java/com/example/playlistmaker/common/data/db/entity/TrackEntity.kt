@@ -1,11 +1,11 @@
-package com.example.playlistmaker.library.data.db.entity
+package com.example.playlistmaker.common.data.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "tracks")
 data class TrackEntity(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val id: Long,
     val name: String,
     val artistName: String,

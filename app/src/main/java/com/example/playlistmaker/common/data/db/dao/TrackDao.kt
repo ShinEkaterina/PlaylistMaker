@@ -1,11 +1,11 @@
-package com.example.playlistmaker.library.data.db.dao
+package com.example.playlistmaker.common.data.db.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.playlistmaker.library.data.db.entity.TrackEntity
+import com.example.playlistmaker.common.data.db.entity.TrackEntity
 
 @Dao
 interface TrackDao {
@@ -22,5 +22,5 @@ interface TrackDao {
     suspend fun getTracksId(): List<Long>
 
     @Query("SELECT * FROM tracks where id = :trackId")
-    suspend fun isTrackFavorite(trackId:Long): TrackEntity?
+    suspend fun isTrackFavorite(trackId: Long): TrackEntity?
 }

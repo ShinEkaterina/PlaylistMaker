@@ -5,12 +5,13 @@ import android.media.MediaPlayer
 import androidx.room.Room
 import com.example.playlistmaker.history.data.HistoryRepository
 import com.example.playlistmaker.history.data.impl.HistoryRepositoryImpl
-import com.example.playlistmaker.library.data.db.AppDatabase
+import com.example.playlistmaker.common.data.db.AppDatabase
 import com.example.playlistmaker.search.data.NetworkClient
 import com.example.playlistmaker.search.data.network.RetrofitNetworkClient
 import com.example.playlistmaker.search.data.network.iTunesApi
 import com.example.playlistmaker.settings.data.SettingsRepository
 import com.example.playlistmaker.settings.data.impl.SettingsRepositoryImpl
+import com.example.playlistmaker.util.PlaylistDbMapper
 import com.google.gson.Gson
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
@@ -63,13 +64,22 @@ val dataModule = module {
         SettingsRepositoryImpl(get())
     }
     factory { Gson() }
+    single { PlaylistDbMapper() }
+
 
     single {
         return@single MediaPlayer()
     }
 // Database
     single {
-        Room.databaseBuilder(androidContext(), AppDatabase::class.java, "database.db")
+        Room.databaseBuilder(
+            androidContext(),
+            AppDatabase::class.java,
+            "database.db"
+        ).addMigrations(
+            AppDatabase.MIGRATION_1_2,
+            AppDatabase.MIGRATION_2_3
+        )
             .build()
     }
 }

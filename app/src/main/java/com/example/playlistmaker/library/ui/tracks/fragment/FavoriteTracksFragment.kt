@@ -1,4 +1,4 @@
-package com.example.playlistmaker.library.ui.fragment
+package com.example.playlistmaker.library.ui.tracks.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,8 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.databinding.FragmentFavoriteTracksBinding
-import com.example.playlistmaker.library.ui.view_model.FavTracksFragmentState
-import com.example.playlistmaker.library.ui.view_model.FavoriteTracksViewModel
+import com.example.playlistmaker.library.ui.tracks.view_model.FavTracksFragmentState
+import com.example.playlistmaker.library.ui.tracks.view_model.FavoriteTracksViewModel
 import com.example.playlistmaker.player.ui.fragment.AudioPlayerFragment
 import com.example.playlistmaker.search.ui.TrackAdapter
 import com.example.playlistmaker.util.debounce
@@ -88,7 +88,7 @@ class FavoriteTracksFragment : Fragment(), TrackAdapter.Listener {
     }
 
     private fun showLoading() {
-        with(binding){
+        with(binding) {
             rvTracks.isVisible = false
             clErrorWidget.isVisible = false
             loadingIndicator.isVisible = true
@@ -96,7 +96,7 @@ class FavoriteTracksFragment : Fragment(), TrackAdapter.Listener {
     }
 
     private fun showEmpty() {
-        with(binding){
+        with(binding) {
             rvTracks.isVisible = false
             loadingIndicator.isVisible = false
             clErrorWidget.isVisible = true
@@ -104,7 +104,7 @@ class FavoriteTracksFragment : Fragment(), TrackAdapter.Listener {
     }
 
     private fun showContent(favorites: List<Track>) {
-        with(binding){
+        with(binding) {
             loadingIndicator.isVisible = false
             clErrorWidget.isVisible = false
             rvTracks.isVisible = true
