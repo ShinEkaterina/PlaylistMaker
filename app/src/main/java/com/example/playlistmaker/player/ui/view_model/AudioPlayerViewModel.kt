@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.playlistmaker.common.domain.model.Playlist
 import com.example.playlistmaker.common.domain.model.Track
-import com.example.playlistmaker.library.domain.db.FavoriteTracksInteractor
-import com.example.playlistmaker.library.domain.db.PlaylistInteractor
+import com.example.playlistmaker.library.domain.api.FavoriteTracksInteractor
+import com.example.playlistmaker.library.domain.api.PlaylistInteractor
 import com.example.playlistmaker.player.domain.model.PlayerState
 import com.example.playlistmaker.player.domain.api.AudioPlayerInteractor
 import kotlinx.coroutines.Job

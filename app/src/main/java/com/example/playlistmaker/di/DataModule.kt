@@ -11,7 +11,7 @@ import com.example.playlistmaker.search.data.network.RetrofitNetworkClient
 import com.example.playlistmaker.search.data.network.iTunesApi
 import com.example.playlistmaker.settings.data.SettingsRepository
 import com.example.playlistmaker.settings.data.impl.SettingsRepositoryImpl
-import com.example.playlistmaker.util.PlaylistDbMapper
+import com.example.playlistmaker.util.PlaylistDbConverter
 import com.google.gson.Gson
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
@@ -64,7 +64,7 @@ val dataModule = module {
         SettingsRepositoryImpl(get())
     }
     factory { Gson() }
-    single { PlaylistDbMapper() }
+    single { PlaylistDbConverter() }
 
 
     single {

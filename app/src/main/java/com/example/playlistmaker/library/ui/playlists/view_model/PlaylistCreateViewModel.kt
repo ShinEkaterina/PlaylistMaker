@@ -1,11 +1,11 @@
-package com.example.playlistmaker.library.ui.playlist.view_model
+package com.example.playlistmaker.library.ui.playlists.view_model
 
 import android.content.Context
 import android.os.Environment
 import androidx.lifecycle.ViewModel
 import com.example.playlistmaker.common.domain.model.Playlist
-import com.example.playlistmaker.library.domain.db.PlaylistInteractor
-import com.example.playlistmaker.library.ui.playlist.fragment.PlaylistCreateFragment.Companion.PLAYLIST_STORAGE_NAME
+import com.example.playlistmaker.library.domain.api.PlaylistInteractor
+import com.example.playlistmaker.library.ui.playlists.fragment.PlaylistCreateFragment.Companion.PLAYLIST_STORAGE_NAME
 import java.io.File
 
 

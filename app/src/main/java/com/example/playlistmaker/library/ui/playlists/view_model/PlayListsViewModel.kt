@@ -1,14 +1,14 @@
-package com.example.playlistmaker.library.ui.playlist.view_model
+package com.example.playlistmaker.library.ui.playlists.view_model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.playlistmaker.common.domain.model.Playlist
-import com.example.playlistmaker.library.domain.db.PlaylistInteractor
+import com.example.playlistmaker.library.domain.api.PlaylistInteractor
 import kotlinx.coroutines.launch
 
-class PlaylistViewModel(private val playlistInteractor: PlaylistInteractor) : ViewModel() {
+class PlaylistsViewModel(private val playlistInteractor: PlaylistInteractor) : ViewModel() {
 
     private val _libraryPlaylist = MutableLiveData<PlaylistsFragmentState>()
     val libraryPlaylist: LiveData<PlaylistsFragmentState> = _libraryPlaylist

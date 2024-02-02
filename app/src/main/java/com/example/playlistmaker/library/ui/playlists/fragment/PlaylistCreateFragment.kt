@@ -1,4 +1,4 @@
-package com.example.playlistmaker.library.ui.playlist.fragment
+package com.example.playlistmaker.library.ui.playlists.fragment
 
 import android.app.AlertDialog
 import android.content.Context
@@ -31,7 +31,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.Playlist
 import com.example.playlistmaker.databinding.FragmentPlaylistCreateBinding
-import com.example.playlistmaker.library.ui.playlist.view_model.PlaylistCreateViewModel
+import com.example.playlistmaker.library.ui.playlists.view_model.PlaylistCreateViewModel
 import com.example.playlistmaker.util.dpToPx
 import com.example.playlistmaker.util.getNameForImage
 import com.google.android.material.dialog.MaterialAlertDialogBuilder

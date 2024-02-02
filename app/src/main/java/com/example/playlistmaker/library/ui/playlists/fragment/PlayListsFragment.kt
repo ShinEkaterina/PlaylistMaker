@@ -1,4 +1,4 @@
-package com.example.playlistmaker.library.ui.playlist.fragment
+package com.example.playlistmaker.library.ui.playlists.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,15 +12,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.Playlist
 import com.example.playlistmaker.databinding.FragmentLibraryPlaylistsBinding
-import com.example.playlistmaker.library.ui.playlist.view_model.PlaylistViewModel
-import com.example.playlistmaker.library.ui.playlist.view_model.PlaylistsFragmentState
+import com.example.playlistmaker.library.ui.playlists.view_model.PlaylistsFragmentState
+import com.example.playlistmaker.library.ui.playlists.view_model.PlaylistsViewModel
 import com.example.playlistmaker.util.debounce
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 
 class PlayListsFragment : Fragment() {
 
-    private val viewModel: PlaylistViewModel by activityViewModel()
+    private val viewModel: PlaylistsViewModel by activityViewModel()
 
     private var _binding: FragmentLibraryPlaylistsBinding? = null
     private val binding get() = _binding!!

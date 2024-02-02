@@ -26,7 +26,7 @@ import com.example.playlistmaker.search.ui.view_model.SearchViewModel
 import com.example.playlistmaker.util.debounce
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SearchFragment : Fragment(), TrackAdapter.Listener {
+class SearchFragment : Fragment(), TrackAdapter.ClickListener {
 
     private var searchText: String = ""
 
@@ -117,10 +117,14 @@ class SearchFragment : Fragment(), TrackAdapter.Listener {
     }
 
     // добавление трека в историю по клику и открыте в аудиоплеере
-    override fun onClick(track: Track) {
+    override fun onTrackClick(track: Track) {
         searchTrackViewModel.addNewTrackToHistory(track)
         searchTrackViewModel.getHistory()
         onTrackClickDebounce(track)
+    }
+
+    override fun onTrackLongClick(track: Track) {
+        //do nothing
     }
 
     private val searchTextWatcher = object : TextWatcher {

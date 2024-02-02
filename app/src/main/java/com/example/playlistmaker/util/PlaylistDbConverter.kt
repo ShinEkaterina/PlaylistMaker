@@ -3,7 +3,7 @@ package com.example.playlistmaker.util
 import com.example.playlistmaker.common.domain.model.Playlist
 import com.example.playlistmaker.common.data.db.entity.PlaylistEntity
 
-class PlaylistDbMapper {
+class PlaylistDbConverter {
     fun map(playlist: Playlist): PlaylistEntity {
         return PlaylistEntity(
             id = playlist.id,

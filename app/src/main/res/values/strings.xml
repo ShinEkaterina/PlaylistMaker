@@ -29,6 +29,11 @@
     <string name="create">Создать</string>
     <string name="playlist_name">Название*</string>
     <string name="playlist_description">Описание*</string>
+    <string name="bottom_sheet_share">Поделиться</string>
+    <string name="bottom_sheet_edit">Редактировать информацию</string>
+    <string name="bottom_sheet_remove">Удалить плейлист</string>
+    <string name="no_tracks_for_sharing">В этом плейлисте нет списка треков, которым можно поделиться</string>
+
 
 
 </resources>
