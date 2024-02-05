@@ -26,6 +26,10 @@ class TrackAdapter(var tracks: ArrayList<Track>, var clickListener: ClickListene
         val track = tracks[position]
         holder.bind(track)
         holder.itemView.setOnClickListener { clickListener.onTrackClick(track) }
+        holder.itemView.setOnLongClickListener {
+            clickListener.onTrackLongClick(track)
+            true // Возвращаем true, чтобы указать, что обработчик долгого клика был обработан
+        }
     }
 
     override fun getItemCount(): Int {

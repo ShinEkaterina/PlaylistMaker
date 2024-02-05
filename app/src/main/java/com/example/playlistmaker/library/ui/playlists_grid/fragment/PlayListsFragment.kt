@@ -1,9 +1,11 @@
-package com.example.playlistmaker.library.ui.playlists.fragment
+package com.example.playlistmaker.library.ui.playlists_grid.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -12,13 +14,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.Playlist
 import com.example.playlistmaker.databinding.FragmentLibraryPlaylistsBinding
-import com.example.playlistmaker.library.ui.playlists.view_model.PlaylistsFragmentState
-import com.example.playlistmaker.library.ui.playlists.view_model.PlaylistsViewModel
+import com.example.playlistmaker.library.ui.playlists_grid.view_model.PlaylistsFragmentState
+import com.example.playlistmaker.library.ui.playlists_grid.view_model.PlaylistsViewModel
+import com.example.playlistmaker.util.PLAYLIST_ID
+import com.example.playlistmaker.util.createJsonFromPlaylist
 import com.example.playlistmaker.util.debounce
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 
-class PlayListsFragment : Fragment() {
+class PlayListsFragment : Fragment(), PlaylistAdapter.PlaylistClickListener {
 
     private val viewModel: PlaylistsViewModel by activityViewModel()
 
@@ -40,8 +44,12 @@ class PlayListsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         onPlaylistClickDebounce =
             debounce(CLICK_DEBOUNCE_DELAY_MILLISECONDS, lifecycleScope, false) { playlist ->
-
+                findNavController().navigate(
+                    R.id.action_libraryFragment_to_playlistFragment,
+                    bundleOf(PLAYLIST_ID to createJsonFromPlaylist(playlist))
+                )
             }
+
 
         playlistAdapter = PlaylistAdapter(R.layout.item_playlist_grid) { playlist ->
             onPlaylistClickDebounce(playlist)
@@ -107,4 +115,8 @@ class PlayListsFragment : Fragment() {
         @JvmStatic
         fun newInstance() = PlayListsFragment()
     }
+
+    override fun onClick(playlist: Playlist) {
+        onPlaylistClickDebounce(playlist)
+        Log.d("LOGS", "Playlist click")    }
 }

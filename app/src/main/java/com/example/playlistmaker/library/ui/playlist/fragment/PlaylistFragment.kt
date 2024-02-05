@@ -1,15 +1,14 @@
 package com.example.playlistmaker.library.ui.playlist.fragment
 
 import android.content.Intent
-import android.media.MediaFormat.KEY_TRACK_ID
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -18,20 +17,22 @@ import com.bumptech.glide.Glide
 import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.Playlist
 import com.example.playlistmaker.common.domain.model.Track
+import com.example.playlistmaker.common.presentation.ConfirmationDialog
 import com.example.playlistmaker.common.presentation.rightEndingMinutes
 import com.example.playlistmaker.common.presentation.rightEndingTrack
 import com.example.playlistmaker.databinding.FragmentPlaylistBinding
 import com.example.playlistmaker.library.ui.playlist.view_model.PlaylistTracksState
 import com.example.playlistmaker.library.ui.playlist.view_model.PlaylistViewModel
+import com.example.playlistmaker.player.ui.fragment.AudioPlayerFragment
 import com.example.playlistmaker.search.ui.TrackAdapter
 import com.example.playlistmaker.util.CLICK_DEBOUNCE_DELAY_MILLISECONDS
 import com.example.playlistmaker.util.PLAYLIST_ID
-import com.example.playlistmaker.util.createJsonFromTrack
 import com.example.playlistmaker.util.createPlaylistFromJson
 import com.example.playlistmaker.util.debounce
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.concurrent.TimeUnit
@@ -50,7 +51,10 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
     private lateinit var bottomSheetSettingsBehavior: BottomSheetBehavior<ConstraintLayout>
     private lateinit var onTrackClickDebounce: (Track) -> Unit
 
+
     private val viewModel by viewModel<PlaylistViewModel>()
+
+    private val confirmator: ConfirmationDialog by inject { parametersOf(requireContext()) }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -68,14 +72,18 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
             viewLifecycleOwner.lifecycleScope,
             true
         ) { track ->
-            val bundle = bundleOf(KEY_TRACK_ID to createJsonFromTrack(track))
-            findNavController().navigate(R.id.action_playlistFragment_to_playerFragment, bundle)
+            findNavController().navigate(
+                R.id.action_playlistFragment_to_playerFragment,
+                AudioPlayerFragment.createArgs(track)
+            )
         }
 
         playlist = createPlaylistFromJson(requireArguments().getString(PLAYLIST_ID))
 
         binding.rvTracks.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+        adapter = TrackAdapter(ArrayList(), this@PlaylistFragment)
         binding.rvTracks.adapter = adapter
 
         viewModel.apply {
@@ -130,7 +138,7 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
             .into(binding.ivPlaceholder)
 
         bottomSheetTracksBehavior = BottomSheetBehavior.from(binding.bottomSheetTracks)
-        bottomSheetTracksBehavior.peekHeight = binding.container.height / 3
+        bottomSheetTracksBehavior.peekHeight = binding.container.height*3 / 10
         bottomSheetTracksBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
         bottomSheetSettingsBehavior = BottomSheetBehavior.from(binding.bottomSheetSettings)
@@ -185,28 +193,28 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
     }
 
     private fun showDialogDeleteTrack(track: Track) {
-/*        val dialog = MaterialAlertDialogBuilder(requireContext(), R.style.DialogButtons)
-            .setTitle(getString(R.string.delete_track))
-            .setMessage(getString(R.string.delete_track_message))
-            .setNegativeButton(getString(R.string.cancel)) { dialog, which ->
-            }
-            .setPositiveButton(getString(R.string.delete)) { dialog, which ->
-                viewModel.deleteTrackFromPlaylist(playlist.id, track)
-            }
-        dialog.show()*/
+        /*        val dialog = MaterialAlertDialogBuilder(requireContext(), R.style.DialogButtons)
+                    .setTitle(getString(R.string.delete_track))
+                    .setMessage(getString(R.string.delete_track_message))
+                    .setNegativeButton(getString(R.string.cancel)) { dialog, which ->
+                    }
+                    .setPositiveButton(getString(R.string.delete)) { dialog, which ->
+                        viewModel.deleteTrackFromPlaylist(playlist.id, track)
+                    }
+                dialog.show()*/
     }
 
     private fun showDialogDeletePlaylist() {
-/*        val dialog = MaterialAlertDialogBuilder(requireContext(), R.style.DialogButtons)
-            .setTitle(getString(R.string.delete_playlist))
-            .setMessage(getString(R.string.delete_playlist_message))
-            .setNegativeButton(getString(R.string.cancel)) { dialog, which ->
-            }
-            .setPositiveButton(getString(R.string.delete)) { dialog, which ->
-                viewModel.deletePlaylist(playlist.id)
-                findNavController().popBackStack()
-            }
-        dialog.show()*/
+        /*        val dialog = MaterialAlertDialogBuilder(requireContext(), R.style.DialogButtons)
+                    .setTitle(getString(R.string.delete_playlist))
+                    .setMessage(getString(R.string.delete_playlist_message))
+                    .setNegativeButton(getString(R.string.cancel)) { dialog, which ->
+                    }
+                    .setPositiveButton(getString(R.string.delete)) { dialog, which ->
+                        viewModel.deletePlaylist(playlist.id)
+                        findNavController().popBackStack()
+                    }
+                dialog.show()*/
     }
 
     private fun sharePlaylist() {
@@ -280,7 +288,7 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
 
     override fun onTrackLongClick(track: Track) {
         showDialogDeleteTrack(track)
+        Log.d("My LOG","LONG CLICK")
     }
-
 
 }

@@ -19,8 +19,7 @@ import java.io.File
 
 class PlaylistViewModel(
     context: Context,
-    private val playlistInteractor: PlaylistInteractor,
-    private val confirmator: ConfirmationDialog
+    private val playlistInteractor: PlaylistInteractor
 ) : ViewModel() {
 
     private val _playlistTracks = MutableLiveData<PlaylistTracksState>()

@@ -19,7 +19,7 @@ import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.Playlist
 import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.databinding.FragmentPlayerBinding
-import com.example.playlistmaker.library.ui.playlists.fragment.PlaylistAdapter
+import com.example.playlistmaker.library.ui.playlists_grid.fragment.PlaylistAdapter
 import com.example.playlistmaker.player.domain.model.PlayerState
 import com.example.playlistmaker.player.presentation.model.TrackInfo
 import com.example.playlistmaker.player.ui.view_model.AudioPlayerViewModel
