@@ -28,12 +28,15 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.Playlist
+import com.example.playlistmaker.common.presentation.ConfirmationDialog
 import com.example.playlistmaker.databinding.FragmentPlaylistCreateBinding
 import com.example.playlistmaker.library.ui.playlist_create.view_model.PlaylistCreateViewModel
 import com.example.playlistmaker.util.getNameForImage
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import java.io.File
 import java.io.FileOutputStream
 
@@ -58,6 +61,7 @@ class PlaylistCreateFragment : Fragment() {
             }
         }
     private val viewModel by viewModel<PlaylistCreateViewModel>()
+    private val confirmator: ConfirmationDialog by inject { parametersOf(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -163,23 +167,21 @@ class PlaylistCreateFragment : Fragment() {
     }
 
     private fun showDialog() {
-        val dialog = MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Завершить создание плейлиста?")
-            .setMessage("Все несохраненные данные будут потеряны")
-            .setNegativeButton("Отмена") { dialog, which ->
-            }
-            .setPositiveButton("Завершить") { dialog, which ->
+        confirmator.showConfirmationDialog(
+            title = getString(R.string.exit_confirmation_title),
+            message = getString(R.string.exit_confirmation_message),
+            positiveButton = getString(R.string.finish),
+            negativeButton = getString(R.string.cancel),
+            positiveAction = {
                 findNavController().popBackStack()
-            }.create()
 
-        dialog.setOnShowListener {
-            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(requireContext(), (R.color.blue)))
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(requireContext(), (R.color.blue)))
-
-        }
-
-            dialog.show()
-        }
+            },
+            negativeAction = {
+            },
+            positiveColor = ContextCompat.getColor(requireContext(), (R.color.blue)),
+            negativeColor = ContextCompat.getColor(requireContext(), (R.color.blue))
+        )
+    }
 
     private fun addPlaylist() {
         viewLifecycleOwner.lifecycleScope.launch {

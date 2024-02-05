@@ -20,8 +20,9 @@ class ConfirmationDialog(private val context: Context) {
     ) {
 
         val posColor = positiveColor
-            ?: context.getThemeColor(com.google.android.material.R.attr.colorPrimary)
-        val megColor = negativeColor ?: context.getThemeColor(com.google.android.material.R.attr.colorPrimary)
+            ?: ContextCompat.getColor(context, R.color.blue)
+        val megColor = negativeColor
+            ?: ContextCompat.getColor(context, R.color.blue)
 
         val dialog = MaterialAlertDialogBuilder(context)
             .setTitle(title)
@@ -31,10 +32,13 @@ class ConfirmationDialog(private val context: Context) {
             }
             .setNegativeButton(negativeButton) { dialog, which ->
                 negativeAction()
-            }
-            .show()
+            }.create()
 
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(posColor)
-        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(megColor)
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(megColor)
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(posColor)
+        }
+
+        dialog.show()
     }
 }

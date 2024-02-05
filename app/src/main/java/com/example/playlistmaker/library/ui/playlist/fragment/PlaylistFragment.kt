@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -138,7 +139,7 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
             .into(binding.ivPlaceholder)
 
         bottomSheetTracksBehavior = BottomSheetBehavior.from(binding.bottomSheetTracks)
-        bottomSheetTracksBehavior.peekHeight = binding.container.height*3 / 10
+        bottomSheetTracksBehavior.peekHeight = binding.container.height * 3 / 10
         bottomSheetTracksBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
         bottomSheetSettingsBehavior = BottomSheetBehavior.from(binding.bottomSheetSettings)
@@ -193,15 +194,20 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
     }
 
     private fun showDialogDeleteTrack(track: Track) {
-        /*        val dialog = MaterialAlertDialogBuilder(requireContext(), R.style.DialogButtons)
-                    .setTitle(getString(R.string.delete_track))
-                    .setMessage(getString(R.string.delete_track_message))
-                    .setNegativeButton(getString(R.string.cancel)) { dialog, which ->
-                    }
-                    .setPositiveButton(getString(R.string.delete)) { dialog, which ->
-                        viewModel.deleteTrackFromPlaylist(playlist.id, track)
-                    }
-                dialog.show()*/
+        confirmator.showConfirmationDialog(
+            title = getString(R.string.delete_track),
+            message = getString(R.string.delete_track_message),
+            positiveButton = getString(R.string.delete),
+            negativeButton = getString(R.string.cancel),
+            positiveAction = {
+                viewModel.deleteTrackFromPlaylist(playlist.id, track)
+            },
+            negativeAction = {
+            },
+            positiveColor = ContextCompat.getColor(requireContext(), R.color.blue),
+            negativeColor = ContextCompat.getColor(requireContext(), R.color.blue)
+        )
+
     }
 
     private fun showDialogDeletePlaylist() {
@@ -288,7 +294,7 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
 
     override fun onTrackLongClick(track: Track) {
         showDialogDeleteTrack(track)
-        Log.d("My LOG","LONG CLICK")
+        Log.d("My LOG", "LONG CLICK")
     }
 
 }
