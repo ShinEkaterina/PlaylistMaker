@@ -13,6 +13,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import com.example.playlistmaker.library.ui.playlists_grid.view_model.PlaylistsViewModel
 import com.example.playlistmaker.library.ui.playlist.view_model.PlaylistViewModel
+import com.example.playlistmaker.library.ui.playlist_edit.view_model.PlaylistEditViewModel
 
 
 val viewModelModule = module {
@@ -42,11 +43,16 @@ val viewModelModule = module {
         PlaylistsViewModel(get())
     }
 
-   // single { ConfirmationDialog(androidContext()) }
-    factory { (context: Context) -> ConfirmationDialog(context = context) }
-
-
     viewModel {
         PlaylistViewModel(androidContext(), get())
     }
+
+    viewModel {
+        PlaylistEditViewModel(androidContext(), get())
+    }
+
+    factory { (context: Context) -> ConfirmationDialog(context = context) }
+
+
+
 }

@@ -1,11 +1,9 @@
 package com.example.playlistmaker.library.ui.playlist_create.fragment
 
-import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.text.Editable
@@ -13,7 +11,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowInsets
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -32,7 +29,6 @@ import com.example.playlistmaker.common.presentation.ConfirmationDialog
 import com.example.playlistmaker.databinding.FragmentPlaylistCreateBinding
 import com.example.playlistmaker.library.ui.playlist_create.view_model.PlaylistCreateViewModel
 import com.example.playlistmaker.util.getNameForImage
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -40,10 +36,10 @@ import org.koin.core.parameter.parametersOf
 import java.io.File
 import java.io.FileOutputStream
 
-class PlaylistCreateFragment : Fragment() {
+open class PlaylistCreateFragment : Fragment() {
 
     private var _binding: FragmentPlaylistCreateBinding? = null
-    private val binding: FragmentPlaylistCreateBinding
+     val binding: FragmentPlaylistCreateBinding
         get() = _binding!!
 
     private var textWatcherName: TextWatcher? = null
@@ -142,11 +138,11 @@ class PlaylistCreateFragment : Fragment() {
             }
 
         })
-        hideNavigation()
+      //  hideNavigation()
 
     }
 
-    private fun hideNavigation() {
+/*    private fun hideNavigation() {
         // Скрыть нижнюю панель навигации
         activity?.window?.decorView?.systemUiVisibility = (
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
@@ -158,7 +154,7 @@ class PlaylistCreateFragment : Fragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             activity?.window?.insetsController?.hide(WindowInsets.Type.navigationBars())
         }
-    }
+    }*/
 
     private fun closeKeybord() {
         val inputMethodManager =

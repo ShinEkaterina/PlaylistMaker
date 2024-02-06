@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -28,6 +29,7 @@ import com.example.playlistmaker.player.ui.fragment.AudioPlayerFragment
 import com.example.playlistmaker.search.ui.TrackAdapter
 import com.example.playlistmaker.util.CLICK_DEBOUNCE_DELAY_MILLISECONDS
 import com.example.playlistmaker.util.PLAYLIST_ID
+import com.example.playlistmaker.util.createJsonFromPlaylist
 import com.example.playlistmaker.util.createPlaylistFromJson
 import com.example.playlistmaker.util.debounce
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -115,10 +117,10 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
         }
 
         binding.tvEditInformation.setOnClickListener {
-/*            findNavController().navigate(
-                R.id.action_playlistDescriptionFragment_to_playlistEditFragment,
+            findNavController().navigate(
+                R.id.action_playlistFragment_to_playlistEditFragment,
                 bundleOf(PLAYLIST_ID to createJsonFromPlaylist(playlist))
-            )*/
+            )
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {

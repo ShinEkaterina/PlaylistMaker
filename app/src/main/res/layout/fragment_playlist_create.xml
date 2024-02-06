@@ -21,6 +21,7 @@
             app:navigationIcon="@drawable/ic_arrow_back">
 
             <TextView
+                android:id="@+id/tvHeading"
                 style="@style/TextHeaderStyle"
                 android:text="@string/newPlaylist" />
 
