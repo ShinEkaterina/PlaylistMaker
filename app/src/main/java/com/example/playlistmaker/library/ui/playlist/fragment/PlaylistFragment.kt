@@ -126,6 +126,29 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
                 findNavController().popBackStack()
             }
         })
+
+        bottomSheetTracksBehavior = BottomSheetBehavior.from(binding.bottomSheetTracks)
+        bottomSheetSettingsBehavior = BottomSheetBehavior.from(binding.bottomSheetSettings)
+
+
+        bottomSheetSettingsBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                        binding.overlay.visibility = View.GONE
+                    }
+
+                    else -> {
+                        binding.overlay.visibility = View.VISIBLE
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+               // binding.overlay.alpha = slideOffset
+            }
+        })
     }
 
     private fun initView() {
@@ -138,12 +161,12 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
             .placeholder(R.drawable.playlist_card_placeholder)
             .into(binding.ivPlaceholder)
 
-        bottomSheetTracksBehavior = BottomSheetBehavior.from(binding.bottomSheetTracks)
         bottomSheetTracksBehavior.peekHeight = binding.container.height * 3 / 10
         bottomSheetTracksBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
-        bottomSheetSettingsBehavior = BottomSheetBehavior.from(binding.bottomSheetSettings)
         bottomSheetSettingsBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        bottomSheetSettingsBehavior.peekHeight = binding.container.height * 4 / 10
+
 
     }
 
@@ -211,16 +234,19 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
     }
 
     private fun showDialogDeletePlaylist() {
-        /*        val dialog = MaterialAlertDialogBuilder(requireContext(), R.style.DialogButtons)
-                    .setTitle(getString(R.string.delete_playlist))
-                    .setMessage(getString(R.string.delete_playlist_message))
-                    .setNegativeButton(getString(R.string.cancel)) { dialog, which ->
-                    }
-                    .setPositiveButton(getString(R.string.delete)) { dialog, which ->
-                        viewModel.deletePlaylist(playlist.id)
-                        findNavController().popBackStack()
-                    }
-                dialog.show()*/
+        confirmator.showConfirmationDialog(
+            title = getString(R.string.delete_playlist),
+            message = getString(R.string.delete_playlist_message),
+            positiveButton = getString(R.string.delete),
+            negativeButton = getString(R.string.cancel),
+            positiveAction = {
+                viewModel.deletePlaylist(playlist.id)
+                findNavController().popBackStack()            },
+            negativeAction = {
+            },
+            positiveColor = ContextCompat.getColor(requireContext(), R.color.blue),
+            negativeColor = ContextCompat.getColor(requireContext(), R.color.blue)
+        )
     }
 
     private fun sharePlaylist() {
@@ -272,7 +298,7 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
             .placeholder(R.drawable.playlist_card_placeholder)
             .into(binding.ivPlaylistMini)
         binding.tvPlMiniTitle.text = playlist.name
-        binding.tvPlMiniCount.text = rightEndingTrack(playlist.tracks!!.size)
+        binding.tvPlMiniCount.text = rightEndingTrack(if(playlist.tracks.isNullOrEmpty()) 0 else playlist.tracks!!.size)
 
 
     }

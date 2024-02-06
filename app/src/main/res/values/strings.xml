@@ -40,7 +40,6 @@
     <string name="exit_confirmation_title">Завершить создание плейлиста?</string>
     <string name="exit_confirmation_message">Все несохраненные данные будут потеряны</string>
     <string name="finish">Завершить</string>
-
-
-
+    <string name="delete_playlist">Удалить плейлист</string>
+    <string name="delete_playlist_message">Вы уверены, что хотите удалить этот плейлист?</string>
 </resources>
