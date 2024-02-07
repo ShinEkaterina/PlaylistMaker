@@ -1,5 +1,6 @@
 package com.example.playlistmaker.library.ui.playlist.fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -153,15 +154,17 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
         })
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun initView() {
         binding.tvPlaylistName.text = playlist.name
         binding.tvPlaylistOverview.text = playlist.description
         updateCountSongs()
         updateSumTime()
         Glide.with(requireContext())
-            .load(viewModel.getImage(playlist.imageName))
-            .placeholder(R.drawable.playlist_card_placeholder)
+            .load(playlist.imageUri)
+            .placeholder(R.drawable.playlist_card_placeholder_with_padding)
             .into(binding.ivPlaceholder)
+        binding.toolbar.navigationIcon = requireContext().getDrawable(R.drawable.ic_arrow_back)
 
         bottomSheetTracksBehavior.peekHeight = binding.container.height * 3 / 10
         bottomSheetTracksBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
@@ -242,7 +245,7 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
             positiveButton = getString(R.string.delete),
             negativeButton = getString(R.string.cancel),
             positiveAction = {
-                viewModel.deletePlaylist(playlist.id)
+                viewModel.deletePlaylist(playlist)
                 findNavController().popBackStack()            },
             negativeAction = {
             },
@@ -296,7 +299,7 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
     private fun showBottomSheetSettings() {
         bottomSheetSettingsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         Glide.with(requireContext())
-            .load(viewModel.getImage(playlist.imageName))
+            .load(playlist.imageUri)
             .placeholder(R.drawable.playlist_card_placeholder)
             .into(binding.ivPlaylistMini)
         binding.tvPlMiniTitle.text = playlist.name

@@ -25,7 +25,9 @@ import com.example.playlistmaker.player.presentation.model.TrackInfo
 import com.example.playlistmaker.player.ui.view_model.AudioPlayerViewModel
 import com.example.playlistmaker.player.ui.view_model.PlaylistState
 import com.example.playlistmaker.search.presentation.Mapper
+import com.example.playlistmaker.util.CLICK_DEBOUNCE_DELAY_MILLISECONDS
 import com.example.playlistmaker.util.Formater
+import com.example.playlistmaker.util.TRACK
 import com.example.playlistmaker.util.debounce
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -105,14 +107,14 @@ class AudioPlayerFragment : Fragment() {
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
             }
 
-        binding.rvPlaylist?.layoutManager =
+        binding.rvPlaylist.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         playlistAdapter = PlaylistAdapter(R.layout.playlist_line) { playlist ->
             onPlaylistClickDebounce(playlist)
         }
 
-        binding.rvPlaylist?.adapter = playlistAdapter
+        binding.rvPlaylist.adapter = playlistAdapter
 
         viewModel.apply {
             playlistState.observe(viewLifecycleOwner, ::renderPlaylistState)
@@ -244,8 +246,7 @@ class AudioPlayerFragment : Fragment() {
     }
 
     companion object {
-        const val TRACK = "track"
-        private const val CLICK_DEBOUNCE_DELAY_MILLISECONDS = 100L
+
         fun createArgs(track: Track): Bundle = bundleOf(TRACK to track)
     }
 }

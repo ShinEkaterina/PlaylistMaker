@@ -15,6 +15,7 @@ import com.example.playlistmaker.library.ui.tracks.view_model.FavTracksFragmentS
 import com.example.playlistmaker.library.ui.tracks.view_model.FavoriteTracksViewModel
 import com.example.playlistmaker.player.ui.fragment.AudioPlayerFragment
 import com.example.playlistmaker.search.ui.TrackAdapter
+import com.example.playlistmaker.util.CLICK_DEBOUNCE_DELAY_MILLISECONDS
 import com.example.playlistmaker.util.debounce
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -120,7 +121,5 @@ class FavoriteTracksFragment : Fragment(), TrackAdapter.ClickListener {
     companion object {
         @JvmStatic
         fun newInstance() = FavoriteTracksFragment()
-        private const val CLICK_DEBOUNCE_DELAY_MILLISECONDS = 100L
-
     }
 }

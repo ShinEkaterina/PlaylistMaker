@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.example.playlistmaker.util.PlaylistTracksConverter
+import com.example.playlistmaker.util.UriConverter
 
 @Entity(tableName = "playlists")
 data class PlaylistEntity(
@@ -11,6 +12,7 @@ data class PlaylistEntity(
     val id: Long,
     val name: String,
     val description: String,
+    @TypeConverters(UriConverter::class)
     val imageName: String?,
     @TypeConverters(PlaylistTracksConverter::class)
     val tracks: List<String>? = null,

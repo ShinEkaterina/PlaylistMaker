@@ -16,6 +16,7 @@ import com.example.playlistmaker.common.domain.model.Playlist
 import com.example.playlistmaker.databinding.FragmentLibraryPlaylistsBinding
 import com.example.playlistmaker.library.ui.playlists_grid.view_model.PlaylistsFragmentState
 import com.example.playlistmaker.library.ui.playlists_grid.view_model.PlaylistsViewModel
+import com.example.playlistmaker.util.CLICK_DEBOUNCE_DELAY_MILLISECONDS
 import com.example.playlistmaker.util.PLAYLIST_ID
 import com.example.playlistmaker.util.createJsonFromPlaylist
 import com.example.playlistmaker.util.debounce
@@ -109,8 +110,6 @@ class PlayListsFragment : Fragment(), PlaylistAdapter.PlaylistClickListener {
     }
 
     companion object {
-
-        private const val CLICK_DEBOUNCE_DELAY_MILLISECONDS = 1000L
 
         @JvmStatic
         fun newInstance() = PlayListsFragment()

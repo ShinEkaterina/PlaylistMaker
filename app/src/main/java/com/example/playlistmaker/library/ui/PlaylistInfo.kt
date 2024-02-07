@@ -1,12 +1,10 @@
-package com.example.playlistmaker.common.domain.model
+package com.example.playlistmaker.library.ui
 
-import android.net.Uri
-
-data class Playlist(
+data class PlaylistInfo(
     val id: Long,
     val name: String,
     val description: String,
-    val imageUri: Uri?,
+    val imageUri: String?,
     val tracks: List<String>?,
     val tracksNumber: Int = 0
 )

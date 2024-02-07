@@ -1,20 +1,17 @@
 package com.example.playlistmaker.library.ui.playlists_grid.fragment
 
-import android.os.Environment
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.Playlist
-import com.example.playlistmaker.library.ui.playlist_create.fragment.PlaylistCreateFragment.Companion.PLAYLIST_STORAGE_NAME
 import com.example.playlistmaker.util.dpToPx
 import com.example.playlistmaker.util.rightEnding
-import java.io.File
 
 
 class PlaylistViewHolder(
@@ -38,18 +35,18 @@ class PlaylistViewHolder(
             else
                 playlist.tracks.size
         countSongs.text = rightEnding(count)
-        showImage(playlist.imageName)
+        showImage(playlist.imageUri)
 
         itemView.setOnClickListener { clickListener.onClick(playlist) }
     }
 
-    private fun showImage(name: String?) {
-        val filePath = File(
+    private fun showImage(uri: Uri?) {
+/*        val filePath = File(
             itemView.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
             PLAYLIST_STORAGE_NAME
         )
         val file = File(filePath, name)
-        val uri = file.toUri()
+        val uri = file.toUri()*/
         Glide.with(itemView.context)
             .load(uri)
             .placeholder(R.drawable.playlist_card)

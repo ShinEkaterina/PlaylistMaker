@@ -54,8 +54,6 @@ class PlaylistViewModel(
             _playlistTracks.postValue(PlaylistTracksState.Content(tracks))
     }
 
-    fun getImage(name: String?) = File(filePath, name).toUri()
-
     fun deleteTrackFromPlaylist(playlistId: Long, track: Track) {
         viewModelScope.launch {
             playlistInteractor.deleteTrackFromPlaylist(playlistId, track)
@@ -63,9 +61,9 @@ class PlaylistViewModel(
         }
     }
 
-    fun deletePlaylist(playlistId: Long) {
+    fun deletePlaylist(playlist: Playlist) {
         viewModelScope.launch {
-            playlistInteractor.deletePlaylist(playlistId)
+            playlistInteractor.deletePlaylist(playlist)
         }
     }
 }
