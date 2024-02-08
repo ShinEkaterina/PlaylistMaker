@@ -21,3 +21,4 @@ fun rightEndingMinutes(number: Int): String {
         else return "$number минут"
     }
 }
+

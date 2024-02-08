@@ -48,11 +48,10 @@ val viewModelModule = module {
     }
 
     viewModel {
-        PlaylistEditViewModel(androidContext(), get(),get())
+        PlaylistEditViewModel(androidContext(), get(), get())
     }
 
     factory { (context: Context) -> ConfirmationDialog(context = context) }
-
 
 
 }

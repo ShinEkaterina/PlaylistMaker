@@ -6,7 +6,7 @@ import com.example.playlistmaker.library.data.api.PlaylistRepository
 import com.example.playlistmaker.common.data.db.AppDatabase
 import com.example.playlistmaker.common.data.db.entity.TracksPlaylistEntity
 import com.example.playlistmaker.util.PlaylistDbConverter
-import com.example.playlistmaker.util.TrackDbMapper
+import com.example.playlistmaker.util.TrackDbConverter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -15,7 +15,7 @@ import kotlinx.coroutines.withContext
 class PlaylistRepositoryImpl(
     private val appDatabase: AppDatabase,
     private val playlistDbConverter: PlaylistDbConverter,
-    private val trackDbConverter: TrackDbMapper,
+    private val trackDbConverter: TrackDbConverter,
 ) : PlaylistRepository {
     override fun getAllPlaylist(): Flow<List<Playlist>> {
         return flow {
@@ -74,7 +74,8 @@ class PlaylistRepositoryImpl(
     override suspend fun deleteTrackFromPlaylist(playlistId: Long, track: Track) {
         withContext(Dispatchers.IO) {
             val listTracksId = ArrayList<String>()
-            val listTracks = appDatabase.playlistDao().getPlaylistById(playlistId).tracks!!.toMutableList()
+            val listTracks =
+                appDatabase.playlistDao().getPlaylistById(playlistId).tracks!!.toMutableList()
             listTracks.remove(track.trackId.toString())
             listTracksId.addAll(listTracks.toList())
             appDatabase.playlistDao().updatePlaylistTracksId(playlistId, listTracksId)

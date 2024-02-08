@@ -10,8 +10,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.Playlist
+import com.example.playlistmaker.common.presentation.rightEndingTrack
 import com.example.playlistmaker.util.dpToPx
-import com.example.playlistmaker.util.rightEnding
 
 
 class PlaylistViewHolder(
@@ -34,19 +34,13 @@ class PlaylistViewHolder(
                 0
             else
                 playlist.tracks.size
-        countSongs.text = rightEnding(count)
+        countSongs.text = rightEndingTrack(count)
         showImage(playlist.imageUri)
 
         itemView.setOnClickListener { clickListener.onClick(playlist) }
     }
 
     private fun showImage(uri: Uri?) {
-/*        val filePath = File(
-            itemView.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-            PLAYLIST_STORAGE_NAME
-        )
-        val file = File(filePath, name)
-        val uri = file.toUri()*/
         Glide.with(itemView.context)
             .load(uri)
             .placeholder(R.drawable.playlist_card)

@@ -1,11 +1,8 @@
 package com.example.playlistmaker.library.ui.playlist_edit.fragment
 
-import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -35,7 +32,6 @@ class PlaylistEditFragment : PlaylistCreateFragment() {
         }
 
         binding.tvCreate.setOnClickListener {
-            // val imageName = "${getNameForImage(playlistName = binding.etPlaylistName.text.toString())}.jpg"
             if (playlistNewImgUri != null) {
 
                 updateImage(playlistNewImgUri!!)
@@ -68,7 +64,7 @@ class PlaylistEditFragment : PlaylistCreateFragment() {
 
     private fun updateImage(newImageUri: Uri) {
         viewModel.saveImageToStorage(newImageUri)
-        if (playlist.imageUri != null){
+        if (playlist.imageUri != null) {
             viewModel.deleteOldImage(playlist.imageUri!!)
         }
     }

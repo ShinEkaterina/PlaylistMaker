@@ -8,7 +8,11 @@ import java.lang.reflect.Type
 
 
 class UriDeserializer : JsonDeserializer<Uri> {
-    override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): Uri {
+    override fun deserialize(
+        json: JsonElement?,
+        typeOfT: Type?,
+        context: JsonDeserializationContext?
+    ): Uri {
         return Uri.parse(json?.asString)
     }
 }

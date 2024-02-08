@@ -2,10 +2,8 @@ package com.example.playlistmaker.util
 
 import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.common.data.db.entity.TrackEntity
-import com.example.playlistmaker.player.presentation.model.TrackInfo
-import com.example.playlistmaker.util.Formater
 
-class TrackDbMapper {
+class TrackDbConverter {
     fun map(track: TrackEntity): Track {
         return Track(
             trackId = track.id,
@@ -21,6 +19,7 @@ class TrackDbMapper {
             isFavorite = true
         )
     }
+
     fun map(track: Track): TrackEntity {
         return TrackEntity(
             id = track.trackId,

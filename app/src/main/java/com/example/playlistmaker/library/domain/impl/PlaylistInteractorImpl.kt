@@ -24,11 +24,11 @@ class PlaylistInteractorImpl(
     }
 
     override fun getPlaylist(playlistId: Long): Flow<Playlist> {
-       return playlistRepository.getPlaylist(playlistId)
+        return playlistRepository.getPlaylist(playlistId)
     }
 
     override fun getTracksPlaylist(playlistId: Long): Flow<List<Track>> {
-       return playlistRepository.getTracksPlaylist(playlistId)
+        return playlistRepository.getTracksPlaylist(playlistId)
     }
 
     override suspend fun deleteTrackFromPlaylist(playlistId: Long, track: Track) {
@@ -36,7 +36,7 @@ class PlaylistInteractorImpl(
     }
 
     override suspend fun deletePlaylist(playlist: Playlist) {
-      playlist.imageUri?.let { imagesRepositoryInteractor.removeImage(it)  }
+        playlist.imageUri?.let { imagesRepositoryInteractor.removeImage(it) }
 
         playlistRepository.deletePlaylist(playlist.id)
     }
