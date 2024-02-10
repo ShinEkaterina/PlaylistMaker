@@ -23,7 +23,7 @@ class PlaylistDbConverter {
             playlistEntity.name,
             playlistEntity.description,
             playlistEntity.imageName!!.toUri(),
-            playlistEntity.tracks,
+            playlistEntity.tracks?: listOf(),
             playlistEntity.tracksNumber
         )
     }

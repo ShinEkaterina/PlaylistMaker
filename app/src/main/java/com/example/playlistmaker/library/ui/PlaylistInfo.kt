@@ -5,6 +5,6 @@ data class PlaylistInfo(
     val name: String,
     val description: String,
     val imageUri: String?,
-    val tracks: List<String>?,
+    val tracks: List<String> = listOf(),
     val tracksNumber: Int = 0
 )

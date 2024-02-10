@@ -36,7 +36,7 @@ class PlaylistInteractorImpl(
     }
 
     override suspend fun deletePlaylist(playlist: Playlist) {
-        playlist.imageUri?.let { imagesRepositoryInteractor.removeImage(it) }
+        playlist.imageUri?.let(imagesRepositoryInteractor::removeImage)
 
         playlistRepository.deletePlaylist(playlist.id)
     }

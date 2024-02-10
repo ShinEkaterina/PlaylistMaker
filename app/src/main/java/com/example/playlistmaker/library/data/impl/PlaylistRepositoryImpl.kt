@@ -47,7 +47,7 @@ class PlaylistRepositoryImpl(
     override suspend fun addTrackToPlaylist(playlist: Playlist, track: Track) {
         withContext(Dispatchers.IO) {
             val listTracksId = ArrayList<String>()
-            if (!playlist.tracks.isNullOrEmpty())
+            if (playlist.tracks.isNotEmpty())
                 listTracksId.addAll(playlist.tracks)
             listTracksId.add(0, track.trackId.toString())
 
@@ -75,7 +75,7 @@ class PlaylistRepositoryImpl(
         withContext(Dispatchers.IO) {
             val listTracksId = ArrayList<String>()
             val listTracks =
-                appDatabase.playlistDao().getPlaylistById(playlistId).tracks!!.toMutableList()
+                appDatabase.playlistDao().getPlaylistById(playlistId).tracks?.toMutableList()?: mutableListOf()
             listTracks.remove(track.trackId.toString())
             listTracksId.addAll(listTracks.toList())
             appDatabase.playlistDao().updatePlaylistTracksId(playlistId, listTracksId)

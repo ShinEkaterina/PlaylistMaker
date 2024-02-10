@@ -48,7 +48,7 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
         get() = _binding!!
 
     private lateinit var playlist: Playlist
-    private var adapter: TrackAdapter? = null
+    private  var adapter: TrackAdapter = TrackAdapter(ArrayList(), this)
     private lateinit var bottomSheetTracksBehavior: BottomSheetBehavior<ConstraintLayout>
     private lateinit var bottomSheetSettingsBehavior: BottomSheetBehavior<ConstraintLayout>
     private lateinit var onTrackClickDebounce: (Track) -> Unit
@@ -197,8 +197,8 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
     }
 
     private fun updateSumTime() {
-        val sumDuration = if (adapter!!.tracks.isNotEmpty())
-            adapter!!.tracks.sumOf { it.trackTimeMillis }
+        val sumDuration = if (adapter.tracks.isNotEmpty())
+            adapter.tracks.sumOf { it.trackTimeMillis }
         else
             0
         val count = TimeUnit.MILLISECONDS.toMinutes(sumDuration).toInt()
@@ -206,7 +206,7 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
     }
 
     private fun updateCountSongs() {
-        val count = adapter!!.itemCount
+        val count = adapter.itemCount
         binding.tvCount.text = resources.getQuantityString(R.plurals.track_plurals, count, count)
     }
 
@@ -219,7 +219,7 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
     }
 
     private fun showData(listTrack: List<Track>) {
-        adapter!!.apply {
+        adapter.apply {
             tracks.clear()
             tracks.addAll(listTrack)
             notifyDataSetChanged()
@@ -229,7 +229,7 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
     }
 
     private fun showEmpty() {
-        adapter!!.apply {
+        adapter.apply {
             tracks.clear()
             notifyDataSetChanged()
         }
@@ -274,7 +274,7 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
     }
 
     private fun sharePlaylist() {
-        adapter!!.apply {
+        adapter.apply {
             if (tracks.isEmpty())
                 Toast.makeText(
                     requireContext(),
@@ -299,12 +299,12 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
     private fun getPlaylistInfo(): String {
         return "${playlist.name}\n" +
                 "${playlist.description}\n" +
-                "${playlist.tracks!!.size}\n" +
+                "${playlist.tracks.size}\n" +
                 getTracksInfo()
     }
 
     private fun getTracksInfo(): String {
-        val tracksInfo = adapter!!.tracks.mapIndexed { index, track ->
+        val tracksInfo = adapter.tracks.mapIndexed { index, track ->
             "${index + 1}.${track.artistName} - ${track.trackName}(${
                 SimpleDateFormat(
                     "mm:ss",
@@ -322,9 +322,9 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
             .placeholder(R.drawable.playlist_card_placeholder)
             .into(binding.ivPlaylistMini)
         binding.tvPlMiniTitle.text = playlist.name
-        val count = if (playlist.tracks.isNullOrEmpty()) 0 else playlist.tracks?.size
+        val count = if (playlist.tracks.isEmpty()) 0 else playlist.tracks.size
         binding.tvPlMiniCount.text =
-            resources.getQuantityString(R.plurals.track_plurals, count!!, count)
+            resources.getQuantityString(R.plurals.track_plurals, count, count)
 
 
     }

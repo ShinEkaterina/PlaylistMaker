@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.PickVisualMediaRequest
@@ -29,19 +28,17 @@ import com.example.playlistmaker.common.presentation.ConfirmationDialog
 import com.example.playlistmaker.databinding.FragmentPlaylistCreateBinding
 import com.example.playlistmaker.library.ui.playlist_create.view_model.PlaylistCreateViewModel
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 
 open class PlaylistCreateFragment : Fragment() {
 
     private var _binding: FragmentPlaylistCreateBinding? = null
-     val binding: FragmentPlaylistCreateBinding
+    val binding: FragmentPlaylistCreateBinding
         get() = _binding!!
 
     private var textWatcherName: TextWatcher? = null
     private var uriImage: Uri? = null
-     var playlistNewImgUri: Uri? = null
+    var playlistNewImgUri: Uri? = null
 
     private val pickMedia =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
@@ -58,7 +55,7 @@ open class PlaylistCreateFragment : Fragment() {
             }
         }
     private val viewModel by viewModel<PlaylistCreateViewModel>()
-  //  private val confirmator: ConfirmationDialog by inject { parametersOf(requireContext()) }
+    //  private val confirmator: ConfirmationDialog by inject { parametersOf(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -89,7 +86,7 @@ open class PlaylistCreateFragment : Fragment() {
 
         binding.tvCreate.setOnClickListener {
             if (it.isEnabled) {
-                if (playlistNewImgUri!= null){
+                if (playlistNewImgUri != null) {
                     viewModel.saveImageToStorage(playlistNewImgUri!!)
                 }
                 addPlaylist()
@@ -191,8 +188,8 @@ open class PlaylistCreateFragment : Fragment() {
                         0,
                         binding.etPlaylistName.text.toString(),
                         binding.etPlaylistOverview.text.toString(),
-                        if(playlistNewImgUri!= null) playlistNewImgUri else null,
-                        null
+                        if (playlistNewImgUri != null) playlistNewImgUri else null,
+                        listOf()
                     )
                 )
             }
@@ -207,17 +204,5 @@ open class PlaylistCreateFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    fun ImageView.setImageUriOrDefault(uri: Uri?, default: Int) {
-        if (uri != null) {
-            this.setImageURI(uri)
-            // Проверка, что изображение действительно установлено, если drawable не установлен, используем плейсхолдер
-            if (this.drawable == null) {
-                this.setImageResource(default)
-            }
-        } else {
-            this.setImageResource(default)
-        }
     }
 }

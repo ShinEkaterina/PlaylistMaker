@@ -1,8 +1,6 @@
 package com.example.playlistmaker.library.ui.playlist.view_model
 
 import android.content.Context
-import android.os.Environment
-import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,14 +8,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.playlistmaker.common.domain.model.Playlist
 import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.library.domain.api.PlaylistInteractor
-import com.example.playlistmaker.util.PLAYLIST_STORAGE_NAME
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.File
 
 
 class PlaylistViewModel(
-    context: Context,
     private val playlistInteractor: PlaylistInteractor
 ) : ViewModel() {
 
@@ -26,10 +21,6 @@ class PlaylistViewModel(
 
     private val _playlist = MutableLiveData<Playlist>()
     val playlist: LiveData<Playlist> = _playlist
-
-    private val filePath by lazy {
-        File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), PLAYLIST_STORAGE_NAME)
-    }
 
     fun updatePlaylist(playlistId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -48,7 +39,7 @@ class PlaylistViewModel(
     }
 
     private fun renderState(tracks: List<Track>) {
-        if (tracks.isNullOrEmpty())
+        if (tracks.isEmpty())
             _playlistTracks.postValue(PlaylistTracksState.Empty)
         else
             _playlistTracks.postValue(PlaylistTracksState.Content(tracks))
