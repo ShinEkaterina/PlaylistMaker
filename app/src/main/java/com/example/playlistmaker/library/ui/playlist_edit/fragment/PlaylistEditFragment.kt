@@ -37,7 +37,7 @@ class PlaylistEditFragment : PlaylistCreateFragment() {
                     playlist.id,
                     binding.etPlaylistName.text.toString(),
                     binding.etPlaylistOverview.text.toString(),
-                    playlistNewImgUri ?: Uri.EMPTY,
+                    playlistNewImgUri ?: playlist.imageUri,
                     playlist.tracks
                 ),
                 playlist.imageUri

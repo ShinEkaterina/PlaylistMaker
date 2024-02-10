@@ -6,7 +6,6 @@ import com.example.playlistmaker.common.domain.model.Playlist
 import com.example.playlistmaker.library.domain.api.ImagesRepositoryInteractor
 import com.example.playlistmaker.library.domain.api.PlaylistInteractor
 import com.example.playlistmaker.library.ui.playlist_create.view_model.PlaylistCreateViewModel
-import com.example.playlistmaker.library.ui.playlist_edit.fragment.NewPlaylistData
 import kotlinx.coroutines.launch
 
 class PlaylistEditViewModel(
