@@ -21,6 +21,7 @@ import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.Playlist
 import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.common.presentation.ConfirmationDialog
+import com.example.playlistmaker.common.presentation.calculateDesiredHeight
 import com.example.playlistmaker.common.presentation.rightEndingMinutes
 import com.example.playlistmaker.common.presentation.rightEndingTrack
 import com.example.playlistmaker.databinding.FragmentPlaylistBinding
@@ -58,7 +59,7 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
 
     private val viewModel by viewModel<PlaylistViewModel>()
 
-    private val confirmator: ConfirmationDialog by inject { parametersOf(requireContext()) }
+   // private val confirmator: ConfirmationDialog by inject { parametersOf(requireContext()) }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -81,6 +82,8 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
                 AudioPlayerFragment.createArgs(track)
             )
         }
+
+        setupBottomSheet()
 
         playlist = createPlaylistFromJson(requireArguments().getString(PLAYLIST_ID))
 
@@ -130,10 +133,9 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
             }
         })
 
-        bottomSheetTracksBehavior = BottomSheetBehavior.from(binding.bottomSheetTracks)
-        bottomSheetSettingsBehavior = BottomSheetBehavior.from(binding.bottomSheetSettings)
 
 
+/*
         bottomSheetSettingsBehavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -149,9 +151,9 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-               // binding.overlay.alpha = slideOffset
+                // binding.overlay.alpha = slideOffset
             }
-        })
+        })*/
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -166,13 +168,56 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
             .into(binding.ivPlaceholder)
         binding.toolbar.navigationIcon = requireContext().getDrawable(R.drawable.ic_arrow_back)
 
-        bottomSheetTracksBehavior.peekHeight = binding.container.height * 3 / 10
+    }
+
+    private fun setupBottomSheet() {
+
+        bottomSheetTracksBehavior = BottomSheetBehavior.from(binding.bottomSheetTracks)
+        bottomSheetSettingsBehavior = BottomSheetBehavior.from(binding.bottomSheetSettings)
+
+
+      //  bottomSheetTracksBehavior.peekHeight = binding.container.height * 3 / 10
         bottomSheetTracksBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
-        bottomSheetSettingsBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+       // bottomSheetSettingsBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         bottomSheetSettingsBehavior.peekHeight = binding.container.height * 4 / 10
 
+       // val bottomSheetContainer = binding.bottomSheet
+        //val optionsBottomSheetContainer = binding.hideableBottomSheet
+      //  bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetContainer)
+        //optionsBottomSheetBehaviour = BottomSheetBehavior.from(optionsBottomSheetContainer)
 
+        val desiredHeight = resources.calculateDesiredHeight(24 + 24 + 150)
+        val optionsDesiredHeight = resources.calculateDesiredHeight(24 + 28)
+
+        bottomSheetTracksBehavior.peekHeight = desiredHeight
+        bottomSheetSettingsBehavior.peekHeight = optionsDesiredHeight
+        bottomSheetSettingsBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+
+
+        bottomSheetSettingsBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                        bottomSheet.post {
+                            binding.overlay.visibility = View.GONE
+
+                        }
+                    }
+
+                    else -> {
+                        binding.overlay.visibility = View.VISIBLE
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+        })
+
+/*        binding.recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView = binding.recyclerView
+        recyclerView.adapter = adapter*/
     }
 
     private fun updatePlaylist(playlistUpdate: Playlist) {
@@ -222,7 +267,8 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
     }
 
     private fun showDialogDeleteTrack(track: Track) {
-        confirmator.showConfirmationDialog(
+        ConfirmationDialog.showConfirmationDialog(
+            requireContext(),
             title = getString(R.string.delete_track),
             message = getString(R.string.delete_track_message),
             positiveButton = getString(R.string.delete),
@@ -239,14 +285,16 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
     }
 
     private fun showDialogDeletePlaylist() {
-        confirmator.showConfirmationDialog(
+        ConfirmationDialog.showConfirmationDialog(
+            requireContext(),
             title = getString(R.string.delete_playlist),
             message = getString(R.string.delete_playlist_message),
             positiveButton = getString(R.string.delete),
             negativeButton = getString(R.string.cancel),
             positiveAction = {
                 viewModel.deletePlaylist(playlist)
-                findNavController().popBackStack()            },
+                findNavController().popBackStack()
+            },
             negativeAction = {
             },
             positiveColor = ContextCompat.getColor(requireContext(), R.color.blue),
@@ -303,7 +351,8 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
             .placeholder(R.drawable.playlist_card_placeholder)
             .into(binding.ivPlaylistMini)
         binding.tvPlMiniTitle.text = playlist.name
-        binding.tvPlMiniCount.text = rightEndingTrack(if(playlist.tracks.isNullOrEmpty()) 0 else playlist.tracks!!.size)
+        binding.tvPlMiniCount.text =
+            rightEndingTrack(if (playlist.tracks.isNullOrEmpty()) 0 else playlist.tracks!!.size)
 
 
     }

@@ -58,7 +58,7 @@ open class PlaylistCreateFragment : Fragment() {
             }
         }
     private val viewModel by viewModel<PlaylistCreateViewModel>()
-    private val confirmator: ConfirmationDialog by inject { parametersOf(requireContext()) }
+  //  private val confirmator: ConfirmationDialog by inject { parametersOf(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -166,7 +166,8 @@ open class PlaylistCreateFragment : Fragment() {
     }
 
     private fun showDialog() {
-        confirmator.showConfirmationDialog(
+        ConfirmationDialog.showConfirmationDialog(
+            requireContext(),
             title = getString(R.string.exit_confirmation_title),
             message = getString(R.string.exit_confirmation_message),
             positiveButton = getString(R.string.finish),
