@@ -36,7 +36,7 @@ class PlayListsFragment : Fragment(), PlaylistAdapter.PlaylistClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentLibraryPlaylistsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -78,8 +78,8 @@ class PlayListsFragment : Fragment(), PlaylistAdapter.PlaylistClickListener {
     }
 
     private fun showPlaylists(listPlaylist: List<Playlist>) {
-        binding.llErrorWidget.visibility = View.GONE
-        binding.rvPlaylists.visibility = View.VISIBLE
+        binding.llErrorWidget.isVisible = false
+        binding.rvPlaylists.isVisible = true
 
         playlistAdapter?.playlists?.clear()
         playlistAdapter?.playlists?.addAll(listPlaylist)
@@ -87,8 +87,8 @@ class PlayListsFragment : Fragment(), PlaylistAdapter.PlaylistClickListener {
     }
 
     private fun showEmpty() {
-        binding.llErrorWidget.visibility = View.VISIBLE
-        binding.rvPlaylists.visibility = View.GONE
+        binding.llErrorWidget.isVisible = true
+        binding.rvPlaylists.isVisible = false
     }
 
     private fun showLoading() {

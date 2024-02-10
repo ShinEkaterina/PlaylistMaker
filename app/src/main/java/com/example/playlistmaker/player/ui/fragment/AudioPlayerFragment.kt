@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -131,11 +132,11 @@ class AudioPlayerFragment : Fragment() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (newState) {
                     BottomSheetBehavior.STATE_HIDDEN -> {
-                        binding.overlay.visibility = View.GONE
+                        binding.overlay.isVisible = false
                     }
 
                     else -> {
-                        binding.overlay.visibility = View.VISIBLE
+                        binding.overlay.isVisible = true
                     }
                 }
             }
@@ -224,9 +225,9 @@ class AudioPlayerFragment : Fragment() {
         binding.tvDuration.text = trackInfo.duration
         binding.tvDurationPlay.setText(R.string.time_00)
 
-        if (trackInfo.collectionName.isNullOrEmpty()) {
-            binding.tvAlbum.visibility = View.GONE
-            binding.album.visibility = View.GONE
+        if (trackInfo.collectionName.isEmpty()) {
+            binding.tvAlbum.isVisible = false
+            binding.album.isVisible = false
         } else {
             binding.tvAlbum.text = trackInfo.collectionName
         }

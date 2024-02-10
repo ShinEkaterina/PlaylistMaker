@@ -246,8 +246,8 @@ class SearchFragment : Fragment(), TrackAdapter.ClickListener {
         binding.apply {
             recycleViewTracks.adapter = TrackAdapter(ArrayList(updatedHistory), this@SearchFragment)
             recycleViewTracks.isVisible = true
-            binding.trackNotFoundVidget.setVisibility(View.GONE)
-            binding.noInternetVidget.setVisibility(View.GONE)
+            binding.trackNotFoundVidget.isVisible = false
+            binding.noInternetVidget.isVisible = false
             progressBar.isVisible = false
             clearHistoryButton.isVisible = false
             searchHistory.isVisible = false

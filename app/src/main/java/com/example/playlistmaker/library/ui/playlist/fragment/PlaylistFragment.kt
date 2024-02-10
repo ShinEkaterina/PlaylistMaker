@@ -12,6 +12,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -59,7 +60,7 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentPlaylistBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -175,13 +176,13 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
                 when (newState) {
                     BottomSheetBehavior.STATE_HIDDEN -> {
                         bottomSheet.post {
-                            binding.overlay.visibility = View.GONE
+                            binding.overlay.isVisible = false
 
                         }
                     }
 
                     else -> {
-                        binding.overlay.visibility = View.VISIBLE
+                        binding.overlay.isVisible = true
                     }
                 }
             }
@@ -196,7 +197,7 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
     }
 
     private fun updateSumTime() {
-        val sumDuration = if (!adapter!!.tracks.isNullOrEmpty())
+        val sumDuration = if (adapter!!.tracks.isNotEmpty())
             adapter!!.tracks.sumOf { it.trackTimeMillis }
         else
             0
@@ -274,7 +275,7 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
 
     private fun sharePlaylist() {
         adapter!!.apply {
-            if (tracks.isNullOrEmpty())
+            if (tracks.isEmpty())
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.no_tracks_for_sharing),
