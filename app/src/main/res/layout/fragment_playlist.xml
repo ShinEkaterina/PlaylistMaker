@@ -10,6 +10,7 @@
     tools:context=".library.ui.playlist.fragment.PlaylistFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clPlaylistInfo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/light_gray">
@@ -47,17 +48,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ivPlaceholder"
             tools:text="[Playlist Name]" />
-
-        <ProgressBar
-            android:id="@+id/loading_indicator"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:indeterminateTint="@color/blue"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvPlaylistOverview"

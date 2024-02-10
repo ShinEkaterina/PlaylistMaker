@@ -146,24 +146,14 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
         bottomSheetTracksBehavior = BottomSheetBehavior.from(binding.bottomSheetTracks)
         bottomSheetSettingsBehavior = BottomSheetBehavior.from(binding.bottomSheetSettings)
 
-
-        //  bottomSheetTracksBehavior.peekHeight = binding.container.height * 3 / 10
         bottomSheetTracksBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        bottomSheetSettingsBehavior.state = BottomSheetBehavior.STATE_HIDDEN
 
-        // bottomSheetSettingsBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-        bottomSheetSettingsBehavior.peekHeight = binding.container.height * 4 / 10
-
-        // val bottomSheetContainer = binding.bottomSheet
-        //val optionsBottomSheetContainer = binding.hideableBottomSheet
-        //  bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetContainer)
-        //optionsBottomSheetBehaviour = BottomSheetBehavior.from(optionsBottomSheetContainer)
-
-        val desiredHeight = resources.calculateDesiredHeight(24 + 24 + 150)
-        val optionsDesiredHeight = resources.calculateDesiredHeight(24 + 28)
+        val desiredHeight = resources.calculateDesiredHeight(150 + 24)
+        val optionsDesiredHeight = resources.calculateDesiredHeight(52 + 24)
 
         bottomSheetTracksBehavior.peekHeight = desiredHeight
         bottomSheetSettingsBehavior.peekHeight = optionsDesiredHeight
-        bottomSheetSettingsBehavior.state = BottomSheetBehavior.STATE_HIDDEN
 
 
         bottomSheetSettingsBehavior.addBottomSheetCallback(object :
@@ -291,8 +281,6 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
         val shareIntent = Intent.createChooser(intent, null)
         startActivity(shareIntent)
     }
-
-
 
 
     private fun showBottomSheetSettings() {
