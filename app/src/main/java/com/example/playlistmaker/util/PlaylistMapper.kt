@@ -1,5 +1,6 @@
 package com.example.playlistmaker.util
 
+import android.net.Uri
 import androidx.core.net.toUri
 import com.example.playlistmaker.common.domain.model.Playlist
 import com.example.playlistmaker.library.ui.PlaylistInfo
@@ -21,7 +22,7 @@ object PlaylistMapper {
             id = playlistInfo.id,
             name = playlistInfo.name,
             description = playlistInfo.description,
-            imageUri = playlistInfo.imageUri!!.toUri(),
+            imageUri = playlistInfo.imageUri?.toUri() ?: Uri.EMPTY,
             tracks = playlistInfo.tracks,
             tracksNumber = playlistInfo.tracksNumber
         )

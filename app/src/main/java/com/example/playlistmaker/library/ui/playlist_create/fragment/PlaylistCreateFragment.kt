@@ -86,8 +86,8 @@ open class PlaylistCreateFragment : Fragment() {
 
         binding.tvCreate.setOnClickListener {
             if (it.isEnabled) {
-                if (playlistNewImgUri != null) {
-                    viewModel.saveImageToStorage(playlistNewImgUri!!)
+                playlistNewImgUri?.let { uri ->
+                    viewModel.saveImageToStorage(uri)
                 }
                 addPlaylist()
                 Toast.makeText(

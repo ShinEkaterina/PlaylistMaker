@@ -1,5 +1,6 @@
 package com.example.playlistmaker.util
 
+import android.net.Uri
 import androidx.core.net.toUri
 import com.example.playlistmaker.common.data.db.entity.PlaylistEntity
 import com.example.playlistmaker.common.domain.model.Playlist
@@ -17,20 +18,19 @@ class PlaylistDbConverter {
     }
 
     fun map(playlistEntity: PlaylistEntity): Playlist {
-
         return Playlist(
             playlistEntity.id,
             playlistEntity.name,
             playlistEntity.description,
-            playlistEntity.imageName!!.toUri(),
+            playlistEntity.imageName?.toUri() ?: Uri.EMPTY,
             playlistEntity.tracks?: listOf(),
             playlistEntity.tracksNumber
         )
     }
 
     fun map(playlistEntity: List<PlaylistEntity>): List<Playlist> {
-        return playlistEntity.map { playlistEntity ->
-            map(playlistEntity)
+        return playlistEntity.map { entity ->
+            map(entity)
         }
     }
 }

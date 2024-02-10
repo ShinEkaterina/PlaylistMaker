@@ -19,18 +19,23 @@ object TracksPlaylistConverter {
 
     @TypeConverter
     fun toTrackEntity(data: String): TrackEntity {
-        val trackMassive = data?.split(";")
+        val trackMassive = data.split(";")
+
+        if (trackMassive.size < 10) {
+            // Обработка ошибки: данные некорректны или неполны
+            throw IllegalArgumentException("Некорректные данные: $data")
+        }
         return TrackEntity(
-            trackMassive?.get(0)!!.toString().toLong(),
-            trackMassive?.get(1).toString(),
-            trackMassive?.get(2).toString(),
-            trackMassive?.get(3).toString().toLong(),
-            trackMassive?.get(4).toString(),
-            trackMassive?.get(5).toString(),
-            trackMassive?.get(6).toString(),
-            trackMassive?.get(7).toString(),
-            trackMassive?.get(8).toString(),
-            trackMassive?.get(9).toString(),
+            trackMassive[0].toLong(),
+            trackMassive[1],
+            trackMassive[2],
+            trackMassive[3].toLong(),
+            trackMassive[4],
+            trackMassive[5],
+            trackMassive[6],
+            trackMassive[7],
+            trackMassive[8],
+            trackMassive[9]
         )
     }
 }

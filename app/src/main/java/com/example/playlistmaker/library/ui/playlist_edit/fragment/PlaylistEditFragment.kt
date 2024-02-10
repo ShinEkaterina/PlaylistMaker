@@ -32,11 +32,9 @@ class PlaylistEditFragment : PlaylistCreateFragment() {
         }
 
         binding.tvCreate.setOnClickListener {
-            if (playlistNewImgUri != null) {
-
-                updateImage(playlistNewImgUri!!)
-                updatePlaylist(playlistNewImgUri)
-
+            playlistNewImgUri?.let { nonNullUri ->
+                updateImage(nonNullUri)
+                updatePlaylist(nonNullUri)
             }
             findNavController().popBackStack()
         }
@@ -64,9 +62,10 @@ class PlaylistEditFragment : PlaylistCreateFragment() {
 
     private fun updateImage(newImageUri: Uri) {
         viewModel.saveImageToStorage(newImageUri)
-        if (playlist.imageUri != null) {
-            viewModel.deleteOldImage(playlist.imageUri!!)
+        playlist.imageUri?.let {
+            viewModel.deleteOldImage(it)
         }
+
     }
 
     private fun updatePlaylist(imageUri: Uri?) {
