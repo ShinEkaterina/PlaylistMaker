@@ -57,6 +57,7 @@
 
         <ImageView
             android:id="@+id/clearButton"
+            android:contentDescription="@string/clear"
             style="@style/ClearTextIconStyle"
             android:layout_gravity="end|center_vertical"
             android:layout_marginEnd="@dimen/size_12"
@@ -123,6 +124,7 @@
             <ImageView
                 style="@style/SearchingActivityNotFoundMode"
                 android:layout_width="wrap_content"
+                android:contentDescription="@string/not_found"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/size_110"
@@ -146,6 +148,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/size_110"
+                android:contentDescription="@string/no_internet"
                 android:src="@drawable/no_internet" />
 
             <TextView

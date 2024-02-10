@@ -9,7 +9,7 @@ import com.example.playlistmaker.history.data.HistoryRepository
 import com.example.playlistmaker.history.data.impl.HistoryRepositoryImpl
 import com.example.playlistmaker.search.data.NetworkClient
 import com.example.playlistmaker.search.data.network.RetrofitNetworkClient
-import com.example.playlistmaker.search.data.network.iTunesApi
+import com.example.playlistmaker.search.data.network.ITunesApi
 import com.example.playlistmaker.settings.data.SettingsRepository
 import com.example.playlistmaker.settings.data.impl.SettingsRepositoryImpl
 import com.example.playlistmaker.util.PlaylistDbConverter
@@ -29,12 +29,12 @@ const val LOCAL_STORAGE = "local_storage"
 
 val dataModule = module {
 
-    single<iTunesApi> {
+    single<ITunesApi> {
         Retrofit.Builder()
             .baseUrl(ITUNES_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(iTunesApi::class.java)
+            .create(ITunesApi::class.java)
 
     }
 

@@ -29,7 +29,7 @@ class PlaylistViewHolder(
     fun bind(playlist: Playlist) {
         playlistName.text = playlist.name
         val count =
-            if (playlist.tracks.isNullOrEmpty())
+            if (playlist.tracks.isEmpty())
                 0
             else
                 playlist.tracks.size

@@ -18,10 +18,10 @@
     <LinearLayout
         android:layout_width="350dp"
         android:layout_height="49dp"
-        android:layout_weight="1"
         android:layout_gravity="bottom"
         android:layout_marginStart="0dp"
         android:layout_marginBottom="@dimen/size_12"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
@@ -49,10 +49,10 @@
 
             <ImageView
                 style="@style/ellipse"
-                android:src="@drawable/ellipse"
                 android:layout_gravity="center_vertical"
-                android:layout_marginEnd="@dimen/size_4" />
-            />
+                android:layout_marginEnd="@dimen/size_4"
+                android:contentDescription="@string/cover"
+                android:src="@drawable/ellipse" />
 
             <TextView
                 android:id="@+id/track_time"
@@ -66,8 +66,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|end"
-        android:layout_marginEnd="@dimen/size_20"
         android:layout_marginStart="@dimen/size_8"
+        android:layout_marginEnd="@dimen/size_20"
         android:background="@drawable/ic_arrow_forward"
         android:backgroundTint="@color/gray"
         tools:ignore="ContentDescription" />

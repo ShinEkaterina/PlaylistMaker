@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 
 
 class RetrofitNetworkClient(
-    private val itunesService: iTunesApi,
+    private val itunesService: ITunesApi,
     private val context: Context
 ) : NetworkClient {
 

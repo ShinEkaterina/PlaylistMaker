@@ -39,7 +39,7 @@ class TrackRepositoryImpl(
                     )
                 } else {
                     val favTrackIds = appDataBase.trackDao().getTracksId()
-                    emit(Resource.Success((response as TrackSearchResponse).results.map {
+                    emit(Resource.Success(response.results.map {
                         Track(
                             it.trackId,
                             it.trackName,

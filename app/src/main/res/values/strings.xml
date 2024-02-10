@@ -44,6 +44,17 @@
     <string name="delete_playlist_message">Вы уверены, что хотите удалить этот плейлист?</string>
     <string name="save">Сохранить</string>
     <string name="edit_playlist">Редактировать плейлист</string>
+    <string name="add_to_playlist">Добавить в плейлист</string>
+    <string name="like">Нравится</string>
+    <string name="play">Слушать</string>
+    <string name="cover">Обложка</string>
+    <string name="menu">Меню</string>
+    <string name="clear">Очистить</string>
+
+
+
+
+
 
     <plurals name="track_plurals">
         <item quantity="zero">%1$d треков</item>

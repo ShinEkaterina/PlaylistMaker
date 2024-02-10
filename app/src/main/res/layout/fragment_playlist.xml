@@ -17,6 +17,7 @@
         <ImageView
             android:id="@+id/ivPlaceholder"
             android:layout_width="match_parent"
+            android:contentDescription="@string/cover"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
             android:src="@drawable/playlist_card_placeholder_with_padding"
@@ -99,6 +100,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/menu"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0"
                 android:padding="@dimen/size_5"
@@ -130,6 +132,7 @@
 
             <ImageView
                 android:id="@+id/ivShare"
+                android:contentDescription="@string/bottom_sheet_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -138,6 +141,7 @@
 
             <ImageView
                 android:id="@+id/ivSettings"
+                android:contentDescription="@string/menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -236,6 +240,7 @@
 
                 <ImageView
                     android:id="@+id/ivPlaylistMini"
+                    android:contentDescription="@string/cover"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"

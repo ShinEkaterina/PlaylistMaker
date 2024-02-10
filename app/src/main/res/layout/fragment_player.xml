@@ -157,6 +157,7 @@
 
             <ImageView
                 android:id="@+id/ivAddButton"
+                android:contentDescription="@string/add_to_playlist"
                 style="@style/audio_player_add_button"
                 android:src="@drawable/add_to_list_button"
                 app:layout_constraintBottom_toTopOf="@+id/tvDurationName"
@@ -165,6 +166,7 @@
 
             <ImageView
                 android:id="@+id/ivLikeButton"
+                android:contentDescription="@string/like"
                 style="@style/audio_player_like_button"
                 android:src="@drawable/like_button_off"
                 app:layout_constraintBottom_toTopOf="@+id/tvDuration"
@@ -174,6 +176,7 @@
             <ImageView
                 android:id="@+id/ivPlayButton"
                 style="@style/audio_player_play_button"
+                android:contentDescription="@string/play"
                 android:src="@drawable/play_button"
                 app:layout_constraintBottom_toTopOf="@+id/tvDurationPlay"
                 app:layout_constraintEnd_toStartOf="@+id/rightBorder"

@@ -42,7 +42,7 @@ class HistoryInteractorImpl(private val historyRepository: HistoryRepository) : 
 
     fun createTrackListFromJson(json: String): ArrayList<Track> {
         var historyList = ArrayList<Track>()
-        if (!json.isNullOrEmpty()) {
+        if (json.isNotEmpty()) {
             val sType = object : TypeToken<ArrayList<Track>>() {}.type
             historyList = Gson().fromJson(json, sType)
         }

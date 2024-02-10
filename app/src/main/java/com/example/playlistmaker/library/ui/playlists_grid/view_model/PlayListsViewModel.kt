@@ -22,7 +22,7 @@ class PlaylistsViewModel(private val playlistInteractor: PlaylistInteractor) : V
     }
 
     private fun renderState(playlists: List<Playlist>) {
-        if (playlists.isNullOrEmpty())
+        if (playlists.isEmpty())
             _libraryPlaylist.postValue(PlaylistsFragmentState.Empty)
         else
             _libraryPlaylist.postValue(PlaylistsFragmentState.Content(playlists))

@@ -15,6 +15,7 @@
             style="@style/plaseholder_image"
             android:layout_marginTop="106dp"
             android:src="@drawable/track_not_found"
+            android:contentDescription="@string/noPlaylistFound"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
