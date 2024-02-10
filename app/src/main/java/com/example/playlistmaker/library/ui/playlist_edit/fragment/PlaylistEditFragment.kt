@@ -32,18 +32,25 @@ class PlaylistEditFragment : PlaylistCreateFragment() {
         }
 
         binding.tvCreate.setOnClickListener {
-            playlistNewImgUri?.let { nonNullUri ->
-                updateImage(nonNullUri)
-                updatePlaylist(nonNullUri)
-            }
+            viewModel.updatePlaylist(
+                Playlist(
+                    playlist.id,
+                    binding.etPlaylistName.text.toString(),
+                    binding.etPlaylistOverview.text.toString(),
+                    playlistNewImgUri ?: Uri.EMPTY,
+                    playlist.tracks
+                ),
+                playlist.imageUri
+            )
             findNavController().popBackStack()
         }
 
-        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().popBackStack()
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().popBackStack()
+                }
+            })
     }
 
     private fun initView() {
@@ -57,26 +64,5 @@ class PlaylistEditFragment : PlaylistCreateFragment() {
             .placeholder(R.drawable.playlist_card_placeholder_with_padding)
             .transform(RoundedCorners(28))
             .into(binding.ivNewImage)
-    }
-
-
-    private fun updateImage(newImageUri: Uri) {
-        viewModel.saveImageToStorage(newImageUri)
-        playlist.imageUri.let {
-            viewModel.deleteOldImage(it)
-        }
-
-    }
-
-    private fun updatePlaylist(imageUri: Uri?) {
-        viewModel.updatePlaylist(
-            Playlist(
-                playlist.id,
-                binding.etPlaylistName.text.toString(),
-                binding.etPlaylistOverview.text.toString(),
-                imageUri?: Uri.EMPTY,
-                playlist.tracks
-            )
-        )
     }
 }

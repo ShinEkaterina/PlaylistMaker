@@ -149,7 +149,10 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
         bottomSheetTracksBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         bottomSheetSettingsBehavior.state = BottomSheetBehavior.STATE_HIDDEN
 
+        // Высота такая чтобы не перекрывала описание и кнопочки
         val desiredHeight = resources.calculateDesiredHeight(150 + 24)
+        // Высота такая чтобы не перекрывала название
+
         val optionsDesiredHeight = resources.calculateDesiredHeight(52 + 24)
 
         bottomSheetTracksBehavior.peekHeight = desiredHeight
