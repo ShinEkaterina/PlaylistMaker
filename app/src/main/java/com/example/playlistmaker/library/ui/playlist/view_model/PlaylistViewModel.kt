@@ -1,6 +1,5 @@
 package com.example.playlistmaker.library.ui.playlist.view_model
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +9,9 @@ import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.library.domain.api.PlaylistInteractor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.stream.Collectors
 
 
 class PlaylistViewModel(
@@ -56,5 +58,17 @@ class PlaylistViewModel(
         viewModelScope.launch {
             playlistInteractor.deletePlaylist(playlist)
         }
+    }
+
+    fun getTracksInfo(tracks: List<Track>): String {
+        val tracksInfo = tracks.mapIndexed { index, track ->
+            "${index + 1}.${track.artistName} - ${track.trackName}(${
+                SimpleDateFormat(
+                    "mm:ss",
+                    Locale.getDefault()
+                ).format(track.trackTimeMillis)
+            })"
+        }
+        return tracksInfo.stream().collect(Collectors.joining("\n"))
     }
 }

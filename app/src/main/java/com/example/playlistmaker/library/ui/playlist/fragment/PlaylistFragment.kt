@@ -35,10 +35,7 @@ import com.example.playlistmaker.util.createPlaylistFromJson
 import com.example.playlistmaker.util.debounce
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.text.SimpleDateFormat
-import java.util.Locale
 import java.util.concurrent.TimeUnit
-import java.util.stream.Collectors
 
 
 class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
@@ -48,7 +45,7 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
         get() = _binding!!
 
     private lateinit var playlist: Playlist
-    private  var adapter: TrackAdapter = TrackAdapter(ArrayList(), this)
+    private var adapter: TrackAdapter = TrackAdapter(ArrayList(), this)
     private lateinit var bottomSheetTracksBehavior: BottomSheetBehavior<ConstraintLayout>
     private lateinit var bottomSheetSettingsBehavior: BottomSheetBehavior<ConstraintLayout>
     private lateinit var onTrackClickDebounce: (Track) -> Unit
@@ -300,20 +297,9 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
         return "${playlist.name}\n" +
                 "${playlist.description}\n" +
                 "${playlist.tracks.size}\n" +
-                getTracksInfo()
+                viewModel.getTracksInfo(adapter.tracks)
     }
 
-    private fun getTracksInfo(): String {
-        val tracksInfo = adapter.tracks.mapIndexed { index, track ->
-            "${index + 1}.${track.artistName} - ${track.trackName}(${
-                SimpleDateFormat(
-                    "mm:ss",
-                    Locale.getDefault()
-                ).format(track.trackTimeMillis)
-            })"
-        }
-        return tracksInfo.stream().collect(Collectors.joining("\n"))
-    }
 
     private fun showBottomSheetSettings() {
         bottomSheetSettingsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
