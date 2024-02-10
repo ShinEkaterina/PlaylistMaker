@@ -60,7 +60,14 @@ class PlaylistViewModel(
         }
     }
 
-    fun getTracksInfo(tracks: List<Track>): String {
+     fun getPlaylistInfo(playlist: Playlist, tracks: List<Track>): String {
+        return "${playlist.name}\n" +
+                "${playlist.description}\n" +
+                "${playlist.tracks.size}\n" +
+                getTracksInfo(tracks)
+    }
+
+   private fun getTracksInfo(tracks: List<Track>): String {
         val tracksInfo = tracks.mapIndexed { index, track ->
             "${index + 1}.${track.artistName} - ${track.trackName}(${
                 SimpleDateFormat(

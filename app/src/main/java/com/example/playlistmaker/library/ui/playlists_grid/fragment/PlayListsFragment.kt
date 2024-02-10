@@ -1,7 +1,6 @@
 package com.example.playlistmaker.library.ui.playlists_grid.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -117,5 +116,5 @@ class PlayListsFragment : Fragment(), PlaylistAdapter.PlaylistClickListener {
 
     override fun onClick(playlist: Playlist) {
         onPlaylistClickDebounce(playlist)
-        Log.d("LOGS", "Playlist click")    }
+    }
 }

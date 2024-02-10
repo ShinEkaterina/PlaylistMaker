@@ -62,7 +62,7 @@ class PlaylistEditFragment : PlaylistCreateFragment() {
 
     private fun updateImage(newImageUri: Uri) {
         viewModel.saveImageToStorage(newImageUri)
-        playlist.imageUri?.let {
+        playlist.imageUri.let {
             viewModel.deleteOldImage(it)
         }
 
@@ -74,7 +74,7 @@ class PlaylistEditFragment : PlaylistCreateFragment() {
                 playlist.id,
                 binding.etPlaylistName.text.toString(),
                 binding.etPlaylistOverview.text.toString(),
-                imageUri,
+                imageUri?: Uri.EMPTY,
                 playlist.tracks
             )
         )

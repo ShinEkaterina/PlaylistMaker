@@ -55,7 +55,6 @@ open class PlaylistCreateFragment : Fragment() {
             }
         }
     private val viewModel by viewModel<PlaylistCreateViewModel>()
-    //  private val confirmator: ConfirmationDialog by inject { parametersOf(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -188,7 +187,7 @@ open class PlaylistCreateFragment : Fragment() {
                         0,
                         binding.etPlaylistName.text.toString(),
                         binding.etPlaylistOverview.text.toString(),
-                        if (playlistNewImgUri != null) playlistNewImgUri else null,
+                         playlistNewImgUri?:  Uri.EMPTY,
                         listOf()
                     )
                 )

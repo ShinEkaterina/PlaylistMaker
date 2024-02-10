@@ -8,11 +8,7 @@ import androidx.room.TypeConverter
 object UriConverter {
 
     @TypeConverter
-    fun fromUri(uri: Uri?): String? =
-        if (uri == null)
-            null
-        else
-            uri.toString()
+    fun fromUri(uri: Uri?): String? = uri?.toString()
 
     @TypeConverter
     fun toUri(data: String?): Uri? = data?.toUri()

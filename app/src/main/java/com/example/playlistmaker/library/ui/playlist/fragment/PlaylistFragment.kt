@@ -3,7 +3,6 @@ package com.example.playlistmaker.library.ui.playlist.fragment
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -286,19 +285,14 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
     private fun shareTracks() {
         val intent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, getPlaylistInfo())
+            putExtra(Intent.EXTRA_TEXT, viewModel.getPlaylistInfo(playlist, adapter.tracks))
             type = "text/plain"
         }
         val shareIntent = Intent.createChooser(intent, null)
         startActivity(shareIntent)
     }
 
-    private fun getPlaylistInfo(): String {
-        return "${playlist.name}\n" +
-                "${playlist.description}\n" +
-                "${playlist.tracks.size}\n" +
-                viewModel.getTracksInfo(adapter.tracks)
-    }
+
 
 
     private fun showBottomSheetSettings() {
@@ -311,8 +305,6 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
         val count = if (playlist.tracks.isEmpty()) 0 else playlist.tracks.size
         binding.tvPlMiniCount.text =
             resources.getQuantityString(R.plurals.track_plurals, count, count)
-
-
     }
 
     override fun onResume() {
@@ -332,7 +324,6 @@ class PlaylistFragment : Fragment(), TrackAdapter.ClickListener {
 
     override fun onTrackLongClick(track: Track) {
         showDialogDeleteTrack(track)
-        Log.d("My LOG", "LONG CLICK")
     }
 
 }

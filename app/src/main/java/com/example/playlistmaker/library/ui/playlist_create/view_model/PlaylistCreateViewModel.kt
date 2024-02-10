@@ -1,6 +1,5 @@
 package com.example.playlistmaker.library.ui.playlist_create.view_model
 
-import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import com.example.playlistmaker.common.domain.model.Playlist
@@ -9,7 +8,6 @@ import com.example.playlistmaker.library.domain.api.PlaylistInteractor
 
 
 open class PlaylistCreateViewModel(
-    context: Context,
     private val imagesInteractor: ImagesRepositoryInteractor,
     private val playlistInteractor: PlaylistInteractor
 ) : ViewModel() {

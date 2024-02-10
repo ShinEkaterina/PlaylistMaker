@@ -1,6 +1,5 @@
 package com.example.playlistmaker.player.ui.view_model
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,8 +8,8 @@ import com.example.playlistmaker.common.domain.model.Playlist
 import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.library.domain.api.FavoriteTracksInteractor
 import com.example.playlistmaker.library.domain.api.PlaylistInteractor
-import com.example.playlistmaker.player.domain.model.PlayerState
 import com.example.playlistmaker.player.domain.api.AudioPlayerInteractor
+import com.example.playlistmaker.player.domain.model.PlayerState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -66,7 +65,6 @@ class AudioPlayerViewModel(
                 delay(DELAY_UPDATE_TIMER_MC)
                 currentTimerLiveData.postValue(audioPlayerInterator.currentPosition())
             }
-            Log.d("MY LOG", "set 00")
             currentTimerLiveData.postValue(0)
         }
     }
@@ -136,7 +134,7 @@ class AudioPlayerViewModel(
     }
 
     private fun renderState(playlists: List<Playlist>) {
-        if (playlists.isNullOrEmpty())
+        if (playlists.isEmpty())
             _playlistState.postValue(PlaylistState.Empty)
         else
             _playlistState.postValue(PlaylistState.Content(playlists))
