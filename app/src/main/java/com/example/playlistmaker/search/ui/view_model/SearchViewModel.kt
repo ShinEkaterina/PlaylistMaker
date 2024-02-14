@@ -28,7 +28,7 @@ class SearchViewModel(
         SEARCH_DEBOUNCE_DELAY_MILLISECONDS, viewModelScope, false
     ) {
         val newSearchText = lastSearchText
-        if (newSearchText!!.isEmpty()) {
+        if   (newSearchText?.isEmpty() != false){
             getHistory()
             showHistory()
         } else {

@@ -23,6 +23,7 @@
 
         <ImageView
             android:id="@+id/ivPlaylist"
+            android:contentDescription="@string/cover"
             android:src="@drawable/playlist_card_placeholder"
             tools:src="@tools:sample/backgrounds/scenic"
             android:layout_width="match_parent"

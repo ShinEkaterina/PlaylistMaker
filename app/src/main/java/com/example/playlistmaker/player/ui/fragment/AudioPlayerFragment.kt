@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -19,13 +20,15 @@ import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.Playlist
 import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.databinding.FragmentPlayerBinding
-import com.example.playlistmaker.library.ui.playlist.fragment.PlaylistAdapter
+import com.example.playlistmaker.library.ui.playlists_grid.fragment.PlaylistAdapter
 import com.example.playlistmaker.player.domain.model.PlayerState
 import com.example.playlistmaker.player.presentation.model.TrackInfo
 import com.example.playlistmaker.player.ui.view_model.AudioPlayerViewModel
 import com.example.playlistmaker.player.ui.view_model.PlaylistState
 import com.example.playlistmaker.search.presentation.Mapper
+import com.example.playlistmaker.util.CLICK_DEBOUNCE_DELAY_MILLISECONDS
 import com.example.playlistmaker.util.Formater
+import com.example.playlistmaker.util.TRACK
 import com.example.playlistmaker.util.debounce
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -105,14 +108,14 @@ class AudioPlayerFragment : Fragment() {
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
             }
 
-        binding.rvPlaylist?.layoutManager =
+        binding.rvPlaylist.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         playlistAdapter = PlaylistAdapter(R.layout.playlist_line) { playlist ->
             onPlaylistClickDebounce(playlist)
         }
 
-        binding.rvPlaylist?.adapter = playlistAdapter
+        binding.rvPlaylist.adapter = playlistAdapter
 
         viewModel.apply {
             playlistState.observe(viewLifecycleOwner, ::renderPlaylistState)
@@ -129,11 +132,11 @@ class AudioPlayerFragment : Fragment() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (newState) {
                     BottomSheetBehavior.STATE_HIDDEN -> {
-                        binding.overlay.visibility = View.GONE
+                        binding.overlay.isVisible = false
                     }
 
                     else -> {
-                        binding.overlay.visibility = View.VISIBLE
+                        binding.overlay.isVisible = true
                     }
                 }
             }
@@ -222,9 +225,9 @@ class AudioPlayerFragment : Fragment() {
         binding.tvDuration.text = trackInfo.duration
         binding.tvDurationPlay.setText(R.string.time_00)
 
-        if (trackInfo.collectionName.isNullOrEmpty()) {
-            binding.tvAlbum.visibility = View.GONE
-            binding.album.visibility = View.GONE
+        if (trackInfo.collectionName.isEmpty()) {
+            binding.tvAlbum.isVisible = false
+            binding.album.isVisible = false
         } else {
             binding.tvAlbum.text = trackInfo.collectionName
         }
@@ -244,8 +247,7 @@ class AudioPlayerFragment : Fragment() {
     }
 
     companion object {
-        const val TRACK = "track"
-        private const val CLICK_DEBOUNCE_DELAY_MILLISECONDS = 100L
+
         fun createArgs(track: Track): Bundle = bundleOf(TRACK to track)
     }
 }

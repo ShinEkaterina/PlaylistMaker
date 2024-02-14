@@ -39,10 +39,29 @@
         <action
             android:id="@+id/action_libraryFragment_to_playlistCreateFragment"
             app:destination="@id/playlistCreateFragment" />
+        <action
+            android:id="@+id/action_libraryFragment_to_playlistFragment"
+            app:destination="@id/playlistFragment" />
     </fragment>
     <fragment
         android:id="@+id/playlistCreateFragment"
-        android:name="com.example.playlistmaker.library.ui.playlist.fragment.PlaylistCreateFragment"
+        android:name="com.example.playlistmaker.library.ui.playlist_create.fragment.PlaylistCreateFragment"
         android:label="fragment_playlist_create"
         tools:layout="@layout/fragment_playlist_create" />
+    <fragment
+        android:id="@+id/playlistFragment"
+        android:name="com.example.playlistmaker.library.ui.playlist.fragment.PlaylistFragment"
+        android:label="fragment_playlist"
+        tools:layout="@layout/fragment_playlist" >
+        <action
+            android:id="@+id/action_playlistFragment_to_playerFragment"
+            app:destination="@id/playerFragment" />
+        <action
+            android:id="@+id/action_playlistFragment_to_playlistEditFragment"
+            app:destination="@id/playlistEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playlistEditFragment"
+        android:name="com.example.playlistmaker.library.ui.playlist_edit.fragment.PlaylistEditFragment"
+        android:label="PlaylistEditFragment" />
 </navigation>

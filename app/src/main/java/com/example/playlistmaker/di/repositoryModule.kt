@@ -3,9 +3,11 @@ package com.example.playlistmaker.di
 import com.example.playlistmaker.history.data.HistoryRepository
 import com.example.playlistmaker.history.data.impl.HistoryRepositoryImpl
 import com.example.playlistmaker.library.data.api.FavoriteTracksRepository
+import com.example.playlistmaker.library.data.api.ImagesRepository
 import com.example.playlistmaker.library.data.api.PlaylistRepository
-import com.example.playlistmaker.util.TrackDbMapper
+import com.example.playlistmaker.util.TrackDbConverter
 import com.example.playlistmaker.library.data.impl.FavoriteTracksRepositoryImpl
+import com.example.playlistmaker.library.data.impl.ImagesRepositoryImpl
 import com.example.playlistmaker.library.data.impl.PlaylistRepositoryImpl
 import com.example.playlistmaker.player.data.AudioPlayerRepositoryImpl
 import com.example.playlistmaker.search.data.TrackRepository
@@ -42,7 +44,7 @@ val repositoryModule = module {
         HistoryRepositoryImpl(get(named(SHARED_PREFS_SEARCH_HISTORY)))
     }
 
-    factory { TrackDbMapper() }
+    factory { TrackDbConverter() }
 
     single<FavoriteTracksRepository> {
         FavoriteTracksRepositoryImpl(get(), get())
@@ -50,6 +52,10 @@ val repositoryModule = module {
 
     single<PlaylistRepository> {
         PlaylistRepositoryImpl(get(), get(), get())
+    }
+
+    single<ImagesRepository> {
+        ImagesRepositoryImpl(androidContext(), "playlist_images")
     }
 
 }

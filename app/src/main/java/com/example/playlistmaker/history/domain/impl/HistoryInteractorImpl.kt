@@ -3,10 +3,9 @@ package com.example.playlistmaker.history.domain.impl
 import com.example.playlistmaker.history.data.HistoryRepository
 import com.example.playlistmaker.history.domain.HistoryInteractor
 import com.example.playlistmaker.common.domain.model.Track
+import com.example.playlistmaker.util.MAX_NUMBER_OF_TRACK_HISTORY
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-
-const val MAX_NUMBER_OF_TRACK = 10
 
 
 class HistoryInteractorImpl(private val historyRepository: HistoryRepository) : HistoryInteractor {
@@ -24,7 +23,7 @@ class HistoryInteractorImpl(private val historyRepository: HistoryRepository) : 
     override fun addTrackToHistory(track: Track) {
         val historyTrackList = getHistoryList()
         historyTrackList.remove(track)
-        if (historyTrackList.size >= MAX_NUMBER_OF_TRACK) {
+        if (historyTrackList.size >= MAX_NUMBER_OF_TRACK_HISTORY) {
             historyTrackList.removeAt(historyTrackList.size - 1)
         }
         historyTrackList.add(0, track)
@@ -43,7 +42,7 @@ class HistoryInteractorImpl(private val historyRepository: HistoryRepository) : 
 
     fun createTrackListFromJson(json: String): ArrayList<Track> {
         var historyList = ArrayList<Track>()
-        if (!json.isNullOrEmpty()) {
+        if (json.isNotEmpty()) {
             val sType = object : TypeToken<ArrayList<Track>>() {}.type
             historyList = Gson().fromJson(json, sType)
         }

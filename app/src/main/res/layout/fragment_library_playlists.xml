@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".library.ui.playlist.fragment.PlayListsFragment">
+    tools:context=".library.ui.playlists_grid.fragment.PlayListsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,6 +36,7 @@
                 android:layout_height="120dp"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="centerCrop"
+                android:contentDescription="@string/noPlaylistFound"
                 android:src="@drawable/track_not_found"
                 tools:src="@drawable/track_not_found" />
 

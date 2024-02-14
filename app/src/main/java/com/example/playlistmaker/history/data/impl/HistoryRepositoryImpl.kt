@@ -2,9 +2,7 @@ package com.example.playlistmaker.history.data.impl
 
 import android.content.SharedPreferences
 import com.example.playlistmaker.history.data.HistoryRepository
-
-
-const val KEY_FOR_HISTORY_LIST = "KEY_FOR_HISTORY_LIST"
+import com.example.playlistmaker.util.KEY_FOR_HISTORY_LIST
 
 
 class HistoryRepositoryImpl(

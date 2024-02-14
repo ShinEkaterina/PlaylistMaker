@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.FragmentLibraryBinding
 import com.example.playlistmaker.library.ui.tracks.fragment.FavoriteTracksFragment
-import com.example.playlistmaker.library.ui.playlist.fragment.PlayListsFragment
+import com.example.playlistmaker.library.ui.playlists_grid.fragment.PlayListsFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class LibraryFragment : Fragment() {

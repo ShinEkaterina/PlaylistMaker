@@ -25,7 +25,7 @@ class App : Application(), KoinComponent {
                 viewModelModule
             )
         }
-       val settingsInteractor = getKoin().get<SettingsInteractor>()
+        val settingsInteractor = getKoin().get<SettingsInteractor>()
 
         switchTheme(settingsInteractor.getThemeSettings())
         super.onCreate()
@@ -39,9 +39,5 @@ class App : Application(), KoinComponent {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
 
-    }
-
-    companion object {
-        const val TRACK = "track"
     }
 }

@@ -1,1 +1,0 @@
-const val PLAYLIST_STORAGE_NAME = "playlist_images"

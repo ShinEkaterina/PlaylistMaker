@@ -10,6 +10,7 @@
     <ImageView
         android:layout_width="@dimen/size_45"
         android:layout_height="@dimen/size_45"
+        android:contentDescription="@string/cover"
         android:id="@+id/ivPlaylist"
         android:layout_weight="0"
         android:layout_marginVertical="8dp"

@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".library.ui.playlist.fragment.PlaylistCreateFragment">
+        tools:context=".library.ui.playlist_create.fragment.PlaylistCreateFragment">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/playlistCreateToolbar"
@@ -21,6 +21,7 @@
             app:navigationIcon="@drawable/ic_arrow_back">
 
             <TextView
+                android:id="@+id/tvHeading"
                 style="@style/TextHeaderStyle"
                 android:text="@string/newPlaylist" />
 
@@ -28,6 +29,7 @@
 
         <ImageView
             android:id="@+id/ivNewImage"
+            android:contentDescription="@string/cover"
             android:layout_width="312dp"
             android:layout_height="312dp"
             android:layout_marginHorizontal="24dp"
